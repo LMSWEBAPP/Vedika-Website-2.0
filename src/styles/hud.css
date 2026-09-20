@@ -1,0 +1,945 @@
+/* ==========================================================================
+   VEDIKA AI TUTOR - HUD & HERO SHOWCASE STYLES (3D CAROUSEL & BUST REFINEMENT)
+   Updates:
+   1. Reduced bottom fade (160px, soft intensity) so Vedika's chest & shoulders are fully visible.
+   2. Hardware WebGL clipping ensures only head, neck, and shoulders are ever rendered.
+   3. 3D revolving glassmorphic carousel orbits around Vedika in 3D WebGL space.
+   4. Side columns remain strictly 340px, giving the 3D carousel full revolving freedom.
+   ========================================================================== */
+
+/* Hero Showcase Wrapper (Full-Bleed Viewport Presentation Deck - Box Enclosure Removed) */
+.hero-showcase-wrapper {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Full Viewport Canvas (Removed Enclosed Box, Side Space Now Used for Content) */
+.hero-card {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  max-height: none;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top Shimmering Tinted Glow from above */
+.card-top-shimmer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 340px;
+  background: radial-gradient(ellipse 90% 100% at 50% 0%, rgba(0, 200, 255, 0.20) 0%, rgba(0, 75, 170, 0.10) 45%, transparent 80%);
+  pointer-events: none;
+  z-index: 15;
+}
+
+/* Card Top Navigation Bar */
+.card-top-bar {
+  position: absolute;
+  top: 26px;
+  left: 48px;
+  right: 48px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+}
+
+.stage-badge-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  background: rgba(14, 22, 38, 0.90);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.stage-badge-pill .badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff5e3a;
+  box-shadow: 0 0 8px #ff5e3a;
+}
+
+/* Stage Stepper Navigation Dots (4 stages) */
+.stage-stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(10, 16, 28, 0.88);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--transition-fast);
+}
+
+.step-dot.active {
+  background: var(--cyan-primary);
+  box-shadow: 0 0 10px var(--cyan-primary);
+  transform: scale(1.3);
+}
+
+.step-dot:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.card-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-card-pill {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #06080d;
+  background: #ffffff;
+  border: none;
+  padding: 8px 20px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-card-pill:hover {
+  background: var(--cyan-primary);
+  box-shadow: 0 4px 20px rgba(0, 229, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-icon-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-icon-circle:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: var(--cyan-primary);
+}
+
+/* 3D WebGL Canvas Container (Centered in middle throughout) */
+.three-canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+#webgl-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.model-loading-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 20;
+}
+
+.loader-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(0, 229, 255, 0.15);
+  border-top-color: var(--cyan-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loader-text {
+  font-size: 0.75rem;
+  color: var(--cyan-primary);
+  letter-spacing: 0.15em;
+}
+
+/* Stage Layers Layout - Driven Directly by GSAP Continuous Scrubbed Flow */
+.stage-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 25;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 85px clamp(24px, 4vw, 56px) 95px;
+  box-sizing: border-box;
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+.stage-layer-empty {
+  pointer-events: none;
+}
+
+/* FULL-BLEED 3-ZONE GRID LAYOUT
+   Left Column: minmax(260px, 340px)
+   Center Corridor: 1fr (flexible space for 3D Bot & Carousel)
+   Right Column: minmax(260px, 340px) with min-width 0 to prevent overflow
+*/
+.stage-grid-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 340px) 1fr minmax(260px, 340px);
+  gap: clamp(16px, 3vw, 44px);
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.stage-col-left {
+  width: 100%;
+  max-width: 340px;
+  min-width: 0;
+  z-index: 30;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-sizing: border-box;
+}
+
+.stage-col-center {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  pointer-events: none;
+  /* DEDICATED UNTOUCHED ZONE FOR 3D BOT & REVOLVING CAROUSEL */
+}
+
+.stage-col-right {
+  width: 100%;
+  max-width: 340px;
+  min-width: 0;
+  z-index: 30;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  justify-self: end;
+  box-sizing: border-box;
+}
+
+/* ================= STAGE 1: HERO & BRAND OVERVIEW ================= */
+.sub-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #ff5e3a;
+}
+
+.mono-bullet {
+  font-size: 0.7rem;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 2.7vw, 2.6rem);
+  line-height: 1.05;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+}
+
+.hero-description {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.6;
+}
+
+.glass-brief-pill {
+  padding: 22px;
+}
+
+.glass-brief-pill p {
+  font-size: 0.88rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+  margin-bottom: 14px;
+}
+
+.brief-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.7rem;
+  color: var(--cyan-primary);
+  flex-wrap: wrap;
+}
+
+/* ================= STAGE 2: REAL-TIME COGNITIVE HUD ================= */
+.hud-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 229, 255, 0.1);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--cyan-primary);
+  font-size: 0.68rem;
+  font-weight: 600;
+  width: fit-content;
+}
+
+.pulse-ring {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan-primary);
+  box-shadow: 0 0 8px var(--cyan-primary);
+}
+
+.stage-2-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.4vw, 2.3rem);
+  line-height: 1.05;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.hud-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.hud-bullets li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.35;
+}
+
+.bullet-num {
+  color: var(--cyan-primary);
+  font-weight: 700;
+}
+
+.reticle-wrapper-left {
+  margin-top: 4px;
+}
+
+.reticle-btn-left {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, rgba(16, 26, 46, 0.92) 0%, rgba(10, 17, 30, 0.88) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.35);
+  border-radius: var(--radius-full);
+  padding: 8px 18px;
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
+}
+
+.reticle-btn-left:hover {
+  background: rgba(0, 229, 255, 0.18);
+  border-color: var(--cyan-primary);
+  box-shadow: 0 0 30px rgba(0, 229, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.hud-telemetry-card {
+  padding: 16px 18px;
+}
+
+.card-header-split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card-title {
+  font-size: 0.7rem;
+  color: #cbd5e1;
+  font-weight: 600;
+}
+
+.tag-status-badge {
+  font-size: 0.62rem;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 229, 255, 0.14);
+  border: 1px solid rgba(0, 229, 255, 0.32);
+  color: var(--cyan-primary);
+}
+
+.wave-canvas-wrapper {
+  width: 100%;
+  height: 48px;
+  background: rgba(8, 14, 24, 0.92);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+#emotional-wave-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.wave-footer-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: #64748b;
+}
+
+.telemetry-gauge-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.gauge-box {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.circular-chart {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.circle-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 3.2;
+}
+
+.circle-fg {
+  fill: none;
+  stroke: var(--cyan-primary);
+  stroke-width: 3.2;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.8s ease;
+}
+
+.gauge-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.gauge-val {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.gauge-lbl {
+  font-size: 0.48rem;
+  color: #94a3b8;
+}
+
+.gauge-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex-grow: 1;
+}
+
+.metric-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  padding-bottom: 3px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.metric-label {
+  color: #94a3b8;
+}
+
+/* ================= STAGE 3: PLATFORM FACTS & WHAT CHANGED ================= */
+.col-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  color: #ff5e3a;
+  font-weight: 600;
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.fact-tile {
+  padding: 8px;
+  border-radius: var(--radius-sm);
+}
+
+.fact-key {
+  font-size: 0.58rem;
+  color: #64748b;
+  margin-bottom: 2px;
+}
+
+.fact-val {
+  font-size: 0.68rem;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.steps-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.step-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: var(--radius-md);
+}
+
+.step-num {
+  font-size: 0.7rem;
+  color: var(--cyan-primary);
+  font-weight: 700;
+}
+
+.step-title {
+  font-size: 0.78rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.step-desc {
+  font-size: 0.68rem;
+  color: #94a3b8;
+  line-height: 1.35;
+}
+
+.changes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.change-card {
+  padding: 12px 16px;
+}
+
+.change-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.change-index {
+  font-size: 0.72rem;
+  color: #ff5e3a;
+  font-weight: 700;
+}
+
+.change-heading {
+  font-size: 0.88rem;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.change-text {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+/* ================= STAGE 4: LEARN WITHOUT BOUNDARIES & 3D CAROUSEL ================= */
+.card-content-pills {
+  position: absolute;
+  top: 75px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 35;
+  white-space: nowrap;
+}
+
+.content-pill {
+  background: linear-gradient(135deg, rgba(16, 26, 46, 0.92) 0%, rgba(10, 17, 30, 0.88) 100%);
+  border: 1px solid rgba(0, 229, 255, 0.22);
+  color: #94a3b8;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.content-pill.active, .content-pill:hover {
+  background: #ffffff;
+  color: #06080d;
+  border-color: #ffffff;
+  font-weight: 600;
+}
+
+.split-headline-left {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  line-height: 0.98;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.headline-serif {
+  font-family: serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: lowercase;
+  color: #cbd5e1;
+}
+
+.split-headline-right {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  line-height: 0.95;
+  font-weight: 900;
+  color: #ffffff;
+  text-transform: uppercase;
+}
+
+.headline-outline {
+  -webkit-text-stroke: 1.5px #ffffff;
+  color: transparent;
+}
+
+.headline-block {
+  display: block;
+  font-size: clamp(2rem, 2.8vw, 2.7rem);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(255, 255, 255, 0.25) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.meta-caption {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  line-height: 1.5;
+}
+
+.btn-explore-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all var(--transition-fast);
+}
+
+.btn-explore-arrow:hover {
+  color: var(--cyan-primary);
+  transform: translateX(4px);
+}
+
+.meta-right {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.7rem;
+  color: #cbd5e1;
+}
+
+.stage-4-tag-row {
+  position: absolute;
+  bottom: 100px;
+  left: 40px;
+  right: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 10px;
+  z-index: 30;
+}
+
+.tag-item {
+  font-size: 0.65rem;
+  color: #64748b;
+}
+
+/* ================= PERMANENT BOTTOM VIEWPORT FADE ================= */
+/* User requirement: "Reduce the length of the fade, so reduce the length of the fade and intensity also. Reduce it a little bit because we can't see anything at present now." */
+.viewport-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 160px; /* Reduced from 380px */
+  pointer-events: none;
+  z-index: 38;
+  background: linear-gradient(
+    to top,
+    #050810 0%,
+    rgba(5, 8, 16, 0.85) 45%,
+    rgba(5, 8, 16, 0.25) 80%,
+    transparent 100%
+  );
+}
+
+/* ================= CARD BOTTOM STATUS DOCK (MATCHING VIDEO) ================= */
+.card-bottom-dock {
+  position: absolute;
+  bottom: 24px;
+  left: 48px;
+  right: 48px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: auto;
+  will-change: opacity, transform;
+}
+
+.dock-left {
+  max-width: 520px;
+}
+
+.dock-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.dock-badge-premium {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  background: #00e5ff;
+  color: #06080d;
+}
+
+.dock-badge-sub {
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+.dock-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+}
+
+.dock-desc {
+  font-size: 0.78rem;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.dock-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-dock-unlock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
+  color: #06080d;
+  border: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-dock-unlock:hover {
+  background: var(--cyan-primary);
+  box-shadow: 0 4px 25px rgba(0, 229, 255, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn-dock-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(16, 26, 44, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.btn-dock-icon:hover {
+  background: rgba(22, 36, 60, 0.95);
+  border-color: rgba(0, 229, 255, 0.4);
+}
+
+.btn-dock-icon-only {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(16, 26, 44, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all var(--transition-fast);
+}
+
+.btn-dock-icon-only:hover {
+  background: rgba(22, 36, 60, 0.95);
+  color: var(--cyan-primary);
+  transform: scale(1.06);
+}
+
+/* Responsiveness for Showcase - Guarantees right side is never cut off */
+@media (max-width: 1366px) {
+  .stage-grid-layout {
+    grid-template-columns: minmax(240px, 300px) 1fr minmax(240px, 300px);
+    gap: 24px;
+  }
+  .stage-col-left, .stage-col-right {
+    max-width: 300px;
+  }
+  .stage-layer {
+    padding: 85px 32px 95px;
+  }
+  .card-top-bar {
+    left: 32px;
+    right: 32px;
+  }
+  .card-bottom-dock {
+    left: 32px;
+    right: 32px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .stage-grid-layout {
+    grid-template-columns: minmax(220px, 270px) 1fr minmax(220px, 270px);
+    gap: 16px;
+  }
+  .stage-col-left, .stage-col-right {
+    max-width: 270px;
+  }
+  .stage-layer {
+    padding: 80px 20px 90px;
+  }
+  .card-top-bar {
+    left: 20px;
+    right: 20px;
+  }
+  .card-bottom-dock {
+    left: 20px;
+    right: 20px;
+  }
+  .dock-desc {
+    display: none;
+  }
+}

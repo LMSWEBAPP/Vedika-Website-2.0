@@ -1,0 +1,517 @@
+/* ==========================================================================
+   VEDIKA AI TUTOR - LABS & CURRICULUM SHOWCASE STYLES
+   Interactive 3D STEM sandbox, 4 Core Pillars, Socratic dialogue console,
+   and connect call to action.
+   ========================================================================== */
+
+.interactive-labs-section {
+  position: relative;
+  padding: 120px 28px 80px;
+  background: radial-gradient(100% 60% at 50% 0%, #0d121d 0%, #06080d 80%);
+  z-index: 30;
+}
+
+.section-container {
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.section-badge-row {
+  margin-bottom: 20px;
+}
+
+.section-pill {
+  display: inline-flex;
+  padding: 6px 16px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  color: var(--cyan-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+}
+
+.section-header-split {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.section-headline {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  line-height: 1.15;
+  font-weight: 800;
+  color: #ffffff;
+  max-width: 720px;
+  letter-spacing: -0.02em;
+}
+
+.section-lead {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  max-width: 520px;
+}
+
+/* 4 Core Pillars Grid */
+.pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 60px;
+}
+
+.pillar-card {
+  padding: 32px 26px;
+  display: flex;
+  flex-direction: column;
+}
+
+.pillar-top-badge {
+  font-size: 0.7rem;
+  color: var(--cyan-primary);
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.pillar-icon-box {
+  width: 58px;
+  height: 58px;
+  border-radius: var(--radius-md);
+  background: rgba(0, 229, 255, 0.08);
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.pillar-card:hover .pillar-icon-box {
+  transform: scale(1.08) translateY(-2px);
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.3);
+}
+
+.pillar-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 12px;
+}
+
+.pillar-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.pillar-features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.pillar-features li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pillar-features li span {
+  color: var(--cyan-primary);
+  font-weight: bold;
+}
+
+/* Interactive Lab Simulator Sandbox */
+.lab-simulator-box {
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  margin-bottom: 80px;
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+}
+
+.simulator-header {
+  padding: 16px 28px;
+  background: rgba(14, 20, 32, 0.9);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sim-tabs {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sim-tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  padding: 8px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.sim-tab.active, .sim-tab:hover {
+  background: rgba(0, 229, 255, 0.15);
+  border-color: rgba(0, 229, 255, 0.4);
+  color: #ffffff;
+}
+
+.sim-status {
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+}
+
+.simulator-body {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  min-height: 380px;
+}
+
+.sim-canvas-viewport {
+  background: #04060a;
+  position: relative;
+  overflow: hidden;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.sim-interactive-display {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Socratic Dialogue Sidebar */
+.sim-dialogue-sidebar {
+  background: rgba(10, 14, 22, 0.75);
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+}
+
+.dialogue-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.75rem;
+  color: var(--cyan-primary);
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 18px;
+}
+
+.dialogue-messages {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  margin-bottom: 18px;
+}
+
+.bot-msg {
+  background: rgba(18, 24, 38, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.2);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.speaker-tag {
+  display: block;
+  font-size: 0.68rem;
+  color: var(--cyan-primary);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.bot-msg p {
+  font-size: 0.88rem;
+  color: #e2e8f0;
+  line-height: 1.6;
+}
+
+.dialogue-input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sim-chat-input {
+  flex-grow: 1;
+  background: rgba(18, 24, 38, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  color: #ffffff;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.sim-chat-input:focus {
+  border-color: var(--cyan-primary);
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+}
+
+.btn-sim-send {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--cyan-primary);
+  border: none;
+  color: #06080d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-sim-send:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
+}
+
+/* Connect Section */
+.connect-section {
+  padding: 40px 28px 100px;
+}
+
+.connect-card {
+  padding: 80px 48px;
+  text-align: center;
+  position: relative;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+}
+
+.connect-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.connect-badge {
+  font-size: 0.75rem;
+  color: var(--cyan-primary);
+  margin-bottom: 20px;
+  letter-spacing: 0.1em;
+}
+
+.connect-headline {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.connect-lead {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.connect-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.btn-primary-large {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #06080d;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 16px 36px;
+  border-radius: var(--radius-full);
+  box-shadow: 0 4px 25px rgba(255, 255, 255, 0.25);
+  transition: all var(--transition-fast);
+}
+
+.btn-primary-large:hover {
+  background: var(--cyan-primary);
+  box-shadow: 0 4px 35px rgba(0, 229, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-ghost-large {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 32px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  transition: all var(--transition-fast);
+}
+
+.btn-ghost-large:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Global Footer */
+.global-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 70px 28px 40px;
+  background: #040508;
+}
+
+.footer-container {
+  max-width: 1380px;
+  margin: 0 auto;
+}
+
+.footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 60px;
+  margin-bottom: 60px;
+}
+
+.footer-brand {
+  max-width: 380px;
+}
+
+.footer-tagline {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
+.footer-links-grid {
+  display: flex;
+  gap: 60px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.col-title {
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.footer-col a {
+  font-size: 0.8rem;
+  color: #64748b;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-col a:hover {
+  color: var(--cyan-primary);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.72rem;
+  color: #64748b;
+}
+
+.footer-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (max-width: 1024px) {
+  .pillars-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .simulator-body {
+    grid-template-columns: 1fr;
+  }
+  .sim-canvas-viewport {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .section-headline {
+    font-size: 2.2rem;
+  }
+  .connect-headline {
+    font-size: 2.5rem;
+  }
+  .footer-top {
+    flex-direction: column;
+  }
+  .footer-links-grid {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pillars-grid {
+    grid-template-columns: 1fr;
+  }
+  .section-header-split {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 14px;
+    align-items: flex-start;
+  }
+}

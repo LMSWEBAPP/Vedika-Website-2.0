@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VEDIKA — Next-Gen AI Tutor for STEM & Coding</title>
+  <meta name="description" content="Vedika empowers students to learn better, faster, and easier with personalized 1-on-1 AI tutoring, 3D code visualizations, and hands-on interactive STEM labs." />
+  
+  <!-- Fonts: Space Grotesk, Outfit, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="/src/styles/main.css" />
+  <link rel="stylesheet" href="/src/styles/hud.css" />
+</head>
+<body class="bg-obsidian">
+  <!-- Ambient background glow layers -->
+  <div class="ambient-glow ambient-glow-top"></div>
+  <div class="ambient-glow ambient-glow-center"></div>
+
+  <!-- Global Header Navigation -->
+  <header class="global-nav">
+    <div class="nav-container">
+      <a href="#" class="brand-logo" id="nav-brand">
+        <span class="logo-symbol">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" stroke="#00e5ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            <circle cx="12" cy="12" r="3" fill="#00e5ff" />
+          </svg>
+        </span>
+        <span class="logo-text">VEDIKA<span class="text-cyan">.AI</span></span>
+      </a>
+
+      <div class="nav-center-status">
+        <span class="status-pulse-dot"></span>
+        <span class="status-text mono-text">V2.4 NEURAL ENGINE ACTIVE</span>
+        <span class="status-divider">/</span>
+        <span class="status-meta mono-text">SOCRATIC 3D LABS</span>
+      </div>
+
+      <div class="nav-actions">
+        <button class="btn-ghost-sm" id="btn-audio-toggle" title="Toggle Spatial Audio">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span class="btn-sound-label">AUDIO</span>
+        </button>
+        <button class="btn-nav-outline" id="btn-scroll-labs">Explore Labs</button>
+        <a href="#hero-showcase-wrapper" class="btn-primary-pill" id="btn-connect-nav">
+          <span>Let's Connect</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Showcase Container (100% Focused on 3D Vedika from Start to End) -->
+  <main class="page-content">
+
+    <section class="hero-showcase-wrapper" id="hero-showcase-wrapper">
+      <div class="hero-card" id="hero-card">
+        
+        <!-- Top Tinted Ambient Shimmer Glow from above -->
+        <div class="card-top-shimmer"></div>
+
+        <!-- Hero Card Top Navigation Bar -->
+        <div class="card-top-bar">
+          <div class="stage-badge-pill" id="stage-badge-pill">
+            <span class="badge-dot"></span>
+            <span class="badge-text mono-text" id="badge-stage-text">HERO SECTION // 01</span>
+          </div>
+
+          <!-- Stage Progress Stepper Dots (5 Stages) -->
+          <div class="stage-stepper" id="stage-stepper">
+            <button class="step-dot active" data-step="0" title="01 / Brand Hero"></button>
+            <button class="step-dot" data-step="1" title="02 / Cognitive HUD"></button>
+            <button class="step-dot" data-step="2" title="03 / Platform Facts"></button>
+            <button class="step-dot" data-step="3" title="04 / 3D Carousel"></button>
+            <button class="step-dot" data-step="4" title="05 / Creative Labs"></button>
+          </div>
+
+          <div class="card-top-actions">
+            <button class="btn-card-pill" id="btn-card-connect">
+              <span>Let's Connect</span>
+            </button>
+            <button class="btn-icon-circle" id="btn-modal-info" title="Session Diagnostics">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="16" x2="12" y2="12"></line>
+                <line x1="12" y1="8" x2="12.01" y2="8"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3D WebGL Canvas Layer (Vedika Bot Centered Throughout) -->
+        <div class="three-canvas-container" id="three-canvas-container">
+          <canvas id="webgl-canvas"></canvas>
+          <div class="model-loading-overlay" id="model-loading-overlay">
+            <div class="loader-spinner"></div>
+            <div class="loader-text mono-text">INITIALIZING VEDIKA 3D NEURAL CORE...</div>
+          </div>
+        </div>
+
+        <!-- ================= STAGE 1: HERO & BRAND OVERVIEW ================= -->
+        <div class="stage-layer active" id="stage-1" data-stage-index="0">
+          <div class="stage-grid-layout">
+            <!-- Left Column: Concise, punchy, no clutter -->
+            <div class="stage-col-left">
+              <div class="sub-badge mono-text">
+                <span class="mono-bullet">■</span>
+                SELECTED WORK — 01
+              </div>
+              <h1 class="hero-title">
+                VEDIKA AI<br />
+                <span class="text-glow-gradient">NEXT-GEN TUTOR</span>
+              </h1>
+              <p class="hero-description">
+                Personalized STEM &amp; coding intelligence designed for conceptual clarity and 3D spatial intuition.
+              </p>
+            </div>
+
+            <!-- Center Corridor: Empty & Wide for 3D Bot in Middle -->
+            <div class="stage-col-center"></div>
+
+            <!-- Right Column -->
+            <div class="stage-col-right">
+              <div class="glass-brief-pill prism-card">
+                <p>
+                  A complete pedagogical redesign focused on clear structure, interactive 3D intuition, and real-time mentorship.
+                </p>
+                <div class="brief-meta mono-text">
+                  <span>LEARN FASTER</span>
+                  <span>•</span>
+                  <span>BETTER</span>
+                  <span>•</span>
+                  <span>EASIER</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STAGE 2: REAL-TIME COGNITIVE HUD ================= -->
+        <div class="stage-layer" id="stage-2" data-stage-index="1">
+          <div class="stage-grid-layout">
+            <!-- Left Column: Crisp, clean bullets -->
+            <div class="stage-col-left">
+              <div class="hud-pill-tag mono-text">
+                <span class="pulse-ring"></span>
+                + Real-Time Cognitive Visualization
+              </div>
+              <h2 class="stage-2-headline">
+                VISUALIZE<br />
+                YOUR MIND<br />
+                IN MOTION
+              </h2>
+
+              <ul class="hud-bullets mono-text">
+                <li>
+                  <span class="bullet-num">01</span>
+                  <span>PUT THE MIND'S VOICE INTO VISUAL SPEAK.</span>
+                </li>
+                <li>
+                  <span class="bullet-num">02</span>
+                  <span>DISCOVER INSTANT CONCEPTUAL CLARITY.</span>
+                </li>
+                <li>
+                  <span class="bullet-num">03</span>
+                  <span>HANDLE COMPLEX STEM STRESS &amp; OVERWHELM.</span>
+                </li>
+                <li>
+                  <span class="bullet-num">04</span>
+                  <span>FOCUS AND DECODE YOUR LEVELS IN REAL TIME.</span>
+                </li>
+              </ul>
+
+              <div class="reticle-wrapper-left">
+                <button class="reticle-btn-left" id="reticle-btn-cta">
+                  <div class="reticle-icon-sm">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                      <polygon points="5 3 19 12 5 21 5 3" fill="#00e5ff" />
+                    </svg>
+                  </div>
+                  <span class="mono-text">EXPLORE LABS →</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Center Corridor: Empty & Wide for 3D Bot in Middle -->
+            <div class="stage-col-center"></div>
+
+            <!-- Right Column: Transparent Telemetry Cards -->
+            <div class="stage-col-right">
+              <!-- Card A: Focus State Waveform -->
+              <div class="prism-card hud-telemetry-card">
+                <div class="card-header-split">
+                  <span class="card-title mono-text">Focus State</span>
+                  <span class="tag-status-badge mono-text">Calm</span>
+                </div>
+                <div class="wave-canvas-wrapper">
+                  <canvas id="emotional-wave-canvas" width="280" height="50"></canvas>
+                </div>
+                <div class="wave-footer-meta mono-text">
+                  <span>ALPHA FREQ: 10.4 Hz</span>
+                  <span class="text-cyan">OPTIMAL RECEPTION</span>
+                </div>
+              </div>
+
+              <!-- Card B: Cognitive Load Analysis -->
+              <div class="prism-card hud-telemetry-card">
+                <div class="card-header-split">
+                  <span class="card-title mono-text">Cognitive Load Analysis</span>
+                  <span class="tag-status-badge mono-text">90% Synced</span>
+                </div>
+
+                <div class="telemetry-gauge-row">
+                  <div class="gauge-box">
+                    <svg class="circular-chart" viewBox="0 0 36 36">
+                      <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                      <path class="circle-fg" stroke-dasharray="82, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                    </svg>
+                    <div class="gauge-center-text">
+                      <span class="gauge-val mono-text">82%</span>
+                      <span class="gauge-lbl mono-text">Prefrontal</span>
+                    </div>
+                  </div>
+
+                  <div class="gauge-metrics mono-text">
+                    <div class="metric-line">
+                      <span class="metric-label">Retention</span>
+                      <span class="metric-val text-cyan">94%</span>
+                    </div>
+                    <div class="metric-line">
+                      <span class="metric-label">3D Intuition</span>
+                      <span class="metric-val text-cyan">98%</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STAGE 3: PLATFORM FACTS & WHAT CHANGED ================= -->
+        <div class="stage-layer" id="stage-3" data-stage-index="2">
+          <div class="stage-grid-layout">
+            <!-- Left Column: Clean Platform Facts -->
+            <div class="stage-col-left">
+              <div class="col-header mono-text">
+                <span class="mono-bullet">■</span>
+                PROJECT FACTS
+              </div>
+
+              <div class="facts-grid mono-text">
+                <div class="fact-tile prism-card">
+                  <div class="fact-key">SCOPE</div>
+                  <div class="fact-val">Full STEM</div>
+                </div>
+                <div class="fact-tile prism-card">
+                  <div class="fact-key">FOCUS</div>
+                  <div class="fact-val">Socratic AI</div>
+                </div>
+                <div class="fact-tile prism-card">
+                  <div class="fact-key">TIMELINE</div>
+                  <div class="fact-val">Instant 24/7</div>
+                </div>
+                <div class="fact-tile prism-card">
+                  <div class="fact-key">YEAR</div>
+                  <div class="fact-val">2026 Engine</div>
+                </div>
+              </div>
+
+              <div class="steps-flow">
+                <div class="step-card prism-card">
+                  <div class="step-num mono-text">01</div>
+                  <div class="step-body">
+                    <div class="step-title">Audit</div>
+                    <div class="step-desc">Pinpoint exactly where conceptual intuition stalled.</div>
+                  </div>
+                </div>
+                <div class="step-card prism-card">
+                  <div class="step-num mono-text">02</div>
+                  <div class="step-body">
+                    <div class="step-title">Structure</div>
+                    <div class="step-desc">Socratic conversational loops tailored to student pace.</div>
+                  </div>
+                </div>
+                <div class="step-card prism-card">
+                  <div class="step-num mono-text">03</div>
+                  <div class="step-body">
+                    <div class="step-title">System</div>
+                    <div class="step-desc">Interactive 3D code visualizers and physics labs.</div>
+                  </div>
+                </div>
+                <div class="step-card prism-card">
+                  <div class="step-num mono-text">04</div>
+                  <div class="step-body">
+                    <div class="step-title">Build</div>
+                    <div class="step-desc">Hands-on sandbox mastery with immediate feedback.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Center Corridor: Empty & Wide for 3D Bot in Middle -->
+            <div class="stage-col-center"></div>
+
+            <!-- Right Column: Clean What Changed Cards -->
+            <div class="stage-col-right">
+              <div class="col-header mono-text">
+                <span class="mono-bullet">■</span>
+                WHAT CHANGED
+              </div>
+
+              <div class="changes-list">
+                <div class="prism-card change-card">
+                  <div class="change-top">
+                    <span class="change-index mono-text">01</span>
+                    <h3 class="change-heading">Clear structure</h3>
+                  </div>
+                  <p class="change-text">
+                    Navigation rebuilt around spatial mental models, so every student sees the clear next step.
+                  </p>
+                </div>
+
+                <div class="prism-card change-card">
+                  <div class="change-top">
+                    <span class="change-index mono-text">02</span>
+                    <h3 class="change-heading">Stronger brand presence</h3>
+                  </div>
+                  <p class="change-text">
+                    A sharper visual language—interactive 3D code call stacks that carry the identity rather than decorating it.
+                  </p>
+                </div>
+
+                <div class="prism-card change-card">
+                  <div class="change-top">
+                    <span class="change-index mono-text">03</span>
+                    <h3 class="change-heading">Professional trust</h3>
+                  </div>
+                  <p class="change-text">
+                    Proof-paced Socratic dialogues where learners validate why solutions work, eliminating exam anxiety.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= STAGE 4: PURE 3D REVOLVING CAROUSEL (NOTHING AT ALL IN IT) ================= -->
+        <div class="stage-layer stage-layer-empty" id="stage-4" data-stage-index="3"></div>
+
+        <!-- ================= STAGE 5: LEARN WITHOUT BOUNDARIES (NEXT SCROLL) ================= -->
+        <div class="stage-layer" id="stage-5" data-stage-index="4">
+          <!-- Navigation Pills along the top of Card Content -->
+          <div class="card-content-pills">
+            <button class="content-pill active" data-filter="physics">LAUNCH</button>
+            <button class="content-pill" data-filter="math">STRATEGY</button>
+            <button class="content-pill" data-filter="chemistry">ART DIRECTION</button>
+            <button class="content-pill" data-filter="code">DESIGN SYSTEM</button>
+            <button class="content-pill" data-filter="motion">MOTION</button>
+            <button class="content-pill" data-filter="frontend">FRONT-END</button>
+          </div>
+
+          <div class="stage-grid-layout">
+            <!-- Left Side Split Headline & Subtext -->
+            <div class="stage-col-left">
+              <h2 class="split-headline-left">
+                CREATE<br />
+                <span class="headline-serif">without</span>
+              </h2>
+              <div class="meta-caption mono-text">
+                THOUSANDS OF FREE 3D ASSETS &amp; INTERACTIVE SIMULATION LABS TO INSPIRE YOUR NEXT BIG IDEA.
+              </div>
+              <button class="btn-explore-arrow mono-text" id="btn-explore-arrow-step">
+                <span>EXPLORE ASSETS →</span>
+              </button>
+            </div>
+
+            <!-- Center Corridor: Empty & Wide for 3D Bot in Middle -->
+            <div class="stage-col-center"></div>
+
+            <!-- Right Side Split Headline & Highlights -->
+            <div class="stage-col-right">
+              <h2 class="split-headline-right">
+                <span class="headline-outline">LIMITS</span>
+                <span class="headline-block">boundaries</span>
+              </h2>
+              <div class="meta-right mono-text">
+                <div class="meta-feature-line">NEW ASSETS ADDED DAILY</div>
+                <div class="meta-feature-line">COMMERCIAL USE OK</div>
+                <div class="meta-feature-line">NO ATTRIBUTION REQUIRED</div>
+                <div class="meta-feature-line text-cyan">100% FREE FOREVER</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Filter Tags -->
+          <div class="stage-4-tag-row mono-text">
+            <span class="tag-item">ABSTRACT 3D</span>
+            <span class="tag-item">TEXTURES</span>
+            <span class="tag-item">GRADIENT TEXTURES</span>
+            <span class="tag-item">3D ILLUSTRATIONS</span>
+            <span class="tag-item">UI KIT ELEMENTS</span>
+          </div>
+        </div>
+
+        <!-- ================= PERMANENT BOTTOM VIEWPORT FADE ================= -->
+        <!-- User requirement: "The part where Vedika is, reduce the fade at that part. Just only that part! The remaining page leave like that." -->
+        <div class="viewport-bottom-fade" id="viewport-bottom-fade"></div>
+
+        <!-- ================= CARD BOTTOM STATUS DOCK (MATCHING VIDEO) ================= -->
+        <div class="card-bottom-dock">
+          <div class="dock-left">
+            <div class="dock-badge-group">
+              <span class="dock-badge-premium mono-text">Premium</span>
+              <span class="dock-badge-sub mono-text">Personal &amp; client use</span>
+            </div>
+            <h4 class="dock-title">Cortex</h4>
+            <p class="dock-desc">
+              Data pulses through a glowing neural interface as the frame turns, equal parts diagnostic and dream — a hero for brands mapping what's happening inside the machine.
+            </p>
+          </div>
+
+          <div class="dock-actions">
+            <button class="btn-dock-unlock" id="btn-dock-cta">
+              <span>Upgrade to unlock</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+            </button>
+            <button class="btn-dock-icon" title="Why Scrolltide?">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              <span class="dock-icon-label">Why Scrolltide?</span>
+            </button>
+            <button class="btn-dock-icon-only" title="Favorite" id="btn-bookmark">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+              </svg>
+            </button>
+            <button class="btn-dock-icon-only" title="Share" id="btn-share">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="18" cy="5" r="3"></circle>
+                <circle cx="6" cy="12" r="3"></circle>
+                <circle cx="18" cy="19" r="3"></circle>
+                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
