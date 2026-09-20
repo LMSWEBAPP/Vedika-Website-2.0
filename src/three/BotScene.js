@@ -102,54 +102,83 @@ export class BotScene {
     const loader = new GLTFLoader();
     const modelUrl = '/models/vedika-M1.glb';
 
-    loader.load(
-      modelUrl,
-      (gltf) => {
-        const model = gltf.scene;
-        
-        // Scale Vedika to prominent bust size (0.76)
-        model.scale.set(0.76, 0.76, 0.76);
+    const onModelSuccess = (gltf) => {
+      const model = gltf.scene;
+      
+      // Scale Vedika to prominent bust size (0.76)
+      model.scale.set(0.76, 0.76, 0.76);
 
-        // Position model naturally so full head, neck, shoulders, and chest are completely intact
-        const box = new THREE.Box3().setFromObject(model);
-        const center = box.getCenter(new THREE.Vector3());
-        model.position.set(-center.x, -0.15, -center.z);
+      // Position model naturally so full head, neck, shoulders, and chest are completely intact
+      const box = new THREE.Box3().setFromObject(model);
+      const center = box.getCenter(new THREE.Vector3());
+      model.position.set(-center.x, -0.15, -center.z);
 
-        // Enhance PBR materials
-        model.traverse((child) => {
-          if (child.isMesh && child.material) {
-            child.material.roughness = Math.min(child.material.roughness || 0.5, 0.42);
-            child.material.metalness = Math.min(child.material.metalness || 0.1, 0.22);
-            if (child.material.map) {
-              child.material.map.colorSpace = THREE.SRGBColorSpace;
-              child.material.map.anisotropy = 16;
-            }
+      // Enhance PBR materials
+      model.traverse((child) => {
+        if (child.isMesh && child.material) {
+          child.material.roughness = Math.min(child.material.roughness || 0.5, 0.42);
+          child.material.metalness = Math.min(child.material.metalness || 0.1, 0.22);
+          if (child.material.map) {
+            child.material.map.colorSpace = THREE.SRGBColorSpace;
+            child.material.map.anisotropy = 16;
           }
-        });
+        }
+      });
 
-        this.modelWrapper.add(model);
+      this.modelWrapper.add(model);
 
-        if (loadingOverlay) {
-          loadingOverlay.style.opacity = '0';
-          setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
-        }
-      },
-      (xhr) => {
-        if (loadingOverlay && xhr.total > 0) {
-          const percent = Math.round((xhr.loaded / xhr.total) * 100);
-          const textEl = loadingOverlay.querySelector('.loader-text');
-          if (textEl) textEl.textContent = `SYNCING 3D NEURAL CORE: ${percent}%`;
-        }
-      },
-      (error) => {
-        console.warn('GLB load fallback to procedural model:', error);
-        this.buildProceduralBot();
-        if (loadingOverlay) {
-          loadingOverlay.style.opacity = '0';
-          setTimeout(() => { loadingOverlay.style.display = 'none'; }, 500);
-        }
+      // Pre-warm WebGL shaders for instant zero-jank first frame
+      try {
+        this.renderer.compile(this.scene, this.camera);
+      } catch (_) {}
+
+      if (loadingOverlay) {
+        loadingOverlay.style.opacity = '0';
+        setTimeout(() => { loadingOverlay.style.display = 'none'; }, 200);
       }
-    );
+    };
+
+    const onModelFail = (error) => {
+      console.warn('GLB load fallback to procedural model:', error);
+      this.buildProceduralBot();
+      if (loadingOverlay) {
+        loadingOverlay.style.opacity = '0';
+        setTimeout(() => { loadingOverlay.style.display = 'none'; }, 200);
+      }
+    };
+
+    // Instant parse from high-priority early head stream / persistent cache
+    if (window.__vedikaModelPromise) {
+      window.__vedikaModelPromise
+        .then((arrayBuffer) => {
+          loader.parse(
+            arrayBuffer,
+            '',
+            (gltf) => onModelSuccess(gltf),
+            (parseErr) => {
+              console.warn('[VEDIKA] Buffer parse error, fallback to loader.load:', parseErr);
+              loader.load(modelUrl, onModelSuccess, null, onModelFail);
+            }
+          );
+        })
+        .catch((err) => {
+          console.warn('[VEDIKA] Preload promise error, fallback to loader.load:', err);
+          loader.load(modelUrl, onModelSuccess, null, onModelFail);
+        });
+    } else {
+      loader.load(
+        modelUrl,
+        onModelSuccess,
+        (xhr) => {
+          if (loadingOverlay && xhr.total > 0) {
+            const percent = Math.round((xhr.loaded / xhr.total) * 100);
+            const textEl = loadingOverlay.querySelector('.loader-text');
+            if (textEl) textEl.textContent = `SYNCING 3D NEURAL CORE: ${percent}%`;
+          }
+        },
+        onModelFail
+      );
+    }
   }
 
   buildProceduralBot() {
