@@ -440,14 +440,14 @@ body {
   box-shadow: 0 0 8px #ff5733;
 }
 
-/* Global Nav Header */
+/* Global Nav Header (Sleek, Compact High-End Design) */
 .global-nav {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
-  padding: 18px 32px;
+  padding: 10px 32px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   background: var(--theme-nav-bg, rgba(18, 2, 5, 0.85));
@@ -467,22 +467,22 @@ body {
 .brand-logo {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   text-decoration: none;
   color: var(--offwhite-bright);
   font-family: var(--font-elegant);
   font-weight: 600;
-  font-size: 1.35rem;
-  letter-spacing: 0.08em;
+  font-size: 1.18rem;
+  letter-spacing: 0.12em;
 }
 
 .logo-symbol {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   background: var(--theme-logo-symbol-bg, rgba(45, 7, 15, 0.7));
   border: 1px solid var(--theme-logo-border, var(--offwhite-border-bright));
   box-shadow: 0 0 16px var(--theme-accent-glow);

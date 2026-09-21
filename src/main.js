@@ -22,11 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. Interactive Simulation Sandbox
   initSimulationSandbox();
 
-  // 6. Stage 4 Category Pills Interaction
-  initContentPills();
-
-  // 7. Audio Toggle & Secondary Actions
-  initSecondaryActions();
+  // 6. Stage 4 Interactive Carousel Controls (Prev/Next Arrows)
+  initInteractiveCarousel(botScene);
 });
 
 /* ==========================================================================
@@ -260,65 +257,70 @@ function escapeHtml(str) {
 }
 
 /* ==========================================================================
-   STAGE 4 CONTENT PILLS INTERACTION
+   STAGE 4 INTERACTIVE 3D CAROUSEL CONTROLS
+   Prev / Next arrow buttons, active card text indicator, and dot pagination
    ========================================================================== */
-function initContentPills() {
-  const pills = document.querySelectorAll('.content-pill');
-  pills.forEach((pill) => {
-    pill.addEventListener('click', () => {
-      pills.forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
+function initInteractiveCarousel(botScene) {
+  const btnPrev = document.getElementById('carousel-btn-prev');
+  const btnNext = document.getElementById('carousel-btn-next');
+  const numElem = document.getElementById('carousel-active-num');
+  const titleElem = document.getElementById('carousel-active-title');
+  const descElem = document.getElementById('carousel-active-desc');
+  const dots = document.querySelectorAll('.carousel-dot');
+
+  const updateUI = (index, data) => {
+    if (numElem) numElem.textContent = `${data?.id || (index + 1 < 10 ? '0' + (index + 1) : index + 1)} / 10`;
+    if (titleElem && data) titleElem.textContent = data.title;
+    if (descElem && data) descElem.textContent = data.desc;
+    dots.forEach((dot, idx) => {
+      dot.classList.toggle('active', idx === index);
     });
-  });
-}
+  };
 
-/* ==========================================================================
-   SECONDARY ACTIONS (AUDIO, BOOKMARK, SHARE)
-   ========================================================================= */
-function initSecondaryActions() {
-  const audioBtn = document.getElementById('btn-audio-toggle');
-  let audioActive = false;
-  let audioCtx = null;
+  if (botScene) {
+    botScene.onCarouselChange = (index, data) => {
+      updateUI(index, data);
+    };
+  }
 
-  if (audioBtn) {
-    audioBtn.addEventListener('click', () => {
-      audioActive = !audioActive;
-      const label = audioBtn.querySelector('.btn-sound-label');
-      if (audioActive) {
-        audioBtn.style.color = '#fcfaf6';
-        audioBtn.style.borderColor = 'rgba(252, 250, 246, 0.6)';
-        if (label) label.textContent = 'MUTE';
-        playFuturisticChime();
-      } else {
-        audioBtn.style.color = '';
-        audioBtn.style.borderColor = '';
-        if (label) label.textContent = 'AUDIO';
+  if (btnPrev) {
+    btnPrev.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (botScene && typeof botScene.stepCarousel === 'function') {
+        botScene.stepCarousel(-1);
       }
     });
   }
 
-  function playFuturisticChime() {
-    try {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContext) return;
-      if (!audioCtx) audioCtx = new AudioContext();
-      
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(587.33, audioCtx.currentTime); // D5
-      osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.2); // A5
+  if (btnNext) {
+    btnNext.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (botScene && typeof botScene.stepCarousel === 'function') {
+        botScene.stepCarousel(1);
+      }
+    });
+  }
 
-      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.4);
+  dots.forEach((dot) => {
+    dot.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const targetIdx = parseInt(dot.getAttribute('data-card') || '0', 10);
+      if (botScene && typeof botScene.setCarouselIndex === 'function') {
+        botScene.setCarouselIndex(targetIdx);
+      }
+    });
+  });
 
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      osc.start();
-      osc.stop(audioCtx.currentTime + 0.45);
-    } catch (e) {
-      console.log('Audio not allowed yet:', e);
-    }
+  // Stage 2 Explore button smooth scroll to Stage 3 or Labs
+  const btnExploreCode = document.getElementById('btn-explore-code-studio');
+  if (btnExploreCode) {
+    btnExploreCode.addEventListener('click', () => {
+      const totalScroll = window.ScrollTrigger && window.ScrollTrigger.getById('heroShowcaseTrigger');
+      if (totalScroll) {
+        const targetScrollY = totalScroll.start + 0.47 * (totalScroll.end - totalScroll.start);
+        window.scrollTo({ top: targetScrollY, behavior: 'smooth' });
+      }
+    });
   }
 }
 

@@ -1016,3 +1016,473 @@ body[data-theme="crimson"] .viewport-bottom-fade {
 body[data-theme="crimson"] .btn-explore-arrow:hover {
   color: #ff6e4a;
 }
+
+/* ==========================================================================
+   STAGE 2: VEDIKA-AI LEFT-ALIGNED WIDE SUITE (EXTREME RIGHT BOT CORRIDOR)
+   ========================================================================== */
+.stage-2-wide-layout {
+  width: 100%;
+  max-width: clamp(560px, 60vw, 840px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 30;
+  pointer-events: auto;
+  box-sizing: border-box;
+}
+
+.stage-2-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.stage-2-headline {
+  font-family: var(--font-elegant);
+  font-size: clamp(1.8rem, 2.3vw, 2.4rem);
+  line-height: 1.1;
+  font-weight: 700;
+  background: var(--theme-headline-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.01em;
+}
+
+.stage-2-subtitle {
+  font-family: var(--font-simple);
+  font-size: 0.84rem;
+  color: var(--offwhite-cream);
+  line-height: 1.5;
+  max-width: 660px;
+}
+
+.stage-2-panels-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.stage-2-card {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px 15px;
+  border-radius: var(--radius-md);
+  background: var(--theme-flowchart-bg, rgba(26, 4, 9, 0.65));
+  border: 1px solid var(--theme-border-subtle, rgba(244, 237, 226, 0.14));
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.stage-2-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--offwhite-border-bright);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45), 0 0 16px var(--theme-accent-glow);
+}
+
+.card-header-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.card-num-badge {
+  padding: 2px 7px;
+  border-radius: var(--radius-sm);
+  background: var(--theme-badge-bg);
+  border: 1px solid var(--theme-badge-border);
+  color: var(--theme-badge-text);
+  font-weight: 700;
+  font-size: 0.62rem;
+}
+
+.card-tag {
+  color: var(--offwhite-bright);
+  font-weight: 700;
+  flex: 1;
+}
+
+.card-status-pill {
+  font-size: 0.58rem;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  background: rgba(244, 237, 226, 0.08);
+  border: 1px solid rgba(244, 237, 226, 0.18);
+  color: var(--offwhite-muted);
+}
+
+/* Socratic Dialogue Preview Box */
+.dialogue-preview-box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.dialogue-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 0.74rem;
+}
+
+.dialogue-student {
+  background: rgba(244, 237, 226, 0.06);
+  border-left: 2px solid var(--offwhite-muted);
+}
+
+.dialogue-vedika {
+  background: var(--theme-flow-active-bg, rgba(184, 34, 60, 0.20));
+  border-left: 2px solid var(--theme-accent-bright, #b8223c);
+}
+
+.speaker-label {
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  color: var(--offwhite-muted);
+}
+
+.dialogue-vedika .speaker-label {
+  color: var(--offwhite-bright);
+  font-weight: 600;
+}
+
+.bubble-text {
+  line-height: 1.4;
+  color: var(--offwhite-cream);
+  font-size: 0.74rem;
+}
+
+.card-meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.60rem;
+  color: var(--offwhite-muted);
+  letter-spacing: 0.06em;
+  margin-top: 1px;
+}
+
+/* Telemetry Compact Block */
+.telemetry-compact-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.flowchart-compact-box {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 8px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.25);
+  font-size: 0.66rem;
+}
+
+.flow-arrow {
+  color: var(--theme-accent-bright, #b8223c);
+  font-size: 0.72rem;
+}
+
+/* Code Tracer Box */
+.code-tracer-box {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 9px;
+  border-radius: 6px;
+  background: rgba(8, 1, 3, 0.7);
+  border: 1px solid rgba(244, 237, 226, 0.1);
+  font-size: 0.66rem;
+}
+
+.code-num {
+  color: var(--offwhite-muted);
+  opacity: 0.6;
+  margin-right: 5px;
+}
+
+.code-kw {
+  color: var(--theme-accent-bright, #b8223c);
+  font-weight: 600;
+}
+
+.code-fn {
+  color: var(--offwhite-bright);
+}
+
+.code-comment {
+  color: var(--offwhite-muted);
+  font-style: italic;
+}
+
+.code-active-line {
+  background: rgba(184, 34, 60, 0.2);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+.memory-stack-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.60rem;
+}
+
+.stack-badge, .heap-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(244, 237, 226, 0.08);
+  border: 1px solid rgba(244, 237, 226, 0.15);
+  color: var(--offwhite-bright);
+}
+
+/* Viva Metrics */
+.viva-metrics-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.viva-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.64rem;
+}
+
+.viva-label {
+  width: 110px;
+  color: var(--offwhite-cream);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.viva-bar-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(244, 237, 226, 0.12);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.viva-bar-fill {
+  height: 100%;
+  background: var(--theme-accent-bright, #b8223c);
+  border-radius: var(--radius-full);
+}
+
+.viva-val {
+  color: var(--offwhite-bright);
+  font-weight: 600;
+  width: 26px;
+  text-align: right;
+}
+
+.stage-2-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 2px;
+}
+
+/* ==========================================================================
+   STAGE 4: INTERACTIVE 3D CAROUSEL CONTROLS
+   ========================================================================== */
+.stage-layer-carousel {
+  pointer-events: none;
+}
+
+.carousel-hud-top {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 35;
+  pointer-events: auto;
+  text-align: center;
+}
+
+.carousel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 14px;
+  border-radius: var(--radius-full);
+  background: var(--theme-hud-pill-bg);
+  border: 1px solid var(--theme-sub-badge-border);
+  color: var(--offwhite-bright);
+  font-size: 0.70rem;
+  letter-spacing: 0.14em;
+}
+
+.carousel-active-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 22px;
+  border-radius: var(--radius-full);
+  background: var(--theme-stepper-bg, rgba(18, 3, 7, 0.88));
+  border: 1px solid var(--theme-border-subtle, rgba(244, 237, 226, 0.22));
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+}
+
+.carousel-active-num {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--offwhite-bright);
+  letter-spacing: 0.1em;
+}
+
+.carousel-active-divider {
+  color: var(--offwhite-muted);
+  opacity: 0.35;
+}
+
+.carousel-active-title {
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: var(--offwhite-bright);
+}
+
+.carousel-active-desc {
+  font-size: 0.78rem;
+  color: var(--offwhite-muted);
+}
+
+/* Floating Navigation Arrows */
+.carousel-arrow-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--theme-icon-bg, rgba(36, 5, 11, 0.85));
+  border: 1.5px solid var(--theme-border-subtle, var(--offwhite-border));
+  color: var(--offwhite-bright);
+  cursor: pointer;
+  z-index: 40;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--transition-fast);
+}
+
+.carousel-arrow-prev {
+  left: clamp(20px, 3.5vw, 60px);
+}
+
+.carousel-arrow-next {
+  right: clamp(20px, 3.5vw, 60px);
+}
+
+.carousel-arrow-btn:hover {
+  background: var(--theme-icon-hover, rgba(53, 8, 18, 0.95));
+  border-color: var(--offwhite-border-bright);
+  color: var(--offwhite-bright);
+  box-shadow: 0 0 24px var(--theme-accent-glow), 0 0 16px rgba(252, 250, 246, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-arrow-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+/* Bottom Pagination & Hint */
+.carousel-hud-bottom {
+  position: absolute;
+  bottom: 85px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 35;
+  pointer-events: auto;
+}
+
+.carousel-dots-deck {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: rgba(18, 3, 7, 0.7);
+  border: 1px solid rgba(244, 237, 226, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(244, 237, 226, 0.25);
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  background: rgba(244, 237, 226, 0.6);
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  width: 20px;
+  border-radius: var(--radius-full);
+  background: var(--theme-step-active-bg, var(--offwhite-bright));
+  box-shadow: var(--theme-step-active-shadow, 0 0 8px var(--offwhite-bright));
+}
+
+.carousel-instruction-pill {
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  color: var(--offwhite-muted);
+  opacity: 0.75;
+}
+
+/* Crimson theme adaptations for Stage 2 & Carousel */
+body[data-theme="crimson"] .dialogue-vedika {
+  background: rgba(230, 56, 30, 0.22);
+  border-left-color: #ff5733;
+}
+
+body[data-theme="crimson"] .code-active-line {
+  background: rgba(230, 56, 30, 0.25);
+}
+
+body[data-theme="crimson"] .viva-bar-fill {
+  background: #ff5733;
+}
+
+body[data-theme="crimson"] .carousel-arrow-btn:hover {
+  background: rgba(80, 16, 10, 0.95);
+  border-color: #ffffff;
+  box-shadow: 0 0 24px rgba(230, 56, 30, 0.6);
+}
+
+body[data-theme="crimson"] .carousel-dot.active {
+  background: #ff5733;
+  box-shadow: 0 0 8px #ff5733;
+}

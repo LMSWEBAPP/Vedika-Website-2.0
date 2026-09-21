@@ -76,20 +76,13 @@
     <div class="nav-container">
       <a href="#" class="brand-logo" id="nav-brand">
         <span class="logo-symbol">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
             <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" stroke="#fcfaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
             <circle cx="12" cy="12" r="3" fill="var(--theme-logo-dot, #b8223c)" id="logo-dot-circle" class="theme-logo-dot" />
           </svg>
         </span>
-        <span class="logo-text">VEDIKA<span class="text-gold">.AI</span></span>
+        <span class="logo-text">VEDIKA</span>
       </a>
-
-      <div class="nav-center-status">
-        <span class="status-pulse-dot"></span>
-        <span class="status-text mono-text">SOCRATIC INTELLIGENCE</span>
-        <span class="status-divider">/</span>
-        <span class="status-meta mono-text">3D STEM LABS</span>
-      </div>
 
       <div class="nav-actions">
         <!-- Theme Toggle Switcher (Imperial Maroon vs Reference Video Crimson) -->
@@ -104,13 +97,6 @@
           </button>
         </div>
 
-        <button class="btn-ghost-sm" id="btn-audio-toggle" title="Toggle Spatial Audio">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-          <span class="btn-sound-label">AUDIO</span>
-        </button>
         <button class="btn-nav-outline" id="btn-scroll-labs">Explore Labs</button>
       </div>
     </div>
@@ -251,121 +237,152 @@
 
         <!-- ================= STAGE 2: VEDIKA-AI & INFOGRAPHICS (UNBOXED) ================= -->
         <div class="stage-layer" id="stage-2" data-stage-index="1">
-          <div class="stage-grid-layout">
-            <!-- Left Column: Vedika-AI Modules -->
-            <div class="stage-col-left">
+        <!-- ================= STAGE 2: VEDIKA-AI & INFOGRAPHICS (LEFT-ALIGNED WIDE SUITE) ================= -->
+        <div class="stage-layer" id="stage-2" data-stage-index="1">
+          <div class="stage-2-wide-layout">
+            <!-- Top Header & Badges -->
+            <div class="stage-2-header">
               <div class="hud-pill-tag mono-text">
                 <span class="pulse-ring"></span>
-                VEDIKA-AI COGNITIVE ENGINE
+                VEDIKA-AI // SOCRATIC COGNITIVE CORE
               </div>
               <h2 class="stage-2-headline font-elegant">
-                ASK VEDIKA &amp;<br />
-                CODE STUDIO
+                ASK VEDIKA, DYNAMIC INFOGRAPHICS<br />
+                &amp; CODE MEMORY STUDIO
               </h2>
-
-              <div class="feature-editorial-list">
-                <div class="editorial-item">
-                  <div class="editorial-title mono-text">01 // ASK VEDIKA &amp; HISTORY</div>
-                  <p class="editorial-desc font-simple">Conversational AI mentor answering complex STEM questions through first-principles Socratic dialogues with complete session history.</p>
-                </div>
-                <div class="editorial-item">
-                  <div class="editorial-title mono-text">02 // DYNAMIC INFOGRAPHICS</div>
-                  <p class="editorial-desc font-simple">Automated real-time visual diagrams, mathematical coordinate graphs, and algorithmic logic flowcharts.</p>
-                </div>
-                <div class="editorial-item">
-                  <div class="editorial-title mono-text">03 // CODE WITH VEDIKA &amp; PUZZLES</div>
-                  <p class="editorial-desc font-simple">Interactive code sandbox with step-by-step memory stack visualization, execution tracing, and daily gamified Code Puzzles.</p>
-                </div>
-                <div class="editorial-item">
-                  <div class="editorial-title mono-text">04 // VIVA &amp; APTITUDE PREP</div>
-                  <p class="editorial-desc font-simple">AI-driven oral viva defense practice and technical interview simulation with quantitative &amp; logical reasoning drills.</p>
-                </div>
-              </div>
-
-              <div class="reticle-wrapper-left">
-                <button class="reticle-btn-left" id="reticle-btn-cta">
-                  <div class="reticle-icon-sm">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                      <polygon points="5 3 19 12 5 21 5 3" fill="#fcfaf6" />
-                    </svg>
-                  </div>
-                  <span class="mono-text">EXPLORE LABS →</span>
-                </button>
-              </div>
+              <p class="stage-2-subtitle font-simple">
+                First-principles conversational guidance answering complex STEM problems with real-time memory stack visualizers, persistent session archives, and dynamic coordinate plots.
+              </p>
             </div>
 
-            <!-- Center Corridor: Empty & Wide for 3D Bot in Middle -->
-            <div class="stage-col-center"></div>
-
-            <!-- Right Column: Live Infographics & Telemetry (Unboxed) -->
-            <div class="stage-col-right">
-              <div class="unboxed-section-header mono-text">
-                <span class="mono-bullet">■</span>
-                LIVE INFOGRAPHICS // FLOWCHART &amp; TELEMETRY
+            <!-- 4 Rich Feature Panels Grid -->
+            <div class="stage-2-panels-grid">
+              
+              <!-- Panel 1: Socratic Dialogue & History -->
+              <div class="stage-2-card">
+                <div class="card-header-row mono-text">
+                  <span class="card-num-badge">01</span>
+                  <span class="card-tag">ASK VEDIKA &amp; HISTORY</span>
+                  <span class="card-status-pill">LIVE SESSION</span>
+                </div>
+                <!-- Conversational Snippet -->
+                <div class="dialogue-preview-box">
+                  <div class="dialogue-bubble dialogue-student">
+                    <span class="speaker-label mono-text">STUDENT</span>
+                    <p class="bubble-text font-simple">"Why does Merge Sort always guarantee O(n log n) even in worst case?"</p>
+                  </div>
+                  <div class="dialogue-bubble dialogue-vedika">
+                    <span class="speaker-label mono-text">VEDIKA AI</span>
+                    <p class="bubble-text font-simple">"Because the array is divided strictly in halves at every recursion level (depth = log₂ n), and merging requires linear O(n) work across all subproblems."</p>
+                  </div>
+                </div>
+                <div class="card-meta-pills mono-text">
+                  <span>■ Persistent Memory Archive</span>
+                  <span>■ LaTeX Math Formulations</span>
+                </div>
               </div>
 
-              <!-- Unboxed Waveform -->
-              <div class="unboxed-waveform-group">
-                <div class="telemetry-meta-row mono-text">
-                  <span>COGNITIVE FREQUENCY</span>
-                  <span class="text-accent-bright">ALPHA // 10.4 Hz OPTIMAL</span>
+              <!-- Panel 2: Dynamic Infographics & Algorithmic Tree -->
+              <div class="stage-2-card">
+                <div class="card-header-row mono-text">
+                  <span class="card-num-badge">02</span>
+                  <span class="card-tag">DYNAMIC INFOGRAPHICS</span>
+                  <span class="card-status-pill">REAL-TIME</span>
                 </div>
-                <div class="wave-canvas-wrapper unboxed-canvas-wrap">
-                  <canvas id="emotional-wave-canvas" width="280" height="46"></canvas>
+                <!-- Cognitive Waveform Telemetry -->
+                <div class="telemetry-compact-block">
+                  <div class="telemetry-meta-row mono-text">
+                    <span>COGNITIVE PULSE</span>
+                    <span class="text-accent-bright">ALPHA // 10.4 Hz OPTIMAL</span>
+                  </div>
+                  <div class="wave-canvas-wrapper unboxed-canvas-wrap">
+                    <canvas id="emotional-wave-canvas" width="320" height="40"></canvas>
+                  </div>
                 </div>
-              </div>
-
-              <!-- Unboxed Algorithmic Flowchart -->
-              <div class="unboxed-flowchart-block">
-                <div class="flowchart-header mono-text">
-                  <span>ALGORITHMIC EXECUTION TREE</span>
-                  <span class="flowchart-step-badge">STEP 03/04</span>
-                </div>
-                <div class="flowchart-steps mono-text">
+                <!-- Flowchart visualizer -->
+                <div class="flowchart-compact-box mono-text">
                   <div class="flow-step active-flow">
                     <span class="flow-icon">◆</span>
-                    <span class="flow-text">input(n) → test (n &lt;= 1)</span>
-                    <span class="flow-tag">BASE CHECK</span>
+                    <span class="flow-text">split(arr, l, r)</span>
+                    <span class="flow-tag">DIVIDE</span>
                   </div>
-                  <div class="flow-connector">│</div>
+                  <span class="flow-arrow">➔</span>
                   <div class="flow-step">
                     <span class="flow-icon">◇</span>
-                    <span class="flow-text">alloc stack frame(n=3)</span>
-                    <span class="flow-tag">MEMORY HEAP</span>
+                    <span class="flow-text">merge(left, right)</span>
+                    <span class="flow-tag">CONQUER</span>
                   </div>
-                  <div class="flow-connector">│</div>
-                  <div class="flow-step">
-                    <span class="flow-icon">◇</span>
-                    <span class="flow-text">recurse: n * factorial(n - 1)</span>
-                    <span class="flow-tag">BRANCH</span>
-                  </div>
+                </div>
+                <div class="card-meta-pills mono-text">
+                  <span>■ Coordinate Geometry Graphs</span>
+                  <span>■ Logic Decision Trees</span>
                 </div>
               </div>
 
-              <!-- Circular Gauge Strip (Unboxed) -->
-              <div class="unboxed-gauge-strip">
-                <div class="gauge-box">
-                  <svg class="circular-chart" viewBox="0 0 36 36">
-                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                    <path class="circle-fg" stroke-dasharray="92, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                  </svg>
-                  <div class="gauge-center-text">
-                    <span class="gauge-val mono-text">92%</span>
-                    <span class="gauge-lbl mono-text">Grasp</span>
-                  </div>
+              <!-- Panel 3: Code with Vedika & Memory Stack Tracer -->
+              <div class="stage-2-card">
+                <div class="card-header-row mono-text">
+                  <span class="card-num-badge">03</span>
+                  <span class="card-tag">CODE WITH VEDIKA</span>
+                  <span class="card-status-pill">EXECUTION TRACE</span>
                 </div>
-                <div class="gauge-metrics mono-text">
-                  <div class="metric-line">
-                    <span class="metric-label">Concept Proof</span>
-                    <span class="metric-val text-gold">96%</span>
-                  </div>
-                  <div class="metric-line">
-                    <span class="metric-label">3D Spatial Intuition</span>
-                    <span class="metric-val text-gold">98%</span>
-                  </div>
+                <!-- Live Code & Call Stack Tracer Box -->
+                <div class="code-tracer-box mono-text">
+                  <div class="code-line"><span class="code-num">01</span> <span class="code-kw">def</span> <span class="code-fn">mergeSort</span>(arr):</div>
+                  <div class="code-line code-active-line"><span class="code-num">02</span>   mid = len(arr) // 2 <span class="code-comment">// stack depth: 3</span></div>
+                  <div class="code-line"><span class="code-num">03</span>   <span class="code-kw">return</span> merge(mergeSort(arr[:mid]), ...)</div>
+                </div>
+                <div class="memory-stack-indicator mono-text">
+                  <span class="stack-badge">CALL STACK: 3 FRAMES</span>
+                  <span class="heap-badge">HEAP ALLOC: 64 BYTES</span>
+                </div>
+                <div class="card-meta-pills mono-text">
+                  <span>■ Memory Call-Stack Visualizer</span>
+                  <span>■ Daily Code Puzzle Streak</span>
                 </div>
               </div>
 
+              <!-- Panel 4: Viva Defense & Aptitude Mock Drills -->
+              <div class="stage-2-card">
+                <div class="card-header-row mono-text">
+                  <span class="card-num-badge">04</span>
+                  <span class="card-tag">VIVA &amp; INTERVIEW DRILLS</span>
+                  <span class="card-status-pill">EXAMINER AI</span>
+                </div>
+                <!-- Viva Evaluation Meters -->
+                <div class="viva-metrics-deck mono-text">
+                  <div class="viva-metric-row">
+                    <span class="viva-label">Conceptual Depth</span>
+                    <div class="viva-bar-track"><div class="viva-bar-fill" style="width: 94%;"></div></div>
+                    <span class="viva-val">94%</span>
+                  </div>
+                  <div class="viva-metric-row">
+                    <span class="viva-label">Algorithmic Rigor</span>
+                    <div class="viva-bar-track"><div class="viva-bar-fill" style="width: 96%;"></div></div>
+                    <span class="viva-val">96%</span>
+                  </div>
+                  <div class="viva-metric-row">
+                    <span class="viva-label">Verbal Defense Clarity</span>
+                    <div class="viva-bar-track"><div class="viva-bar-fill" style="width: 91%;"></div></div>
+                    <span class="viva-val">91%</span>
+                  </div>
+                </div>
+                <div class="card-meta-pills mono-text">
+                  <span>■ Oral Viva Cross-Examination</span>
+                  <span>■ Quantitative Aptitude Mocks</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Quick CTA Action -->
+            <div class="stage-2-actions">
+              <button class="btn-primary-pill" id="btn-explore-code-studio">
+                <span>EXPLORE VEDIKA-AI SUITE</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+              </button>
             </div>
           </div>
         </div>
@@ -428,8 +445,54 @@
           </div>
         </div>
 
-        <!-- ================= STAGE 4: PURE 3D REVOLVING CAROUSEL (NOTHING AT ALL IN IT) ================= -->
-        <div class="stage-layer stage-layer-empty" id="stage-4" data-stage-index="3"></div>
+        <!-- ================= STAGE 4: 3D REVOLVING CAROUSEL WITH INTERACTIVE ARROWS ================= -->
+        <div class="stage-layer stage-layer-carousel" id="stage-4" data-stage-index="3">
+          <!-- Top Feature Indicator -->
+          <div class="carousel-hud-top">
+            <div class="carousel-badge mono-text">
+              <span class="pulse-ring"></span>
+              STAGE 04 // 3D FEATURE ORBIT
+            </div>
+            <div class="carousel-active-pill">
+              <span class="carousel-active-num mono-text" id="carousel-active-num">01 / 10</span>
+              <span class="carousel-active-divider">│</span>
+              <span class="carousel-active-title font-elegant" id="carousel-active-title">Ask Vedika &amp; History</span>
+              <span class="carousel-active-desc font-simple" id="carousel-active-desc">Conversational Socratic AI mentor with full session logs.</span>
+            </div>
+          </div>
+
+          <!-- Interactive Carousel Navigation Arrows -->
+          <button class="carousel-arrow-btn carousel-arrow-prev" id="carousel-btn-prev" aria-label="Previous Feature Card" title="Previous Feature">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+
+          <button class="carousel-arrow-btn carousel-arrow-next" id="carousel-btn-next" aria-label="Next Feature Card" title="Next Feature">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          <!-- Bottom Carousel Pagination Dots & Hint -->
+          <div class="carousel-hud-bottom">
+            <div class="carousel-dots-deck" id="carousel-dots-deck">
+              <button class="carousel-dot active" data-card="0" title="01 / Ask Vedika"></button>
+              <button class="carousel-dot" data-card="1" title="02 / Dynamic Infographics"></button>
+              <button class="carousel-dot" data-card="2" title="03 / Code with Vedika"></button>
+              <button class="carousel-dot" data-card="3" title="04 / Daily Code Puzzles"></button>
+              <button class="carousel-dot" data-card="4" title="05 / Viva &amp; Aptitude Prep"></button>
+              <button class="carousel-dot" data-card="5" title="06 / Virtual Biology Lab"></button>
+              <button class="carousel-dot" data-card="6" title="07 / Virtual Physics Lab"></button>
+              <button class="carousel-dot" data-card="7" title="08 / Virtual Chemistry Lab"></button>
+              <button class="carousel-dot" data-card="8" title="09 / DSA Resource Hub"></button>
+              <button class="carousel-dot" data-card="9" title="10 / Jobs &amp; Progress"></button>
+            </div>
+            <div class="carousel-instruction-pill mono-text">
+              <span>USE ARROWS OR SCROLL TO ROTATE FEATURES</span>
+            </div>
+          </div>
+        </div>
 
         <!-- ================= STAGE 5: VIRTUAL LABS, JOBS & PROGRESS (UNBOXED) ================= -->
         <div class="stage-layer" id="stage-5" data-stage-index="4">

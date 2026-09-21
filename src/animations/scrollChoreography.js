@@ -47,6 +47,9 @@ export function initScrollChoreography(botScene) {
     }
   }
 
+  // Clickable & snap stage target positions (Stages 1 through 5)
+  const stagePositions = [0.05, 0.26, 0.47, 0.71, 0.94];
+
   // Master GSAP scrubbed timeline - silky-smooth scroll without mid-scroll page overlay
   const masterTimeline = gsap.timeline({
     scrollTrigger: {
@@ -55,14 +58,20 @@ export function initScrollChoreography(botScene) {
       start: 'top top',
       end: '+=4800',
       pin: true,
-      scrub: 1.2, // Silky smooth damping - smooths out mousewheel notches and trackpad jitter
+      scrub: 1.0, // Silky smooth damping
       anticipatePin: 1,
       fastScrollEnd: true,
       preventOverlaps: true,
+      snap: {
+        snapTo: stagePositions,
+        duration: { min: 0.22, max: 0.5 },
+        delay: 0.04,
+        ease: 'power2.out'
+      },
       onUpdate: (self) => {
         const progress = self.progress; // 0.0 to 1.0
 
-        // Synchronize 3D Bot choreography (Center -> Left -> Center -> Pure Carousel -> Creative Labs)
+        // Synchronize 3D Bot choreography
         if (botScene) {
           botScene.updateScrollProgress(progress);
         }
@@ -166,8 +175,6 @@ export function initScrollChoreography(botScene) {
     .to({}, { duration: 45 }, 375);
 
   // Clickable step dots to jump smoothly to any stage
-  const stagePositions = [0.05, 0.26, 0.47, 0.71, 0.94];
-
   stepDots.forEach((dot) => {
     dot.addEventListener('click', () => {
       const targetStep = parseInt(dot.getAttribute('data-step') || '0', 10);
@@ -201,6 +208,53 @@ export function initScrollChoreography(botScene) {
   if (btnScrollLabs) btnScrollLabs.addEventListener('click', () => scrollToStage(4));
   if (reticleCta) reticleCta.addEventListener('click', () => scrollToStage(3));
   if (btnExploreArrow) btnExploreArrow.addEventListener('click', () => scrollToStage(2));
+
+  // Natural One-Scroll / Trackpad Swipe Transition
+  let isWheelSnapping = false;
+  let wheelTimeout = null;
+
+  window.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaY) < 22 || isWheelSnapping) return;
+
+    const totalScroll = ScrollTrigger.getById('heroShowcaseTrigger');
+    if (!totalScroll) return;
+
+    const currentScroll = window.scrollY;
+    const start = totalScroll.start;
+    const end = totalScroll.end;
+
+    // Only intercept when inside the pinned showcase region
+    if (currentScroll < start - 20 || currentScroll > end + 20) return;
+
+    const currentProgress = (currentScroll - start) / (end - start);
+
+    let closestIndex = 0;
+    let minDiff = Infinity;
+    stagePositions.forEach((pos, idx) => {
+      const diff = Math.abs(currentProgress - pos);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIndex = idx;
+      }
+    });
+
+    let targetIndex = closestIndex;
+    if (e.deltaY > 0 && closestIndex < stagePositions.length - 1) {
+      targetIndex = closestIndex + 1;
+    } else if (e.deltaY < 0 && closestIndex > 0) {
+      targetIndex = closestIndex - 1;
+    }
+
+    if (targetIndex !== closestIndex) {
+      isWheelSnapping = true;
+      e.preventDefault();
+      scrollToStage(targetIndex);
+      clearTimeout(wheelTimeout);
+      wheelTimeout = setTimeout(() => {
+        isWheelSnapping = false;
+      }, 700);
+    }
+  }, { passive: false });
 
   return masterTimeline;
 }
