@@ -7,21 +7,25 @@ document.addEventListener('DOMContentLoaded', () => {
   let botScene = null;
   if (canvas) {
     botScene = new BotScene(canvas);
+    window.__botScene = botScene;
   }
 
-  // 2. Initialize Scroll Choreography
+  // 2. Initialize Theme Switcher (Imperial Maroon vs Reference Video Crimson)
+  initThemeSwitcher(botScene);
+
+  // 3. Initialize Scroll Choreography
   initScrollChoreography(botScene);
 
-  // 3. Animated Emotional Waveform Canvas (Stage 2 HUD)
+  // 4. Animated Emotional Waveform Canvas (Stage 2 HUD)
   initWaveformCanvas();
 
-  // 4. Interactive Simulation Sandbox
+  // 5. Interactive Simulation Sandbox
   initSimulationSandbox();
 
-  // 5. Stage 4 Category Pills Interaction
+  // 6. Stage 4 Category Pills Interaction
   initContentPills();
 
-  // 6. Audio Toggle & Secondary Actions
+  // 7. Audio Toggle & Secondary Actions
   initSecondaryActions();
 });
 
@@ -55,12 +59,13 @@ function initWaveformCanvas() {
       ctx.stroke();
     }
 
-    // Sine wave - Luminous Off-White telemetry line with subtle maroon glow
+    // Sine wave - Theme-reactive telemetry line (Glowing Coral in Crimson, Alabaster in Maroon)
+    const isCrimson = document.body.getAttribute('data-theme') === 'crimson';
     ctx.beginPath();
-    ctx.strokeStyle = '#fcfaf6';
-    ctx.lineWidth = 2;
-    ctx.shadowColor = 'rgba(184, 34, 60, 0.85)';
-    ctx.shadowBlur = 8;
+    ctx.strokeStyle = isCrimson ? '#ff5c38' : '#fcfaf6';
+    ctx.lineWidth = 2.2;
+    ctx.shadowColor = isCrimson ? 'rgba(255, 87, 51, 0.95)' : 'rgba(184, 34, 60, 0.85)';
+    ctx.shadowBlur = isCrimson ? 12 : 8;
 
     const centerY = canvas.height / 2;
     for (let x = 0; x < canvas.width; x++) {
@@ -285,6 +290,44 @@ function initSecondaryActions() {
       console.log('Audio not allowed yet:', e);
     }
   }
+}
 
+/* ==========================================================================
+   THEME SWITCHER SYSTEM (IMPERIAL MAROON vs REFERENCE VIDEO CRIMSON)
+   ========================================================================== */
+function initThemeSwitcher(botScene) {
+  const savedTheme = localStorage.getItem('vedika-theme') || 'maroon';
+  applyTheme(savedTheme);
 
+  const toggleButtons = document.querySelectorAll('.theme-switch-btn');
+  toggleButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetTheme = btn.getAttribute('data-theme');
+      if (targetTheme) {
+        applyTheme(targetTheme);
+      }
+    });
+  });
+
+  function applyTheme(theme) {
+    document.body.setAttribute('data-theme', theme);
+    localStorage.setItem('vedika-theme', theme);
+
+    // Sync all toggle switch buttons across the page
+    const allBtns = document.querySelectorAll('.theme-switch-btn');
+    allBtns.forEach((b) => {
+      if (b.getAttribute('data-theme') === theme) {
+        b.classList.add('active');
+        b.setAttribute('aria-checked', 'true');
+      } else {
+        b.classList.remove('active');
+        b.setAttribute('aria-checked', 'false');
+      }
+    });
+
+    // Update 3D Bot Scene lighting and card textures
+    if (botScene && typeof botScene.setTheme === 'function') {
+      botScene.setTheme(theme);
+    }
+  }
 }

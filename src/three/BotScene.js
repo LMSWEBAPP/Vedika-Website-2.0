@@ -30,6 +30,9 @@ export class BotScene {
     this.rootGroup.add(this.bustPivot);
     this.scene.add(this.rootGroup);
 
+    // Active Theme ('maroon' | 'crimson')
+    this.currentTheme = 'maroon';
+
     // Initial positioning: camera framed naturally so head, shoulders, and chest are solid and grounded
     this.rootGroup.position.set(0, 0, 0);
     this.camera.position.set(0, 0.26, 2.65);
@@ -72,9 +75,9 @@ export class BotScene {
   }
 
   initLighting() {
-    // Ambient Light - Deep imperial maroon tone
-    const ambientLight = new THREE.AmbientLight(0x1e0409, 2.2);
-    this.scene.add(ambientLight);
+    // Ambient Light - Deep imperial maroon tone (or warm cinnabar in crimson theme)
+    this.ambientLight = new THREE.AmbientLight(0x1e0409, 2.2);
+    this.scene.add(this.ambientLight);
 
     // Top Shimmering Downlight - Soft Warm Alabaster Off-White
     this.topGlowLight = new THREE.DirectionalLight(0xfdf9f3, 3.8);
@@ -105,6 +108,80 @@ export class BotScene {
     this.visorLight = new THREE.PointLight(0xfff8ee, 2.4, 2.2);
     this.visorLight.position.set(0, 0.45, 0.8);
     this.scene.add(this.visorLight);
+  }
+
+  setTheme(theme) {
+    this.currentTheme = theme;
+    if (theme === 'crimson') {
+      // Warm Cinnabar & Sunset Coral Lighting Rig (From Website reference.mp4)
+      if (this.ambientLight) this.ambientLight.color.setHex(0x360a05);
+      if (this.topGlowLight) {
+        this.topGlowLight.color.setHex(0xffe2d0);
+        this.topGlowLight.intensity = 4.2;
+      }
+      if (this.keyLight) {
+        this.keyLight.color.setHex(0xffebe0);
+        this.keyLight.intensity = 3.0;
+      }
+      if (this.fillLight) {
+        this.fillLight.color.setHex(0xb82c16);
+        this.fillLight.intensity = 2.4;
+      }
+      if (this.rimLight1) {
+        this.rimLight1.color.setHex(0xffded0);
+        this.rimLight1.intensity = 5.2;
+      }
+      if (this.rimLight2) {
+        this.rimLight2.color.setHex(0xe83a1e); // vivid sunset vermilion rim from reference video
+        this.rimLight2.intensity = 4.8;
+      }
+      if (this.visorLight) {
+        this.visorLight.color.setHex(0xff6e48);
+      }
+    } else {
+      // Imperial Velvet Maroon & Alabaster Off-White
+      if (this.ambientLight) this.ambientLight.color.setHex(0x1e0409);
+      if (this.topGlowLight) {
+        this.topGlowLight.color.setHex(0xfdf9f3);
+        this.topGlowLight.intensity = 3.8;
+      }
+      if (this.keyLight) {
+        this.keyLight.color.setHex(0xfff6ea);
+        this.keyLight.intensity = 2.8;
+      }
+      if (this.fillLight) {
+        this.fillLight.color.setHex(0x6a1525);
+        this.fillLight.intensity = 1.8;
+      }
+      if (this.rimLight1) {
+        this.rimLight1.color.setHex(0xfcfaf6);
+        this.rimLight1.intensity = 5.0;
+      }
+      if (this.rimLight2) {
+        this.rimLight2.color.setHex(0x9e182e);
+        this.rimLight2.intensity = 4.2;
+      }
+      if (this.visorLight) {
+        this.visorLight.color.setHex(0xfff8ee);
+      }
+    }
+
+    this.refreshCarouselTextures();
+  }
+
+  refreshCarouselTextures() {
+    if (!this.carouselCards) return;
+    this.carouselCards.forEach((card) => {
+      const sharp = this.generateCardTexture(card.data, false);
+      const blur = this.generateCardTexture(card.data, true);
+      if (card.material && card.material.uniforms) {
+        if (card.material.uniforms.tSharp.value) card.material.uniforms.tSharp.value.dispose();
+        if (card.material.uniforms.tBlur.value) card.material.uniforms.tBlur.value.dispose();
+        card.material.uniforms.tSharp.value = sharp;
+        card.material.uniforms.tBlur.value = blur;
+        card.material.needsUpdate = true;
+      }
+    });
   }
 
   loadModel() {
@@ -413,15 +490,21 @@ export class BotScene {
     ctx.fillStyle = bgGrad;
     ctx.fill();
 
-    // Dual Perimeter Borders: Deep Imperial Maroon with subtle Ruby Glow
+    const isCrimson = this.currentTheme === 'crimson';
+
+    // Dual Perimeter Borders
     ctx.lineWidth = 2.5;
-    ctx.strokeStyle = isBlurred ? 'rgba(74, 13, 24, 0.45)' : 'rgba(54, 8, 17, 0.88)';
+    ctx.strokeStyle = isCrimson 
+      ? (isBlurred ? 'rgba(80, 16, 10, 0.45)' : 'rgba(60, 12, 6, 0.88)')
+      : (isBlurred ? 'rgba(74, 13, 24, 0.45)' : 'rgba(54, 8, 17, 0.88)');
     ctx.stroke();
 
     // Inner hairline frame
     drawRoundRect(16, 16, 368, 528, 20);
     ctx.lineWidth = 1;
-    ctx.strokeStyle = isBlurred ? 'rgba(184, 34, 60, 0.25)' : 'rgba(184, 34, 60, 0.45)';
+    ctx.strokeStyle = isCrimson 
+      ? (isBlurred ? 'rgba(230, 56, 30, 0.25)' : 'rgba(230, 56, 30, 0.55)')
+      : (isBlurred ? 'rgba(184, 34, 60, 0.25)' : 'rgba(184, 34, 60, 0.45)');
     ctx.stroke();
 
     // Top specular highlight crescent
@@ -446,9 +529,9 @@ export class BotScene {
     // Top Header: Tag & Number Pill
     ctx.save();
     drawRoundRect(28, 30, 54, 28, 8);
-    ctx.fillStyle = 'rgba(46, 6, 14, 0.92)'; // Deep imperial maroon pill
+    ctx.fillStyle = isCrimson ? 'rgba(50, 10, 6, 0.92)' : 'rgba(46, 6, 14, 0.92)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(184, 34, 60, 0.6)';
+    ctx.strokeStyle = isCrimson ? 'rgba(230, 56, 30, 0.7)' : 'rgba(184, 34, 60, 0.6)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
@@ -458,22 +541,22 @@ export class BotScene {
     ctx.fillText(data.id, 55, 49);
     ctx.restore();
 
-    // Category in bold tracked Imperial Maroon
+    // Category in bold tracked theme accent
     ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#6b1122';
+    ctx.fillStyle = isCrimson ? '#8a1a0a' : '#6b1122';
     ctx.textAlign = 'right';
     ctx.fillText(data.category, 368, 49);
     ctx.textAlign = 'left';
 
     // Thin separator
-    ctx.strokeStyle = 'rgba(74, 13, 24, 0.2)';
+    ctx.strokeStyle = isCrimson ? 'rgba(80, 16, 10, 0.2)' : 'rgba(74, 13, 24, 0.2)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(28, 74);
     ctx.lineTo(372, 74);
     ctx.stroke();
 
-    // Central Topic Emblem (Radiant Garnet-Ruby Medallion)
+    // Central Topic Emblem (Garnet-Ruby in Maroon, Sunset Cinnabar in Crimson)
     const artBoxY = 195;
     const artRadius = 76;
 
@@ -482,12 +565,19 @@ export class BotScene {
 
     // Glowing radial backdrop
     const artGrad = ctx.createRadialGradient(-15, -25, 8, 0, 0, artRadius);
-    artGrad.addColorStop(0, '#c92a46');
-    artGrad.addColorStop(0.55, '#731224');
-    artGrad.addColorStop(1, '#2a040b');
+    if (isCrimson) {
+      artGrad.addColorStop(0, '#ff5c38');
+      artGrad.addColorStop(0.55, '#c82810');
+      artGrad.addColorStop(1, '#3a0702');
+      ctx.shadowColor = 'rgba(230, 56, 30, 0.6)';
+    } else {
+      artGrad.addColorStop(0, '#c92a46');
+      artGrad.addColorStop(0.55, '#731224');
+      artGrad.addColorStop(1, '#2a040b');
+      ctx.shadowColor = 'rgba(184, 34, 60, 0.5)';
+    }
 
     ctx.fillStyle = artGrad;
-    ctx.shadowColor = 'rgba(184, 34, 60, 0.5)';
     ctx.shadowBlur = 18;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 6, 0, Math.PI * 2);
@@ -515,25 +605,30 @@ export class BotScene {
 
     ctx.restore();
 
-    // Card Title in Calluna (Deep Imperial Maroon - Maximum Contrast & Legibility!)
+    // Card Title in Calluna (Deep Contrast & Legibility!)
     ctx.font = 'bold 24px "Calluna", Georgia, serif';
-    ctx.fillStyle = '#160205';
+    ctx.fillStyle = isCrimson ? '#180402' : '#160205';
     ctx.fillText(data.title, 28, 395);
 
-    // Card Description in Vollkorn (Warm Espresso Maroon)
+    // Card Description in Vollkorn
     ctx.font = '15px "Vollkorn", Georgia, serif';
-    ctx.fillStyle = '#3a0813';
+    ctx.fillStyle = isCrimson ? '#421008' : '#3a0813';
     ctx.fillText(data.desc, 28, 428, 344);
 
-    // Bottom Action Pill (Deep Velvet Maroon Button with White Arrow)
+    // Bottom Action Pill
     ctx.save();
     drawRoundRect(28, 474, 344, 44, 12);
     const btnGrad = ctx.createLinearGradient(28, 474, 372, 518);
-    btnGrad.addColorStop(0, '#560e1d');
-    btnGrad.addColorStop(1, '#24040a');
+    if (isCrimson) {
+      btnGrad.addColorStop(0, '#8c1a0c');
+      btnGrad.addColorStop(1, '#340602');
+    } else {
+      btnGrad.addColorStop(0, '#560e1d');
+      btnGrad.addColorStop(1, '#24040a');
+    }
     ctx.fillStyle = btnGrad;
     ctx.fill();
-    ctx.strokeStyle = 'rgba(184, 34, 60, 0.5)';
+    ctx.strokeStyle = isCrimson ? 'rgba(230, 56, 30, 0.6)' : 'rgba(184, 34, 60, 0.5)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
