@@ -1,7 +1,7 @@
 /* ==========================================================================
-   VEDIKA AI TUTOR - LABS & CURRICULUM SHOWCASE STYLES
-   Aesthetic: Regal Imperial Maroon, Warm Gold, Alabaster Off-White
-   Typography: Calluna (Titles), Thinoo (Badges/Tabs), Vollkorn (Body)
+   VEDIKA AI TUTOR - LABS & SYSTEM ARCHITECTURE STYLES
+   Aesthetic: Pure Regal Imperial Maroon & Alabaster Off-White (No Gold)
+   Typography Trio: Calluna (Elegant), Thinoo (Delicate), Vollkorn (Simple)
    ========================================================================== */
 
 .interactive-labs-section {
@@ -24,9 +24,9 @@
   display: inline-flex;
   padding: 6px 18px;
   border-radius: var(--radius-full);
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-shimmer);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--offwhite-border);
+  color: var(--offwhite-bright);
   font-family: var(--font-delicate);
   font-size: 0.76rem;
   letter-spacing: 0.14em;
@@ -80,15 +80,15 @@
 
 .pillar-card:hover {
   transform: translateY(-4px);
-  border-color: var(--gold-border-bright);
-  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.65), 0 0 24px rgba(212, 175, 55, 0.16);
+  border-color: var(--offwhite-border-bright);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.65), 0 0 24px rgba(184, 34, 60, 0.35);
 }
 
 .pillar-top-badge {
   font-family: var(--font-delicate);
   font-size: 0.74rem;
   letter-spacing: 0.12em;
-  color: var(--gold-shimmer);
+  color: var(--offwhite-cream);
   margin-bottom: 20px;
   font-weight: 600;
 }
@@ -98,18 +98,18 @@
   height: 60px;
   border-radius: var(--radius-md);
   background: rgba(53, 8, 18, 0.8);
-  border: 1px solid var(--gold-border);
+  border: 1px solid var(--offwhite-border);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 24px;
-  color: var(--gold-shimmer);
+  color: var(--offwhite-bright);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .pillar-card:hover .pillar-icon-box {
   transform: scale(1.08) translateY(-2px);
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
+  box-shadow: 0 0 25px rgba(184, 34, 60, 0.45);
 }
 
 .pillar-title {
@@ -138,7 +138,7 @@
   font-size: 0.80rem;
   color: var(--offwhite-parchment);
   padding-top: 16px;
-  border-top: 1px solid rgba(212, 175, 55, 0.12);
+  border-top: 1px solid rgba(244, 237, 226, 0.12);
 }
 
 .pillar-features li {
@@ -194,11 +194,11 @@
 }
 
 .sim-tab.active, .sim-tab:hover {
-  background: linear-gradient(135deg, #f7e8c3 0%, #e8c96c 40%, #d4af37 100%);
-  border-color: #f7e8c3;
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 40%, #ece3d4 100%);
+  border-color: #ffffff;
   color: #160205;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.25), 0 0 14px rgba(184, 34, 60, 0.35);
 }
 
 .sim-status {
@@ -308,15 +308,15 @@
 }
 
 .sim-chat-input:focus {
-  border-color: var(--gold-border-bright);
-  box-shadow: 0 0 16px rgba(212, 175, 55, 0.25);
+  border-color: var(--offwhite-border-bright);
+  box-shadow: 0 0 16px rgba(252, 250, 246, 0.2), 0 0 14px rgba(184, 34, 60, 0.3);
 }
 
 .btn-sim-send {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #f7e8c3 0%, #d4af37 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #ece3d4 100%);
   border: none;
   color: #160205;
   display: flex;
@@ -328,7 +328,7 @@
 
 .btn-sim-send:hover {
   transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.4), 0 0 16px rgba(184, 34, 60, 0.4);
 }
 
 /* Connect Section */
@@ -354,7 +354,7 @@
   width: 550px;
   height: 350px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(212, 175, 55, 0.14) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(184, 34, 60, 0.22) 0%, transparent 70%);
   pointer-events: none;
 }
 
@@ -397,7 +397,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: linear-gradient(135deg, #f7e8c3 0%, #e8c96c 40%, #d4af37 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 40%, #ece3d4 100%);
   color: #160205;
   text-decoration: none;
   font-family: var(--font-delicate);
@@ -406,14 +406,14 @@
   font-weight: 700;
   padding: 16px 38px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow: 0 4px 25px rgba(212, 175, 55, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5), 0 0 20px rgba(252, 250, 246, 0.18);
   transition: all var(--transition-fast);
 }
 
 .btn-primary-large:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #f7e8c3 40%, #e8c96c 100%);
-  box-shadow: 0 6px 35px rgba(212, 175, 55, 0.6);
+  background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
+  box-shadow: 0 6px 35px rgba(255, 255, 255, 0.3), 0 0 25px rgba(184, 34, 60, 0.4);
   transform: translateY(-2px);
 }
 
@@ -509,7 +509,7 @@
   align-items: center;
   justify-content: space-between;
   padding-top: 30px;
-  border-top: 1px solid rgba(212, 175, 55, 0.12);
+  border-top: 1px solid rgba(244, 237, 226, 0.12);
   font-family: var(--font-delicate);
   font-size: 0.74rem;
   letter-spacing: 0.08em;

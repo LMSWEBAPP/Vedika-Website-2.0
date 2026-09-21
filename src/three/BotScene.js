@@ -66,8 +66,8 @@ export class BotScene {
     const ambientLight = new THREE.AmbientLight(0x1e0409, 2.2);
     this.scene.add(ambientLight);
 
-    // Top Shimmering Downlight - Warm Regal Gold
-    this.topGlowLight = new THREE.DirectionalLight(0xf5d378, 3.8);
+    // Top Shimmering Downlight - Soft Warm Alabaster Off-White
+    this.topGlowLight = new THREE.DirectionalLight(0xfdf9f3, 3.8);
     this.topGlowLight.position.set(0, 4.5, 1);
     this.scene.add(this.topGlowLight);
 
@@ -81,18 +81,18 @@ export class BotScene {
     this.fillLight.position.set(-3, 1.5, 2);
     this.scene.add(this.fillLight);
 
-    // Rim Backlight 1 - Regal Polished Gold High-Intensity Rim
-    this.rimLight1 = new THREE.DirectionalLight(0xd4af37, 5.5);
+    // Rim Backlight 1 - Crisp Alabaster Off-White High-Intensity Rim
+    this.rimLight1 = new THREE.DirectionalLight(0xfcfaf6, 5.0);
     this.rimLight1.position.set(2.5, 3.5, -3);
     this.scene.add(this.rimLight1);
 
     // Rim Backlight 2 - Deep Wine Maroon Backfill
-    this.rimLight2 = new THREE.DirectionalLight(0x8c1b2f, 3.6);
+    this.rimLight2 = new THREE.DirectionalLight(0x9e182e, 4.2);
     this.rimLight2.position.set(-2.5, 2.5, -3);
     this.scene.add(this.rimLight2);
 
-    // Visor Point Light - Warm Luminous Golden Amber
-    this.visorLight = new THREE.PointLight(0xf5c842, 2.4, 2.2);
+    // Visor Point Light - Luminous Ivory Off-White
+    this.visorLight = new THREE.PointLight(0xfff8ee, 2.4, 2.2);
     this.visorLight.position.set(0, 0.45, 0.8);
     this.scene.add(this.visorLight);
   }
@@ -217,8 +217,8 @@ export class BotScene {
     const ctx = eyeCanvas.getContext('2d');
     ctx.fillStyle = '#1c0409';
     ctx.fillRect(0, 0, 512, 256);
-    ctx.fillStyle = '#e8c96c';
-    ctx.shadowColor = '#d4af37';
+    ctx.fillStyle = '#fcfaf6';
+    ctx.shadowColor = 'rgba(184, 34, 60, 0.8)';
     ctx.shadowBlur = 15;
 
     const drawDiamondEye = (cx, cy) => {
@@ -251,7 +251,7 @@ export class BotScene {
 
       const earRing = new THREE.Mesh(
         new THREE.TorusGeometry(0.1, 0.02, 16, 32),
-        new THREE.MeshBasicMaterial({ color: 0xd4af37 })
+        new THREE.MeshBasicMaterial({ color: 0xfcfaf6 })
       );
       earRing.rotation.y = Math.PI / 2;
       earRing.position.set(side * 0.5, 0.52, 0);
@@ -286,16 +286,16 @@ export class BotScene {
      ========================================================================== */
   build3DCarousel() {
     const cardData = [
-      { id: '01', category: 'PHYSICS', title: 'Quantum Kinematics', desc: 'Particle wave packet dynamics.', hue: '#e8c96c' },
-      { id: '02', category: 'CALCULUS', title: 'Vector Surfaces', desc: '3D gradient fields & flux.', hue: '#f7e8c3' },
-      { id: '03', category: 'CHEMISTRY', title: 'Molecular Orbitals', desc: 'Covalent bond angles in 3D.', hue: '#d4af37' },
-      { id: '04', category: 'CODE HEAP', title: 'Call Stack Heap', desc: 'Recursion tree visualizer.', hue: '#e8c96c' },
-      { id: '05', category: 'AI TUTOR', title: 'Neural Latent Space', desc: 'Cognitive retention weights.', hue: '#f7e8c3' },
-      { id: '06', category: 'GRAVITY', title: 'Orbital Mechanics', desc: 'N-body gravitational paths.', hue: '#d4af37' },
-      { id: '07', category: 'ALGORITHMS', title: 'Graph Traversal', desc: 'Dijkstra & A* spatial trees.', hue: '#e8c96c' },
-      { id: '08', category: 'THERMO', title: 'Entropy Chamber', desc: 'Kinetic particle dispersion.', hue: '#f7e8c3' },
-      { id: '09', category: 'WAVES', title: 'Laser Diffraction', desc: 'Wave interference patterns.', hue: '#d4af37' },
-      { id: '10', category: 'EXAM LAB', title: 'Socratic Diagnostics', desc: 'Proof-paced concept checks.', hue: '#e8c96c' }
+      { id: '01', category: 'PHYSICS', title: 'Quantum Kinematics', desc: 'Particle wave packet dynamics.', hue: '#fcfaf6' },
+      { id: '02', category: 'CALCULUS', title: 'Vector Surfaces', desc: '3D gradient fields & flux.', hue: '#b8223c' },
+      { id: '03', category: 'CHEMISTRY', title: 'Molecular Orbitals', desc: 'Covalent bond angles in 3D.', hue: '#f4ede2' },
+      { id: '04', category: 'CODE HEAP', title: 'Call Stack Heap', desc: 'Recursion tree visualizer.', hue: '#9e182e' },
+      { id: '05', category: 'AI TUTOR', title: 'Neural Latent Space', desc: 'Cognitive retention weights.', hue: '#fcfaf6' },
+      { id: '06', category: 'GRAVITY', title: 'Orbital Mechanics', desc: 'N-body gravitational paths.', hue: '#c92a46' },
+      { id: '07', category: 'ALGORITHMS', title: 'Graph Traversal', desc: 'Dijkstra & A* spatial trees.', hue: '#ece3d4' },
+      { id: '08', category: 'THERMO', title: 'Entropy Chamber', desc: 'Kinetic particle dispersion.', hue: '#8e182c' },
+      { id: '09', category: 'WAVES', title: 'Laser Diffraction', desc: 'Wave interference patterns.', hue: '#fcfaf6' },
+      { id: '10', category: 'EXAM LAB', title: 'Socratic Diagnostics', desc: 'Proof-paced concept checks.', hue: '#b8223c' }
     ];
 
     const numCards = cardData.length;
@@ -337,7 +337,7 @@ export class BotScene {
     this.carouselGroup.visible = false;
   }
 
-  // Generates clean, high-contrast, semi-solid card texture in Regal Maroon & Polished Gold
+  // Generates clean, high-contrast, semi-solid card texture in Regal Maroon & Alabaster Off-White
   generateCardTexture(data) {
     const canvas = document.createElement('canvas');
     canvas.width = 400;
@@ -367,9 +367,9 @@ export class BotScene {
     ctx.fillStyle = bgGrad;
     ctx.fill();
 
-    // Polished gold perimeter border
+    // Crisp off-white perimeter border
     ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+    ctx.strokeStyle = 'rgba(252, 250, 246, 0.32)';
     ctx.stroke();
 
     // Top hairline accent glow
@@ -379,7 +379,7 @@ export class BotScene {
     ctx.lineTo(365, 10);
     const topHl = ctx.createLinearGradient(35, 10, 365, 10);
     topHl.addColorStop(0, 'transparent');
-    topHl.addColorStop(0.5, 'rgba(232, 201, 108, 0.85)');
+    topHl.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
     topHl.addColorStop(1, 'transparent');
     ctx.strokeStyle = topHl;
     ctx.lineWidth = 3;
@@ -389,33 +389,33 @@ export class BotScene {
     // Top Header: Tag & Number Pill
     ctx.save();
     drawRoundRect(26, 28, 52, 28, 8);
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.14)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+    ctx.strokeStyle = 'rgba(252, 250, 246, 0.28)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.font = 'bold 15px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#e8c96c';
+    ctx.fillStyle = '#fcfaf6';
     ctx.textAlign = 'center';
     ctx.fillText(data.id, 52, 47);
     ctx.restore();
 
     ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#c2b29d';
+    ctx.fillStyle = '#dfd3c3';
     ctx.textAlign = 'right';
     ctx.fillText(data.category, 370, 47);
     ctx.textAlign = 'left';
 
     // Thin separator
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.18)';
+    ctx.strokeStyle = 'rgba(252, 250, 246, 0.16)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(26, 72);
     ctx.lineTo(374, 72);
     ctx.stroke();
 
-    // Central Topic Emblem (Classical Golden Glyph)
+    // Central Topic Emblem (Classical Off-White & Maroon Motif)
     const artBoxY = 195;
     const artRadius = 76;
 
@@ -424,32 +424,32 @@ export class BotScene {
 
     // Glowing radial backdrop
     const artGrad = ctx.createRadialGradient(-15, -25, 8, 0, 0, artRadius);
-    artGrad.addColorStop(0, '#e8c96c');
+    artGrad.addColorStop(0, '#b8223c');
     artGrad.addColorStop(0.55, '#560e1b');
     artGrad.addColorStop(1, '#180306');
 
     ctx.fillStyle = artGrad;
-    ctx.shadowColor = '#d4af37';
+    ctx.shadowColor = 'rgba(184, 34, 60, 0.6)';
     ctx.shadowBlur = 22;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 6, 0, Math.PI * 2);
     ctx.fill();
 
     // Specular highlight crescent
-    ctx.fillStyle = 'rgba(247, 232, 195, 0.45)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
     ctx.shadowBlur = 0;
     ctx.beginPath();
     ctx.ellipse(-22, -28, 26, 13, -Math.PI / 4, 0, Math.PI * 2);
     ctx.fill();
 
     // Concentric orbiting rings
-    ctx.strokeStyle = 'rgba(247, 232, 195, 0.35)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 20, 0, Math.PI * 2);
     ctx.stroke();
 
-    ctx.strokeStyle = '#d4af37';
+    ctx.strokeStyle = 'rgba(252, 250, 246, 0.75)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 38, 0, Math.PI * 1.5);
@@ -469,14 +469,14 @@ export class BotScene {
     // Bottom Action Pill
     ctx.save();
     drawRoundRect(26, 475, 348, 42, 12);
-    ctx.fillStyle = 'rgba(212, 175, 55, 0.12)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
+    ctx.strokeStyle = 'rgba(252, 250, 246, 0.28)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#e8c96c';
+    ctx.fillStyle = '#fcfaf6';
     ctx.fillText('EXPLORE SIMULATION →', 42, 501);
     ctx.restore();
 

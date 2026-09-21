@@ -39,8 +39,8 @@ function initWaveformCanvas() {
   function renderWave() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Background Grid lines - subtle warm gold
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.08)';
+    // Background Grid lines - subtle off-white
+    ctx.strokeStyle = 'rgba(244, 237, 226, 0.08)';
     ctx.lineWidth = 1;
     for (let x = 0; x < canvas.width; x += 20) {
       ctx.beginPath();
@@ -55,11 +55,11 @@ function initWaveformCanvas() {
       ctx.stroke();
     }
 
-    // Sine wave - Polished gold telemetry line
+    // Sine wave - Luminous Off-White telemetry line with subtle maroon glow
     ctx.beginPath();
-    ctx.strokeStyle = '#d4af37';
+    ctx.strokeStyle = '#fcfaf6';
     ctx.lineWidth = 2;
-    ctx.shadowColor = '#e8c96c';
+    ctx.shadowColor = 'rgba(184, 34, 60, 0.85)';
     ctx.shadowBlur = 8;
 
     const centerY = canvas.height / 2;
@@ -104,22 +104,22 @@ function initSimulationSandbox() {
         <div class="code-stack-sim" style="width: 100%; max-width: 460px; font-family: 'Thinoo', sans-serif; font-size: 0.78rem; letter-spacing: 0.06em;">
           <div style="color: #c2b29d; margin-bottom: 10px; display: flex; justify-content: space-between;">
             <span>CALL STACK MEMORY HEAP</span>
-            <span style="color: #e8c96c;">0x7FFEE4B2</span>
+            <span style="color: #fcfaf6;">0x7FFEE4B2</span>
           </div>
           <div style="display: flex; flex-direction: column; gap: 8px;">
-            <div style="background: rgba(212, 175, 55, 0.16); border: 1px solid #d4af37; padding: 10px 14px; border-radius: 8px; color: #fcfaf6; display: flex; justify-content: space-between; animation: pulse 2s infinite;">
+            <div style="background: rgba(184, 34, 60, 0.25); border: 1px solid rgba(252, 250, 246, 0.6); padding: 10px 14px; border-radius: 8px; color: #fcfaf6; display: flex; justify-content: space-between; animation: pulse 2s infinite;">
               <span>factorial(n=1) → returns 1</span>
-              <span style="color: #e8c96c;">BASE HIT [0x04]</span>
+              <span style="color: #fcfaf6; font-weight: bold;">BASE HIT [0x04]</span>
             </div>
-            <div style="background: rgba(36, 5, 11, 0.85); border: 1px solid rgba(212, 175, 55, 0.2); padding: 10px 14px; border-radius: 8px; color: #f4ede2; display: flex; justify-content: space-between;">
+            <div style="background: rgba(36, 5, 11, 0.85); border: 1px solid rgba(244, 237, 226, 0.2); padding: 10px 14px; border-radius: 8px; color: #f4ede2; display: flex; justify-content: space-between;">
               <span>factorial(n=2) → waiting on (n=1)</span>
               <span style="color: #c2b29d;">FRAME [0x03]</span>
             </div>
-            <div style="background: rgba(36, 5, 11, 0.75); border: 1px solid rgba(212, 175, 55, 0.14); padding: 10px 14px; border-radius: 8px; color: #c2b29d; display: flex; justify-content: space-between;">
+            <div style="background: rgba(36, 5, 11, 0.75); border: 1px solid rgba(244, 237, 226, 0.14); padding: 10px 14px; border-radius: 8px; color: #c2b29d; display: flex; justify-content: space-between;">
               <span>factorial(n=3) → waiting on (n=2)</span>
               <span style="color: #948470;">FRAME [0x02]</span>
             </div>
-            <div style="background: rgba(36, 5, 11, 0.6); border: 1px solid rgba(212, 175, 55, 0.1); padding: 10px 14px; border-radius: 8px; color: #948470; display: flex; justify-content: space-between;">
+            <div style="background: rgba(36, 5, 11, 0.6); border: 1px solid rgba(244, 237, 226, 0.1); padding: 10px 14px; border-radius: 8px; color: #948470; display: flex; justify-content: space-between;">
               <span>main() → invoked factorial(3)</span>
               <span style="color: #6d5e4d;">ROOT [0x01]</span>
             </div>
@@ -131,11 +131,11 @@ function initSimulationSandbox() {
       text: `"Observe how orbital velocity balances the central gravitational pull. If tangential velocity increases by just 15%, the stable ellipse converts into an open hyperbolic escape trajectory."`,
       render: () => `
         <div class="physics-sim-view" style="display: flex; flex-direction: column; align-items: center; position: relative; width: 280px; height: 240px;">
-          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle, #d4af37 20%, #7a1525 80%); box-shadow: 0 0 35px rgba(212, 175, 55, 0.5);"></div>
-          <div style="position: absolute; top: 50%; left: 50%; width: 180px; height: 180px; transform: translate(-50%, -50%); border: 1px dashed rgba(212, 175, 55, 0.4); border-radius: 50%; animation: spin 10s linear infinite;">
-            <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; border-radius: 50%; background: #e8c96c; box-shadow: 0 0 15px #d4af37;"></div>
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle, #b8223c 25%, #4a0d18 80%); box-shadow: 0 0 35px rgba(184, 34, 60, 0.6);"></div>
+          <div style="position: absolute; top: 50%; left: 50%; width: 180px; height: 180px; transform: translate(-50%, -50%); border: 1px dashed rgba(244, 237, 226, 0.4); border-radius: 50%; animation: spin 10s linear infinite;">
+            <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 18px; height: 18px; border-radius: 50%; background: #fcfaf6; box-shadow: 0 0 15px rgba(255, 255, 255, 0.9);"></div>
           </div>
-          <div style="position: absolute; bottom: 10px; font-family: 'Thinoo', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; color: #e8c96c;">
+          <div style="position: absolute; bottom: 10px; font-family: 'Thinoo', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; color: #fcfaf6;">
             ORBITAL VELOCITY: 7.92 km/s | G = 6.674e-11
           </div>
         </div>
@@ -145,12 +145,12 @@ function initSimulationSandbox() {
       text: `"Here is the molecular geometry of a methane molecule (CH₄). Notice how the four covalent bonds repel each other symmetrically into a 109.5° tetrahedral angle to minimize electron cloud repulsion."`,
       render: () => `
         <div class="chem-sim-view" style="position: relative; width: 260px; height: 220px; display: flex; align-items: center; justify-content: center;">
-          <div style="width: 50px; height: 50px; border-radius: 50%; background: radial-gradient(circle, #4a0d18, #180306); border: 2px solid #d4af37; display: flex; align-items: center; justify-content: center; font-family: 'Thinoo', sans-serif; font-weight: bold; color: #e8c96c; box-shadow: 0 0 25px rgba(212, 175, 55, 0.4); z-index: 5;">
+          <div style="width: 50px; height: 50px; border-radius: 50%; background: radial-gradient(circle, #4a0d18, #180306); border: 2px solid #fcfaf6; display: flex; align-items: center; justify-content: center; font-family: 'Thinoo', sans-serif; font-weight: bold; color: #fcfaf6; box-shadow: 0 0 25px rgba(184, 34, 60, 0.5); z-index: 5;">
             C
           </div>
-          <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%; background: #fcfaf6; color: #160205; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">H</div>
-          <div style="position: absolute; bottom: 25px; left: 35px; width: 26px; height: 26px; border-radius: 50%; background: #fcfaf6; color: #160205; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">H</div>
-          <div style="position: absolute; bottom: 25px; right: 35px; width: 26px; height: 26px; border-radius: 50%; background: #fcfaf6; color: #160205; border: 1px solid #d4af37; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">H</div>
+          <div style="position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 26px; height: 26px; border-radius: 50%; background: #fcfaf6; color: #160205; border: 1px solid rgba(244, 237, 226, 0.4); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">H</div>
+          <div style="position: absolute; bottom: 25px; left: 35px; width: 26px; height: 26px; border-radius: 50%; background: #fcfaf6; color: #160205; border: 1px solid rgba(244, 237, 226, 0.4); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">H</div>
+          <div style="position: absolute; bottom: 25px; right: 35px; width: 26px; height: 26px; border-radius: 50%; background: #fcfaf6; color: #160205; border: 1px solid rgba(244, 237, 226, 0.4); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: bold;">H</div>
           <div style="position: absolute; bottom: 0; font-family: 'Thinoo', sans-serif; font-size: 0.72rem; letter-spacing: 0.08em; color: #c2b29d;">
             TETRAHEDRAL BOND ANGLE: 109.5°
           </div>
@@ -250,8 +250,8 @@ function initSecondaryActions() {
       audioActive = !audioActive;
       const label = audioBtn.querySelector('.btn-sound-label');
       if (audioActive) {
-        audioBtn.style.color = '#e8c96c';
-        audioBtn.style.borderColor = '#d4af37';
+        audioBtn.style.color = '#fcfaf6';
+        audioBtn.style.borderColor = 'rgba(252, 250, 246, 0.6)';
         if (label) label.textContent = 'MUTE';
         playFuturisticChime();
       } else {
