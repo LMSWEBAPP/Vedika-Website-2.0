@@ -39,6 +39,7 @@ export class BotScene {
     this.scrollProgress = 0;
     this.targetBotRotY = 0;
     this.targetBotRotX = 0;
+    this.targetBotRotZ = 0;
     this.targetCamY = 0.26;
     this.targetCamZ = 2.65;
 
@@ -510,61 +511,86 @@ export class BotScene {
   // - Stage 3 -> 4: 3D Carousel entrance & camera zoom out
   // - Stage 4 (04 / Pure Carousel): 100% pure revolving carousel halo (zero clutter, nothing else on screen)
   // - Stage 4 -> 5: Carousel exits, camera returns, Creative Labs enters
-  // - Stage 5 (05 / Creative Labs): Center gaze with Create Without Boundaries
+  // Smooth scroll-driven sequence & 3D carousel revolving around Vedika
+  // 5-Stage Choreography:
+  // - Stage 1 (01 / Brand Hero): Center frontal gaze
+  // - Stage 1 -> 2: Turn prominently from Center to Left (-0.85 rad / ~49°) in lockstep with page shift
+  // - Stage 2 (02 / Vedika-AI): Hold gaze toward Left looking at editorial features & infographics
+  // - Stage 2 -> 3: Turn prominently from Left back to Center (0.0 rad) in lockstep with page shift
+  // - Stage 3 (03 / Courses & Resource Hub): Center frontal gaze
+  // - Stage 3 -> 4: 3D Carousel entrance & camera zoom out
+  // - Stage 4 (04 / Pure Carousel): 100% pure revolving carousel halo (zero clutter, nothing else on screen)
+  // - Stage 4 -> 5: Carousel exits, camera returns, Vedika recenters
+  // - Stage 5 (05 / Virtual Labs, Jobs & Progress): Center frontal gaze
+  // Full reversibility: scrolling up from Stage 5 to Stage 1 reverses all transformations in exact symmetry!
   updateScrollProgress(progress) {
     this.scrollProgress = progress;
 
     const p = Math.max(0, Math.min(1, progress));
     let targetY = 0;
     let targetX = 0;
+    let targetZ = 0;
     let camY = 0.26;
     let camZ = 2.65;
+
+    // Prominent, unmistakable turn angle: -0.85 rad (~48.7 degrees to the left)
+    const TURN_ANGLE = -0.85;
+    const PITCH_ANGLE = 0.04;
+    const ROLL_ANGLE = -0.04;
 
     if (p < 0.107) {
       // Stage 1: Frontal gaze (Center)
       targetY = 0.0;
       targetX = 0.0;
+      targetZ = 0.0;
       camZ = 2.65;
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.202) {
-      // Scrolling Stage 1 -> Stage 2: Turn from Center to Left
+      // Shift Page 1 -> Page 2: Turn smoothly from Center to Left
+      // Synchronized directly with Page 1 exit and Page 2 entry (and vice versa in reverse!)
       const t = (p - 0.107) / (0.202 - 0.107);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
-      targetY = THREE.MathUtils.lerp(0.0, -0.32, easeT);
-      targetX = THREE.MathUtils.lerp(0.0, 0.03, easeT);
+      targetY = THREE.MathUtils.lerp(0.0, TURN_ANGLE, easeT);
+      targetX = THREE.MathUtils.lerp(0.0, PITCH_ANGLE, easeT);
+      targetZ = THREE.MathUtils.lerp(0.0, ROLL_ANGLE, easeT);
       camZ = THREE.MathUtils.lerp(2.65, 2.58, easeT);
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.321) {
-      // Stage 2 in view: Holding gaze towards Left (looking at Cognitive HUD & headline)
-      targetY = -0.32;
-      targetX = 0.03;
+      // Stage 2: Holding gaze clearly towards Left (looking at Vedika-AI title & features)
+      targetY = TURN_ANGLE;
+      targetX = PITCH_ANGLE;
+      targetZ = ROLL_ANGLE;
       camZ = 2.58;
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.417) {
-      // Scrolling Stage 2 -> Stage 3: Turn from Left back to Center
+      // Shift Page 2 -> Page 3: Turn smoothly from Left back to Center
+      // Synchronized directly with Page 2 exit and Page 3 entry (and vice versa in reverse!)
       const t = (p - 0.321) / (0.417 - 0.321);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
-      targetY = THREE.MathUtils.lerp(-0.32, 0.0, easeT);
-      targetX = THREE.MathUtils.lerp(0.03, 0.0, easeT);
+      targetY = THREE.MathUtils.lerp(TURN_ANGLE, 0.0, easeT);
+      targetX = THREE.MathUtils.lerp(PITCH_ANGLE, 0.0, easeT);
+      targetZ = THREE.MathUtils.lerp(ROLL_ANGLE, 0.0, easeT);
       camZ = THREE.MathUtils.lerp(2.58, 2.65, easeT);
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.536) {
-      // Stage 3 in view: Holding gaze at Center
+      // Stage 3: Frontal gaze (Center) for Courses & Resource Hub
       targetY = 0.0;
       targetX = 0.0;
+      targetZ = 0.0;
       camZ = 2.65;
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.631) {
-      // Scrolling Stage 3 -> Stage 4: 3D Carousel enters, camera pulls back smoothly
+      // Shift Page 3 -> Page 4: 3D Carousel enters, camera pulls back smoothly
       const t = (p - 0.536) / (0.631 - 0.536);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
       targetY = 0.0;
       targetX = 0.0;
+      targetZ = 0.0;
       camZ = THREE.MathUtils.lerp(2.65, 3.10, easeT);
       camY = THREE.MathUtils.lerp(0.26, 0.24, easeT);
       this.isCarouselActive = true;
@@ -584,28 +610,36 @@ export class BotScene {
       const currentAngleOffset = ((this.carouselTargetRotation % cardStep) / cardStep - 0.5);
       targetY = -currentAngleOffset * 0.35;
       targetX = 0.02;
+      targetZ = 0.0;
     } else if (p < 0.893) {
-      // Scrolling Stage 4 -> Stage 5: Carousel exits, camera returns, Vedika recenters
+      // Shift Page 4 -> Page 5: Carousel exits, camera returns, Vedika recenters
       const t = (p - 0.798) / (0.893 - 0.798);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
       camZ = THREE.MathUtils.lerp(3.10, 2.65, easeT);
       camY = THREE.MathUtils.lerp(0.24, 0.26, easeT);
       this.carouselTargetScale = Math.max(0.001, 1.0 - easeT);
       this.isCarouselActive = (this.carouselTargetScale > 0.05);
-      targetY = THREE.MathUtils.lerp(this.bustPivot.rotation.y, 0.0, easeT);
-      targetX = 0.0;
+
+      const cardStep = (Math.PI * 2) / 10;
+      const currentAngleOffset = ((this.carouselTargetRotation % cardStep) / cardStep - 0.5);
+      const carouselLookY = -currentAngleOffset * 0.35;
+      targetY = THREE.MathUtils.lerp(carouselLookY, 0.0, easeT);
+      targetX = THREE.MathUtils.lerp(0.02, 0.0, easeT);
+      targetZ = 0.0;
     } else {
-      // Stage 5: Creative Labs (Create Without Boundaries in full view)
+      // Stage 5: Virtual Labs, Jobs & Progress (Center gaze)
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
       camZ = 2.65;
       camY = 0.26;
       targetY = 0.0;
       targetX = 0.0;
+      targetZ = 0.0;
     }
 
     this.targetBotRotY = targetY;
     this.targetBotRotX = targetX;
+    this.targetBotRotZ = targetZ;
     this.targetCamY = camY;
     this.targetCamZ = camZ;
   }
@@ -616,14 +650,15 @@ export class BotScene {
     const delta = this.clock.getDelta();
     const elapsedTime = this.clock.getElapsedTime();
 
-    // Silky-smooth interpolation to target angles (ZERO cursor tracking)
-    this.bustPivot.rotation.y += (this.targetBotRotY - this.bustPivot.rotation.y) * 0.06;
-    this.bustPivot.rotation.x += (this.targetBotRotX - this.bustPivot.rotation.x) * 0.06;
+    // Responsive, silky interpolation to target angles (tracks GSAP scrubbed scroll faithfully without trailing lag)
+    this.bustPivot.rotation.y += (this.targetBotRotY - this.bustPivot.rotation.y) * 0.28;
+    this.bustPivot.rotation.x += (this.targetBotRotX - this.bustPivot.rotation.x) * 0.28;
+    this.bustPivot.rotation.z += (this.targetBotRotZ - this.bustPivot.rotation.z) * 0.28;
 
     // Camera strictly centered horizontally (x = 0)
     this.camera.position.x = 0;
-    this.camera.position.y += (this.targetCamY - this.camera.position.y) * 0.06;
-    this.camera.position.z += (this.targetCamZ - this.camera.position.z) * 0.06;
+    this.camera.position.y += (this.targetCamY - this.camera.position.y) * 0.22;
+    this.camera.position.z += (this.targetCamZ - this.camera.position.z) * 0.22;
     this.camera.lookAt(0, 0.26, 0);
 
     // 3D Carousel animation & visibility
