@@ -8,9 +8,8 @@ export function initScrollChoreography(botScene) {
   const stage1 = document.getElementById('stage-1');
   const stage2 = document.getElementById('stage-2');
   const stage3 = document.getElementById('stage-3');
-  const stage4 = document.getElementById('stage-4'); // Empty layer: 100% Pure 3D Carousel
-  const stage5 = document.getElementById('stage-5'); // Next scroll: Learn Without Boundaries
-  const bottomDock = document.querySelector('.card-bottom-dock');
+  const stage4 = document.getElementById('stage-4');
+  const stage5 = document.getElementById('stage-5');
 
   const stepDots = document.querySelectorAll('.step-dot');
   const stageBadgeText = document.getElementById('badge-stage-text');
@@ -26,7 +25,6 @@ export function initScrollChoreography(botScene) {
   // Initial states: Stage 1 active, other layers positioned below
   gsap.set(stage1, { autoAlpha: 1, y: 0 });
   gsap.set([stage2, stage3, stage4, stage5].filter(Boolean), { autoAlpha: 0, y: 50 });
-  if (bottomDock) gsap.set(bottomDock, { autoAlpha: 1 });
 
   let currentActiveIndex = 0;
   function updateIndicators(p) {
@@ -84,10 +82,10 @@ export function initScrollChoreography(botScene) {
   // 135 - 155: Stage 2 clean exit (y: 0 -> -40, autoAlpha: 1 -> 0)
   // 155 - 175: Stage 3 clean entry (y: 40 -> 0, autoAlpha: 0 -> 1) [Stage 2 already gone, zero overlay!]
   // 175 - 225: Stage 3 hold
-  // 225 - 245: Stage 3 clean exit (y: 0 -> -40, autoAlpha: 1 -> 0), bottom dock fades out
+  // 225 - 245: Stage 3 clean exit (y: 0 -> -40, autoAlpha: 1 -> 0)
   // 245 - 265: Stage 4 (3D Carousel) scales in cleanly
   // 265 - 335: Stage 4 hold (100% PURE 3D CAROUSEL - zero clutter, nothing at all on screen!)
-  // 335 - 355: Stage 4 scales out, bottom dock fades in
+  // 335 - 355: Stage 4 scales out
   // 355 - 375: Stage 5 clean entry (y: 40 -> 0, autoAlpha: 0 -> 1) [Carousel already gone, zero overlay!]
   // 375 - 420: Stage 5 hold (Creative Labs in full view)
 
@@ -143,28 +141,12 @@ export function initScrollChoreography(botScene) {
       duration: 20
     }, 225);
 
-  if (bottomDock) {
-    masterTimeline.to(bottomDock, {
-      autoAlpha: 0,
-      ease: 'power2.inOut',
-      duration: 20
-    }, 225);
-  }
-
   masterTimeline
     .addLabel('stage4')
     // Stage 4 Hold: 100% Pure 3D Carousel active with nothing at all on screen
     .to({}, { duration: 70 }, 265);
 
   // --- TRANSITION 4: STAGE 4 EXIT -> STAGE 5 CREATIVE LABS (ZERO OVERLAY) ---
-  if (bottomDock) {
-    masterTimeline.to(bottomDock, {
-      autoAlpha: 1,
-      ease: 'power2.out',
-      duration: 20
-    }, 355);
-  }
-
   if (stage5) {
     masterTimeline.fromTo(stage5, {
       y: 40,
@@ -202,7 +184,6 @@ export function initScrollChoreography(botScene) {
   const btnScrollLabs = document.getElementById('btn-scroll-labs');
   const reticleCta = document.getElementById('reticle-btn-cta');
   const btnExploreArrow = document.getElementById('btn-explore-arrow-step');
-  const btnDockCta = document.getElementById('btn-dock-cta');
 
   const scrollToStage = (stageIdx) => {
     const totalScroll = ScrollTrigger.getById('heroShowcaseTrigger');
@@ -218,7 +199,6 @@ export function initScrollChoreography(botScene) {
   if (btnScrollLabs) btnScrollLabs.addEventListener('click', () => scrollToStage(4));
   if (reticleCta) reticleCta.addEventListener('click', () => scrollToStage(3));
   if (btnExploreArrow) btnExploreArrow.addEventListener('click', () => scrollToStage(2));
-  if (btnDockCta) btnDockCta.addEventListener('click', () => scrollToStage(1));
 
   return masterTimeline;
 }

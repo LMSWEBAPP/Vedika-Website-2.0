@@ -286,27 +286,5 @@ function initSecondaryActions() {
     }
   }
 
-  // Bookmark Button
-  const bookmarkBtn = document.getElementById('btn-bookmark');
-  if (bookmarkBtn) {
-    bookmarkBtn.addEventListener('click', () => {
-      bookmarkBtn.style.color = '#e8c96c';
-      bookmarkBtn.style.borderColor = '#d4af37';
-    });
-  }
 
-  // Share Button
-  const shareBtn = document.getElementById('btn-share');
-  if (shareBtn) {
-    shareBtn.addEventListener('click', () => {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(window.location.href);
-        const originalHtml = shareBtn.innerHTML;
-        shareBtn.innerHTML = `<span style="font-size: 0.68rem; color: #e8c96c; font-family: 'Thinoo', sans-serif; letter-spacing: 0.1em;">COPIED!</span>`;
-        setTimeout(() => {
-          shareBtn.innerHTML = originalHtml;
-        }, 1800);
-      }
-    });
-  }
 }
