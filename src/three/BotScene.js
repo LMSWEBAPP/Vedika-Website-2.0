@@ -62,37 +62,37 @@ export class BotScene {
   }
 
   initLighting() {
-    // Ambient Light - Deep space obsidian tone
-    const ambientLight = new THREE.AmbientLight(0x0c1628, 1.8);
+    // Ambient Light - Deep imperial maroon tone
+    const ambientLight = new THREE.AmbientLight(0x1e0409, 2.2);
     this.scene.add(ambientLight);
 
-    // Top Shimmering Downlight
-    this.topGlowLight = new THREE.DirectionalLight(0x40c8ff, 3.6);
+    // Top Shimmering Downlight - Warm Regal Gold
+    this.topGlowLight = new THREE.DirectionalLight(0xf5d378, 3.8);
     this.topGlowLight.position.set(0, 4.5, 1);
     this.scene.add(this.topGlowLight);
 
-    // Key Light - Soft White Key
-    this.keyLight = new THREE.DirectionalLight(0xffffff, 2.6);
+    // Key Light - Warm Alabaster Champagne Key
+    this.keyLight = new THREE.DirectionalLight(0xfff6ea, 2.8);
     this.keyLight.position.set(3, 3.5, 3);
     this.scene.add(this.keyLight);
 
-    // Fill Light - Soft Blue Fill
-    this.fillLight = new THREE.DirectionalLight(0x3880c0, 1.8);
+    // Fill Light - Soft Antique Burgundy-Maroon Fill
+    this.fillLight = new THREE.DirectionalLight(0x6a1525, 1.8);
     this.fillLight.position.set(-3, 1.5, 2);
     this.scene.add(this.fillLight);
 
-    // Rim Backlight 1 - Electric Cyan High-Intensity Rim
-    this.rimLight1 = new THREE.DirectionalLight(0x00e5ff, 5.0);
+    // Rim Backlight 1 - Regal Polished Gold High-Intensity Rim
+    this.rimLight1 = new THREE.DirectionalLight(0xd4af37, 5.5);
     this.rimLight1.position.set(2.5, 3.5, -3);
     this.scene.add(this.rimLight1);
 
-    // Rim Backlight 2 - Deep Blue Backfill
-    this.rimLight2 = new THREE.DirectionalLight(0x0066aa, 3.2);
+    // Rim Backlight 2 - Deep Wine Maroon Backfill
+    this.rimLight2 = new THREE.DirectionalLight(0x8c1b2f, 3.6);
     this.rimLight2.position.set(-2.5, 2.5, -3);
     this.scene.add(this.rimLight2);
 
-    // Visor Point Light
-    this.visorLight = new THREE.PointLight(0x00e5ff, 1.8, 2.2);
+    // Visor Point Light - Warm Luminous Golden Amber
+    this.visorLight = new THREE.PointLight(0xf5c842, 2.4, 2.2);
     this.visorLight.position.set(0, 0.45, 0.8);
     this.scene.add(this.visorLight);
   }
@@ -215,10 +215,10 @@ export class BotScene {
     eyeCanvas.width = 512;
     eyeCanvas.height = 256;
     const ctx = eyeCanvas.getContext('2d');
-    ctx.fillStyle = '#07111c';
+    ctx.fillStyle = '#1c0409';
     ctx.fillRect(0, 0, 512, 256);
-    ctx.fillStyle = '#00e5ff';
-    ctx.shadowColor = '#00e5ff';
+    ctx.fillStyle = '#e8c96c';
+    ctx.shadowColor = '#d4af37';
     ctx.shadowBlur = 15;
 
     const drawDiamondEye = (cx, cy) => {
@@ -251,7 +251,7 @@ export class BotScene {
 
       const earRing = new THREE.Mesh(
         new THREE.TorusGeometry(0.1, 0.02, 16, 32),
-        new THREE.MeshBasicMaterial({ color: 0x00e5ff })
+        new THREE.MeshBasicMaterial({ color: 0xd4af37 })
       );
       earRing.rotation.y = Math.PI / 2;
       earRing.position.set(side * 0.5, 0.52, 0);
@@ -286,16 +286,16 @@ export class BotScene {
      ========================================================================== */
   build3DCarousel() {
     const cardData = [
-      { id: '01', category: 'PHYSICS', title: 'Quantum Kinematics', desc: 'Particle wave packet dynamics.', hue: '#00e5ff' },
-      { id: '02', category: 'CALCULUS', title: 'Vector Surfaces', desc: '3D gradient fields & flux.', hue: '#ff77aa' },
-      { id: '03', category: 'CHEMISTRY', title: 'Molecular Orbitals', desc: 'Covalent bond angles in 3D.', hue: '#a855f7' },
-      { id: '04', category: 'CODE HEAP', title: 'Call Stack Heap', desc: 'Recursion tree visualizer.', hue: '#38ef7d' },
-      { id: '05', category: 'AI TUTOR', title: 'Neural Latent Space', desc: 'Cognitive retention weights.', hue: '#00c6ff' },
-      { id: '06', category: 'GRAVITY', title: 'Orbital Mechanics', desc: 'N-body gravitational paths.', hue: '#ffaa40' },
-      { id: '07', category: 'ALGORITHMS', title: 'Graph Traversal', desc: 'Dijkstra & A* spatial trees.', hue: '#00f2fe' },
-      { id: '08', category: 'THERMO', title: 'Entropy Chamber', desc: 'Kinetic particle dispersion.', hue: '#ff5e3a' },
-      { id: '09', category: 'WAVES', title: 'Laser Diffraction', desc: 'Wave interference patterns.', hue: '#e040fb' },
-      { id: '10', category: 'EXAM LAB', title: 'Socratic Diagnostics', desc: 'Proof-paced concept checks.', hue: '#00e5ff' }
+      { id: '01', category: 'PHYSICS', title: 'Quantum Kinematics', desc: 'Particle wave packet dynamics.', hue: '#e8c96c' },
+      { id: '02', category: 'CALCULUS', title: 'Vector Surfaces', desc: '3D gradient fields & flux.', hue: '#f7e8c3' },
+      { id: '03', category: 'CHEMISTRY', title: 'Molecular Orbitals', desc: 'Covalent bond angles in 3D.', hue: '#d4af37' },
+      { id: '04', category: 'CODE HEAP', title: 'Call Stack Heap', desc: 'Recursion tree visualizer.', hue: '#e8c96c' },
+      { id: '05', category: 'AI TUTOR', title: 'Neural Latent Space', desc: 'Cognitive retention weights.', hue: '#f7e8c3' },
+      { id: '06', category: 'GRAVITY', title: 'Orbital Mechanics', desc: 'N-body gravitational paths.', hue: '#d4af37' },
+      { id: '07', category: 'ALGORITHMS', title: 'Graph Traversal', desc: 'Dijkstra & A* spatial trees.', hue: '#e8c96c' },
+      { id: '08', category: 'THERMO', title: 'Entropy Chamber', desc: 'Kinetic particle dispersion.', hue: '#f7e8c3' },
+      { id: '09', category: 'WAVES', title: 'Laser Diffraction', desc: 'Wave interference patterns.', hue: '#d4af37' },
+      { id: '10', category: 'EXAM LAB', title: 'Socratic Diagnostics', desc: 'Proof-paced concept checks.', hue: '#e8c96c' }
     ];
 
     const numCards = cardData.length;
@@ -337,7 +337,7 @@ export class BotScene {
     this.carouselGroup.visible = false;
   }
 
-  // Generates clean, high-contrast, semi-solid card texture (much less glassmorphism, maximum readability)
+  // Generates clean, high-contrast, semi-solid card texture in Regal Maroon & Polished Gold
   generateCardTexture(data) {
     const canvas = document.createElement('canvas');
     canvas.width = 400;
@@ -358,18 +358,18 @@ export class BotScene {
       ctx.closePath();
     };
 
-    // Card Background: Rich, semi-solid dark slate obsidian (reduced glassmorphism, crisp readability)
+    // Card Background: Rich imperial maroon enamel lacquer
     drawRoundRect(10, 10, 380, 540, 24);
     const bgGrad = ctx.createLinearGradient(10, 10, 390, 550);
-    bgGrad.addColorStop(0, 'rgba(18, 28, 48, 0.98)');
-    bgGrad.addColorStop(0.5, 'rgba(12, 19, 34, 0.97)');
-    bgGrad.addColorStop(1, 'rgba(7, 13, 24, 0.99)');
+    bgGrad.addColorStop(0, 'rgba(56, 9, 18, 0.98)');
+    bgGrad.addColorStop(0.5, 'rgba(38, 5, 12, 0.98)');
+    bgGrad.addColorStop(1, 'rgba(20, 3, 7, 0.99)');
     ctx.fillStyle = bgGrad;
     ctx.fill();
 
-    // Crisp cyan perimeter border
+    // Polished gold perimeter border
     ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.35)';
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
     ctx.stroke();
 
     // Top hairline accent glow
@@ -379,7 +379,7 @@ export class BotScene {
     ctx.lineTo(365, 10);
     const topHl = ctx.createLinearGradient(35, 10, 365, 10);
     topHl.addColorStop(0, 'transparent');
-    topHl.addColorStop(0.5, data.hue);
+    topHl.addColorStop(0.5, 'rgba(232, 201, 108, 0.85)');
     topHl.addColorStop(1, 'transparent');
     ctx.strokeStyle = topHl;
     ctx.lineWidth = 3;
@@ -389,33 +389,33 @@ export class BotScene {
     // Top Header: Tag & Number Pill
     ctx.save();
     drawRoundRect(26, 28, 52, 28, 8);
-    ctx.fillStyle = 'rgba(0, 229, 255, 0.12)';
+    ctx.fillStyle = 'rgba(212, 175, 55, 0.14)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.3)';
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    ctx.font = 'bold 15px "JetBrains Mono", monospace';
-    ctx.fillStyle = data.hue;
+    ctx.font = 'bold 15px "Thinoo", -apple-system, sans-serif';
+    ctx.fillStyle = '#e8c96c';
     ctx.textAlign = 'center';
     ctx.fillText(data.id, 52, 47);
     ctx.restore();
 
-    ctx.font = 'bold 12px "JetBrains Mono", monospace';
-    ctx.fillStyle = '#94a3b8';
+    ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
+    ctx.fillStyle = '#c2b29d';
     ctx.textAlign = 'right';
     ctx.fillText(data.category, 370, 47);
     ctx.textAlign = 'left';
 
     // Thin separator
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.10)';
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.18)';
     ctx.lineWidth = 1;
     ctx.beginPath();
     ctx.moveTo(26, 72);
     ctx.lineTo(374, 72);
     ctx.stroke();
 
-    // Central Topic Emblem (Crisp, High-Contrast STEM Glyph)
+    // Central Topic Emblem (Classical Golden Glyph)
     const artBoxY = 195;
     const artRadius = 76;
 
@@ -424,32 +424,32 @@ export class BotScene {
 
     // Glowing radial backdrop
     const artGrad = ctx.createRadialGradient(-15, -25, 8, 0, 0, artRadius);
-    artGrad.addColorStop(0, data.hue);
-    artGrad.addColorStop(0.65, '#121e34');
-    artGrad.addColorStop(1, '#060a14');
+    artGrad.addColorStop(0, '#e8c96c');
+    artGrad.addColorStop(0.55, '#560e1b');
+    artGrad.addColorStop(1, '#180306');
 
     ctx.fillStyle = artGrad;
-    ctx.shadowColor = data.hue;
-    ctx.shadowBlur = 20;
+    ctx.shadowColor = '#d4af37';
+    ctx.shadowBlur = 22;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 6, 0, Math.PI * 2);
     ctx.fill();
 
     // Specular highlight crescent
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.38)';
+    ctx.fillStyle = 'rgba(247, 232, 195, 0.45)';
     ctx.shadowBlur = 0;
     ctx.beginPath();
     ctx.ellipse(-22, -28, 26, 13, -Math.PI / 4, 0, Math.PI * 2);
     ctx.fill();
 
-    // Futuristic concentric orbiting rings
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+    // Concentric orbiting rings
+    ctx.strokeStyle = 'rgba(247, 232, 195, 0.35)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 20, 0, Math.PI * 2);
     ctx.stroke();
 
-    ctx.strokeStyle = data.hue;
+    ctx.strokeStyle = '#d4af37';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 38, 0, Math.PI * 1.5);
@@ -457,26 +457,26 @@ export class BotScene {
 
     ctx.restore();
 
-    // Card Title & Description (High contrast, crisp text)
-    ctx.font = 'bold 22px "Space Grotesk", sans-serif';
-    ctx.fillStyle = '#ffffff';
+    // Card Title in Calluna (Elegant) & Description in Vollkorn (Simple)
+    ctx.font = 'bold 24px "Calluna", Georgia, serif';
+    ctx.fillStyle = '#fcfaf6';
     ctx.fillText(data.title, 26, 395);
 
-    ctx.font = '14px "Outfit", sans-serif';
-    ctx.fillStyle = '#cbd5e1';
+    ctx.font = '15px "Vollkorn", Georgia, serif';
+    ctx.fillStyle = '#f4ede2';
     ctx.fillText(data.desc, 26, 428, 348);
 
     // Bottom Action Pill
     ctx.save();
     drawRoundRect(26, 475, 348, 42, 12);
-    ctx.fillStyle = 'rgba(0, 229, 255, 0.08)';
+    ctx.fillStyle = 'rgba(212, 175, 55, 0.12)';
     ctx.fill();
-    ctx.strokeStyle = 'rgba(0, 229, 255, 0.28)';
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.35)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
-    ctx.font = 'bold 12px "JetBrains Mono", monospace';
-    ctx.fillStyle = data.hue;
+    ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
+    ctx.fillStyle = '#e8c96c';
     ctx.fillText('EXPLORE SIMULATION →', 42, 501);
     ctx.restore();
 
