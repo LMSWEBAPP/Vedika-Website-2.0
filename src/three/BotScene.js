@@ -43,7 +43,7 @@ export class BotScene {
     this.targetCamY = 0.26;
     this.targetCamZ = 2.65;
 
-    // 3D Revolving Carousel (Tilted 30 degrees to the right)
+    // 3D Revolving Carousel (Tilted 15 degrees to the left)
     this.carouselTiltGroup = new THREE.Group();
     this.carouselGroup = new THREE.Group();
     this.carouselCards = [];
@@ -52,11 +52,11 @@ export class BotScene {
     this.carouselRadius = 1.48;
     this.isCarouselActive = false;
 
-    // Tilt the entire carousel circle 30 degrees to the right (-30° around Z axis)
-    // plus slight forward incline on X (0.18 rad) for rich 3D orbital perspective
-    this.carouselTiltGroup.rotation.z = -30 * (Math.PI / 180); // -0.5236 rad (30° right tilt)
-    this.carouselTiltGroup.rotation.x = 0.18; // slight forward incline
-    this.carouselTiltGroup.position.set(0, 0.05, 0);
+    // Tilt the entire carousel circle 15 degrees to the left (+15° around Z axis = +0.2618 rad)
+    // plus gentle forward pitch on X (0.12 rad) for open, readable 3D perspective
+    this.carouselTiltGroup.rotation.z = 15 * (Math.PI / 180); // +0.2618 rad (15° left tilt)
+    this.carouselTiltGroup.rotation.x = 0.12; // gentle forward incline
+    this.carouselTiltGroup.position.set(0, 0.04, 0);
 
     this.carouselTiltGroup.add(this.carouselGroup);
     this.scene.add(this.carouselTiltGroup);
@@ -395,69 +395,84 @@ export class BotScene {
       ctx.closePath();
     };
 
-    // Card Background: Rich imperial maroon enamel lacquer
-    drawRoundRect(10, 10, 380, 540, 24);
+    // Card Background: Luminous, high-contrast Pearlescent Alabaster Ivory
+    // (Breathtaking visibility against the dark maroon backdrop; matches Vedika's porcelain finish)
+    drawRoundRect(10, 10, 380, 540, 26);
     const bgGrad = ctx.createLinearGradient(10, 10, 390, 550);
-    bgGrad.addColorStop(0, 'rgba(56, 9, 18, 0.98)');
-    bgGrad.addColorStop(0.5, 'rgba(38, 5, 12, 0.98)');
-    bgGrad.addColorStop(1, 'rgba(20, 3, 7, 0.99)');
+    if (isBlurred) {
+      bgGrad.addColorStop(0, 'rgba(244, 238, 228, 0.90)');
+      bgGrad.addColorStop(0.5, 'rgba(236, 227, 214, 0.88)');
+      bgGrad.addColorStop(1, 'rgba(224, 212, 196, 0.90)');
+    } else {
+      bgGrad.addColorStop(0, '#ffffff');
+      bgGrad.addColorStop(0.35, '#fcfaf6');
+      bgGrad.addColorStop(0.75, '#f5ede2');
+      bgGrad.addColorStop(1, '#e8ded0');
+    }
     ctx.fillStyle = bgGrad;
     ctx.fill();
 
-    // Crisp off-white perimeter border
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = isBlurred ? 'rgba(252, 250, 246, 0.16)' : 'rgba(252, 250, 246, 0.35)';
+    // Dual Perimeter Borders: Deep Imperial Maroon with subtle Ruby Glow
+    ctx.lineWidth = 2.5;
+    ctx.strokeStyle = isBlurred ? 'rgba(74, 13, 24, 0.45)' : 'rgba(54, 8, 17, 0.88)';
     ctx.stroke();
 
-    // Top hairline accent glow
+    // Inner hairline frame
+    drawRoundRect(16, 16, 368, 528, 20);
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = isBlurred ? 'rgba(184, 34, 60, 0.25)' : 'rgba(184, 34, 60, 0.45)';
+    ctx.stroke();
+
+    // Top specular highlight crescent
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(35, 10);
-    ctx.lineTo(365, 10);
-    const topHl = ctx.createLinearGradient(35, 10, 365, 10);
+    ctx.moveTo(40, 12);
+    ctx.lineTo(360, 12);
+    const topHl = ctx.createLinearGradient(40, 12, 360, 12);
     topHl.addColorStop(0, 'transparent');
-    topHl.addColorStop(0.5, isBlurred ? 'rgba(255, 255, 255, 0.35)' : 'rgba(255, 255, 255, 0.85)');
+    topHl.addColorStop(0.5, 'rgba(255, 255, 255, 0.95)');
     topHl.addColorStop(1, 'transparent');
     ctx.strokeStyle = topHl;
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 2;
     ctx.stroke();
     ctx.restore();
 
     // If blurred mode: apply 2D canvas filter blur to all text and emblem content!
     if (isBlurred) {
-      ctx.filter = 'blur(10px) opacity(60%)';
+      ctx.filter = 'blur(10px) opacity(65%)';
     }
 
     // Top Header: Tag & Number Pill
     ctx.save();
-    drawRoundRect(26, 28, 52, 28, 8);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    drawRoundRect(28, 30, 54, 28, 8);
+    ctx.fillStyle = 'rgba(46, 6, 14, 0.92)'; // Deep imperial maroon pill
     ctx.fill();
-    ctx.strokeStyle = 'rgba(252, 250, 246, 0.28)';
+    ctx.strokeStyle = 'rgba(184, 34, 60, 0.6)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.font = 'bold 15px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#fcfaf6';
+    ctx.fillStyle = '#fcfaf6'; // Crisp white number
     ctx.textAlign = 'center';
-    ctx.fillText(data.id, 52, 47);
+    ctx.fillText(data.id, 55, 49);
     ctx.restore();
 
+    // Category in bold tracked Imperial Maroon
     ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#dfd3c3';
+    ctx.fillStyle = '#6b1122';
     ctx.textAlign = 'right';
-    ctx.fillText(data.category, 370, 47);
+    ctx.fillText(data.category, 368, 49);
     ctx.textAlign = 'left';
 
     // Thin separator
-    ctx.strokeStyle = 'rgba(252, 250, 246, 0.16)';
+    ctx.strokeStyle = 'rgba(74, 13, 24, 0.2)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(26, 72);
-    ctx.lineTo(374, 72);
+    ctx.moveTo(28, 74);
+    ctx.lineTo(372, 74);
     ctx.stroke();
 
-    // Central Topic Emblem (Classical Off-White & Maroon Motif)
+    // Central Topic Emblem (Radiant Garnet-Ruby Medallion)
     const artBoxY = 195;
     const artRadius = 76;
 
@@ -466,32 +481,32 @@ export class BotScene {
 
     // Glowing radial backdrop
     const artGrad = ctx.createRadialGradient(-15, -25, 8, 0, 0, artRadius);
-    artGrad.addColorStop(0, '#b8223c');
-    artGrad.addColorStop(0.55, '#560e1b');
-    artGrad.addColorStop(1, '#180306');
+    artGrad.addColorStop(0, '#c92a46');
+    artGrad.addColorStop(0.55, '#731224');
+    artGrad.addColorStop(1, '#2a040b');
 
     ctx.fillStyle = artGrad;
-    ctx.shadowColor = 'rgba(184, 34, 60, 0.6)';
-    ctx.shadowBlur = 22;
+    ctx.shadowColor = 'rgba(184, 34, 60, 0.5)';
+    ctx.shadowBlur = 18;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 6, 0, Math.PI * 2);
     ctx.fill();
 
     // Specular highlight crescent
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
     ctx.shadowBlur = 0;
     ctx.beginPath();
     ctx.ellipse(-22, -28, 26, 13, -Math.PI / 4, 0, Math.PI * 2);
     ctx.fill();
 
     // Concentric orbiting rings
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 20, 0, Math.PI * 2);
     ctx.stroke();
 
-    ctx.strokeStyle = 'rgba(252, 250, 246, 0.75)';
+    ctx.strokeStyle = 'rgba(252, 250, 246, 0.9)';
     ctx.lineWidth = 2;
     ctx.beginPath();
     ctx.arc(0, 0, artRadius - 38, 0, Math.PI * 1.5);
@@ -499,33 +514,37 @@ export class BotScene {
 
     ctx.restore();
 
-    // Card Title in Calluna (Elegant) & Description in Vollkorn (Simple)
-    ctx.font = 'bold 23px "Calluna", Georgia, serif';
-    ctx.fillStyle = '#fcfaf6';
-    ctx.fillText(data.title, 26, 395);
+    // Card Title in Calluna (Deep Imperial Maroon - Maximum Contrast & Legibility!)
+    ctx.font = 'bold 24px "Calluna", Georgia, serif';
+    ctx.fillStyle = '#160205';
+    ctx.fillText(data.title, 28, 395);
 
-    ctx.font = '14px "Vollkorn", Georgia, serif';
-    ctx.fillStyle = '#f4ede2';
-    ctx.fillText(data.desc, 26, 428, 348);
+    // Card Description in Vollkorn (Warm Espresso Maroon)
+    ctx.font = '15px "Vollkorn", Georgia, serif';
+    ctx.fillStyle = '#3a0813';
+    ctx.fillText(data.desc, 28, 428, 344);
 
-    // Bottom Action Pill
+    // Bottom Action Pill (Deep Velvet Maroon Button with White Arrow)
     ctx.save();
-    drawRoundRect(26, 475, 348, 42, 12);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    drawRoundRect(28, 474, 344, 44, 12);
+    const btnGrad = ctx.createLinearGradient(28, 474, 372, 518);
+    btnGrad.addColorStop(0, '#560e1d');
+    btnGrad.addColorStop(1, '#24040a');
+    ctx.fillStyle = btnGrad;
     ctx.fill();
-    ctx.strokeStyle = 'rgba(252, 250, 246, 0.28)';
+    ctx.strokeStyle = 'rgba(184, 34, 60, 0.5)';
     ctx.lineWidth = 1;
     ctx.stroke();
 
     ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
-    ctx.fillStyle = '#fcfaf6';
-    ctx.fillText('EXPLORE FEATURE →', 42, 501);
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('EXPLORE FEATURE →', 46, 501);
     ctx.restore();
 
     if (isBlurred) {
       ctx.filter = 'none';
-      // Add a subtle frosted defocus glaze
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      // Frosted defocus glaze
+      ctx.fillStyle = 'rgba(240, 230, 218, 0.15)';
       ctx.fill();
     }
 
@@ -701,7 +720,7 @@ export class BotScene {
     this.camera.position.z += (this.targetCamZ - this.camera.position.z) * 0.22;
     this.camera.lookAt(0, 0.26, 0);
 
-    // 3D Carousel animation & visibility (30° right-tilted orbital group)
+    // 3D Carousel animation & visibility (15° left-tilted orbital group)
     if (this.isCarouselActive) {
       this.carouselTiltGroup.visible = true;
       const currentScale = this.carouselTiltGroup.scale.x;
@@ -711,17 +730,17 @@ export class BotScene {
       this.carouselGroup.rotation.y += (this.carouselTargetRotation - this.carouselGroup.rotation.y) * 0.10;
 
       // Center proximity effect:
-      // Cards coming to center front scale up to 1.38x & become 100% razor sharp;
-      // remaining cards stay compact (0.88x) & their content stays blurred!
+      // Cards coming to center front scale up to 1.40x & become 100% razor sharp;
+      // remaining cards stay compact (0.90x) & their content stays softly blurred!
       const tempPos = new THREE.Vector3();
       this.carouselCards.forEach((card) => {
         card.mesh.getWorldPosition(tempPos);
         let proximity = 0;
         if (tempPos.z > 0) {
-          proximity = Math.pow(Math.max(0, 1.0 - Math.abs(tempPos.x) / 0.85), 2.0);
+          proximity = Math.pow(Math.max(0, 1.0 - Math.abs(tempPos.x) / 0.95), 1.6);
         }
-        // Center card scales up (1.38x), remaining cards are 0.88x
-        const scale = THREE.MathUtils.lerp(0.88, 1.38, proximity);
+        // Center card scales up (1.40x), remaining cards are 0.90x
+        const scale = THREE.MathUtils.lerp(0.90, 1.40, proximity);
         card.mesh.scale.set(scale, scale, 1);
 
         // Center card unblurs into crystal sharpness, remaining cards stay blurred!

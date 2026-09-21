@@ -100,12 +100,18 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
-  background-color: var(--bg-maroon-deepest);
+  background-color: #0c0103;
 }
 
 body {
   font-family: var(--font-simple);
-  background-color: var(--bg-maroon-deepest);
+  /* Elegant Multi-Dimensional Velvet Gradient System (Eliminates flat maroon) */
+  background: 
+    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(195, 36, 64, 0.26) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 55% at 90% 75%, rgba(125, 18, 36, 0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 70% 50% at 10% 45%, rgba(95, 12, 28, 0.25) 0%, transparent 65%),
+    linear-gradient(180deg, #180307 0%, #0d0103 40%, #160206 75%, #080002 100%);
+  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.65;
   overflow-x: hidden;
@@ -138,7 +144,7 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Ambient Glow Blobs in Background (Deep Maroon Vignette) */
+/* Ambient Glow Blobs in Background (Multi-Stop Velvet Lighting) */
 .ambient-glow {
   position: fixed;
   pointer-events: none;
@@ -151,18 +157,18 @@ body {
   top: -140px;
   left: 50%;
   transform: translateX(-50%);
-  width: 950px;
-  height: 540px;
-  background: radial-gradient(circle, rgba(142, 24, 44, 0.25) 0%, rgba(85, 14, 26, 0.28) 45%, transparent 75%);
+  width: 1050px;
+  height: 580px;
+  background: radial-gradient(ellipse at 50% 30%, rgba(205, 38, 68, 0.32) 0%, rgba(125, 18, 36, 0.28) 45%, transparent 75%);
 }
 
 .ambient-glow-center {
   top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1100px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(90, 14, 28, 0.22) 0%, rgba(18, 2, 4, 0) 70%);
+  width: 1200px;
+  height: 900px;
+  background: radial-gradient(ellipse at 50% 50%, rgba(120, 18, 36, 0.24) 0%, rgba(45, 6, 14, 0.15) 50%, transparent 75%);
 }
 
 /* Global Nav Header */
