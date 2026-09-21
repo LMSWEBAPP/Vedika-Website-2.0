@@ -21,22 +21,229 @@
   font-display: swap;
 }
 
-:root {
-  /* Color Palette: Pure Off-white and Maroon (No Gold) */
+/* ==========================================================================
+   THEME DESIGN TOKEN ARCHITECTURE
+   Theme 1: Imperial Maroon & Alabaster Off-White (Default)
+   Theme 2: Cortex Crimson Sunset (Exact Reference Video Theme - Zero Maroon)
+   ========================================================================== */
+
+:root,
+body[data-theme="maroon"] {
+  /* Surface & Background Layers */
+  --bg-deepest: #120204;
+  --bg-noir: #1a0408;
+  --bg-base: #24050b;
+  --bg-surface: #350812;
+  --bg-card: rgba(36, 5, 11, 0.75);
+  --bg-card-gradient: linear-gradient(145deg, rgba(53, 8, 18, 0.88) 0%, rgba(36, 5, 11, 0.92) 50%, rgba(20, 3, 7, 0.96) 100%);
+  --bg-card-hover: linear-gradient(145deg, rgba(72, 12, 25, 0.92) 0%, rgba(46, 7, 15, 0.95) 50%, rgba(26, 4, 9, 0.98) 100%);
+
+  /* Accent & Glow Tokens */
+  --theme-accent: #8e182c;
+  --theme-accent-bright: #b8223c;
+  --theme-accent-vivid: #c92a46;
+  --theme-accent-glow: rgba(184, 34, 60, 0.4);
+  --theme-border-accent: rgba(184, 34, 60, 0.6);
+  --theme-border-subtle: rgba(244, 237, 226, 0.22);
+  --theme-border-outline: rgba(244, 237, 226, 0.22);
+
+  /* Component Glass Surfaces */
+  --theme-pill-bg: rgba(36, 5, 11, 0.92);
+  --theme-pill-border: rgba(244, 237, 226, 0.22);
+  --theme-stepper-bg: rgba(26, 4, 9, 0.90);
+  --theme-stepper-border: rgba(244, 237, 226, 0.22);
+  --theme-step-active-bg: var(--offwhite-bright);
+  --theme-step-active-shadow: 0 0 10px rgba(252, 250, 246, 0.8), 0 0 16px rgba(184, 34, 60, 0.5);
+  --theme-icon-bg: rgba(36, 5, 11, 0.7);
+  --theme-icon-border: rgba(244, 237, 226, 0.22);
+  --theme-icon-hover: rgba(53, 8, 18, 0.95);
+
+  --theme-sub-badge-bg: linear-gradient(135deg, rgba(252, 250, 246, 0.14) 0%, rgba(68, 10, 23, 0.85) 60%, rgba(26, 4, 9, 0.95) 100%);
+  --theme-sub-badge-border: rgba(252, 250, 246, 0.28);
+  --theme-sub-badge-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+
+  --theme-hud-pill-bg: linear-gradient(135deg, rgba(252, 250, 246, 0.14) 0%, rgba(55, 8, 18, 0.85) 60%, rgba(26, 4, 9, 0.95) 100%);
+
+  --theme-reticle-bg: linear-gradient(135deg, rgba(53, 8, 18, 0.95) 0%, rgba(36, 5, 11, 0.92) 100%);
+  --theme-reticle-border: rgba(244, 237, 226, 0.24);
+  --theme-reticle-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  --theme-reticle-hover: rgba(72, 12, 25, 0.95);
+  --theme-reticle-hover-border: rgba(252, 250, 246, 0.65);
+  --theme-reticle-hover-shadow: 0 0 24px rgba(184, 34, 60, 0.4), 0 0 16px rgba(252, 250, 246, 0.2);
+
+  --theme-badge-bg: rgba(184, 34, 60, 0.35);
+  --theme-badge-border: rgba(184, 34, 60, 0.6);
+  --theme-badge-text: var(--offwhite-bright);
+
+  --theme-canvas-bg: rgba(18, 2, 4, 0.6);
+  --theme-canvas-border: rgba(244, 237, 226, 0.12);
+
+  --theme-flowchart-bg: rgba(26, 4, 9, 0.65);
+  --theme-flowchart-border: rgba(244, 237, 226, 0.12);
+  --theme-flow-active-bg: rgba(184, 34, 60, 0.22);
+  --theme-flow-active-border: rgba(184, 34, 60, 0.5);
+
+  --theme-headline-gradient: linear-gradient(135deg, #ffffff 0%, #fcfaf6 35%, #f4ede2 65%, #df94a4 100%);
+
+  --theme-body-bg: 
+    radial-gradient(ellipse 85% 55% at 50% -2%, rgba(254, 250, 244, 0.20) 0%, rgba(215, 45, 75, 0.35) 35%, rgba(65, 8, 18, 0.22) 65%, transparent 80%),
+    radial-gradient(ellipse 60% 50% at 12% 45%, rgba(252, 250, 246, 0.10) 0%, rgba(165, 26, 52, 0.24) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 88% 52%, rgba(252, 250, 246, 0.10) 0%, rgba(165, 26, 52, 0.24) 40%, transparent 70%),
+    radial-gradient(circle at 50% 48%, rgba(254, 250, 244, 0.10) 0%, rgba(184, 34, 60, 0.22) 42%, transparent 75%),
+    linear-gradient(180deg, rgba(252, 250, 246, 0.06) 0%, #22040b 16%, #140206 50%, #1a0309 78%, #070002 100%);
+
+  --theme-ambient-top: radial-gradient(ellipse at 50% 25%, rgba(254, 250, 244, 0.26) 0%, rgba(215, 40, 72, 0.40) 35%, rgba(125, 18, 36, 0.26) 60%, transparent 80%);
+  --theme-ambient-center: radial-gradient(ellipse at 50% 50%, rgba(252, 250, 246, 0.16) 0%, rgba(184, 34, 60, 0.32) 35%, rgba(55, 8, 18, 0.20) 65%, transparent 80%);
+
+  --theme-showcase-bg: 
+    radial-gradient(ellipse 80% 50% at 50% 5%, rgba(254, 250, 244, 0.18) 0%, rgba(205, 38, 68, 0.28) 38%, transparent 75%),
+    radial-gradient(ellipse 65% 55% at 15% 50%, rgba(252, 250, 246, 0.08) 0%, rgba(165, 24, 48, 0.22) 42%, transparent 75%),
+    radial-gradient(ellipse 65% 55% at 85% 50%, rgba(252, 250, 246, 0.08) 0%, rgba(165, 24, 48, 0.22) 42%, transparent 75%),
+    linear-gradient(180deg, rgba(252, 250, 246, 0.05) 0%, #1e0309 18%, #120205 50%, #180307 80%, #070002 100%);
+
+  --theme-shimmer-top: radial-gradient(ellipse 90% 100% at 50% 0%, rgba(254, 250, 244, 0.24) 0%, rgba(215, 45, 75, 0.32) 36%, rgba(75, 10, 22, 0.18) 70%, transparent 100%);
+  --theme-bottom-fade: linear-gradient(to top, rgba(10, 1, 3, 0.28) 0%, rgba(10, 1, 3, 0.05) 60%, transparent 100%);
+
+  --theme-nav-bg: rgba(18, 2, 5, 0.85);
+  --theme-nav-border: var(--offwhite-border);
+  --theme-nav-center-status: rgba(36, 5, 11, 0.7);
+  --theme-logo-symbol-bg: rgba(45, 7, 15, 0.7);
+  --theme-logo-border: var(--offwhite-border-bright);
+  --theme-logo-dot: #b8223c;
+  --theme-dot-active-pulse: rgba(184, 34, 60, 0.7);
+
+  --theme-btn-card-pill-bg: linear-gradient(135deg, #ffffff 0%, #fcfaf6 40%, #ece3d4 100%);
+  --theme-btn-card-pill-hover: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
+  --theme-btn-card-pill-text: #160205;
+  --theme-btn-card-pill-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(252, 250, 246, 0.18);
+  --theme-btn-card-pill-hover-shadow: 0 6px 24px rgba(255, 255, 255, 0.3), 0 0 20px rgba(184, 34, 60, 0.35);
+
+  --theme-btn-hover-bg: rgba(184, 34, 60, 0.25);
+  --theme-gauge-stroke: var(--offwhite-bright);
+
+  /* Legacy variable mappings for safety */
   --bg-maroon-deepest: #120204;
   --bg-maroon-noir: #1a0408;
   --bg-maroon-base: #24050b;
   --bg-maroon-surface: #350812;
   --bg-maroon-card: rgba(36, 5, 11, 0.75);
-  --bg-card: linear-gradient(145deg, rgba(53, 8, 18, 0.88) 0%, rgba(36, 5, 11, 0.92) 50%, rgba(20, 3, 7, 0.96) 100%);
-  --bg-card-hover: linear-gradient(145deg, rgba(72, 12, 25, 0.92) 0%, rgba(46, 7, 15, 0.95) 50%, rgba(26, 4, 9, 0.98) 100%);
-
-  /* Maroon Accents & Glows */
   --maroon-accent: #8e182c;
   --maroon-bright: #b8223c;
   --maroon-vivid: #c92a46;
   --maroon-glow: rgba(184, 34, 60, 0.4);
+}
 
+/* ==========================================================================
+   THEME 2: CORTEX CRIMSON SUNSET (EXACT REFERENCE VIDEO THEME)
+   100% Sunset Cinnabar Vermilion, Burnt Sienna, Warm Coral & Espresso Noir
+   ABSOLUTELY ZERO MAROON!
+   ========================================================================== */
+body[data-theme="crimson"] {
+  /* Surface & Background Layers (Warm Sunset Mahogany & Burnt Espresso) */
+  --bg-deepest: #070101;
+  --bg-noir: #120302;
+  --bg-base: #1e0503;
+  --bg-surface: #2e0805;
+  --bg-card: rgba(46, 9, 5, 0.82);
+  --bg-card-gradient: linear-gradient(145deg, rgba(68, 14, 8, 0.88) 0%, rgba(42, 8, 5, 0.92) 50%, rgba(18, 3, 2, 0.96) 100%);
+  --bg-card-hover: linear-gradient(145deg, rgba(96, 22, 12, 0.92) 0%, rgba(62, 13, 7, 0.95) 50%, rgba(28, 6, 3, 0.98) 100%);
+
+  /* Accent & Glow Tokens (Pure Vibrant Sunset Cinnabar & Coral) */
+  --theme-accent: #c22f18;
+  --theme-accent-bright: #e6381e;
+  --theme-accent-vivid: #ff5733;
+  --theme-accent-glow: rgba(230, 56, 30, 0.50);
+  --theme-border-accent: rgba(255, 87, 51, 0.70);
+  --theme-border-subtle: rgba(255, 200, 180, 0.28);
+  --theme-border-outline: rgba(255, 200, 180, 0.35);
+
+  /* Component Glass Surfaces */
+  --theme-pill-bg: rgba(46, 9, 5, 0.94);
+  --theme-pill-border: rgba(255, 180, 160, 0.40);
+  --theme-stepper-bg: rgba(32, 6, 4, 0.92);
+  --theme-stepper-border: rgba(255, 180, 160, 0.30);
+  --theme-step-active-bg: #ff5733;
+  --theme-step-active-shadow: 0 0 10px rgba(255, 87, 51, 0.9), 0 0 18px rgba(230, 56, 30, 0.65);
+  --theme-icon-bg: rgba(46, 9, 5, 0.80);
+  --theme-icon-border: rgba(255, 180, 160, 0.35);
+  --theme-icon-hover: rgba(78, 16, 9, 0.96);
+
+  --theme-sub-badge-bg: linear-gradient(135deg, rgba(255, 245, 240, 0.18) 0%, rgba(200, 42, 20, 0.88) 60%, rgba(46, 9, 5, 0.95) 100%);
+  --theme-sub-badge-border: rgba(255, 200, 180, 0.40);
+  --theme-sub-badge-shadow: 0 4px 16px rgba(230, 56, 30, 0.30);
+
+  --theme-hud-pill-bg: linear-gradient(135deg, rgba(255, 245, 240, 0.18) 0%, rgba(200, 42, 20, 0.88) 60%, rgba(46, 9, 5, 0.95) 100%);
+
+  --theme-reticle-bg: linear-gradient(135deg, rgba(200, 45, 22, 0.95) 0%, rgba(100, 18, 10, 0.92) 100%);
+  --theme-reticle-border: rgba(255, 180, 160, 0.45);
+  --theme-reticle-shadow: 0 0 20px rgba(230, 56, 30, 0.45);
+  --theme-reticle-hover: rgba(220, 50, 25, 0.95);
+  --theme-reticle-hover-border: #ffffff;
+  --theme-reticle-hover-shadow: 0 0 28px rgba(230, 56, 30, 0.65);
+
+  --theme-badge-bg: rgba(230, 56, 30, 0.35);
+  --theme-badge-border: rgba(230, 56, 30, 0.70);
+  --theme-badge-text: #fff6f2;
+
+  --theme-canvas-bg: rgba(20, 4, 3, 0.65);
+  --theme-canvas-border: rgba(255, 180, 160, 0.18);
+
+  --theme-flowchart-bg: rgba(30, 6, 4, 0.72);
+  --theme-flowchart-border: rgba(255, 180, 160, 0.18);
+  --theme-flow-active-bg: rgba(230, 56, 30, 0.28);
+  --theme-flow-active-border: rgba(230, 56, 30, 0.68);
+
+  --theme-headline-gradient: linear-gradient(135deg, #ffffff 0%, #fff6f2 35%, #ffd4c6 65%, #ff5c38 100%);
+
+  --theme-body-bg: 
+    radial-gradient(ellipse 85% 65% at 50% -5%, rgba(255, 235, 220, 0.38) 0%, rgba(235, 60, 32, 0.72) 32%, rgba(150, 28, 14, 0.48) 60%, transparent 80%),
+    radial-gradient(ellipse 60% 50% at 12% 45%, rgba(255, 120, 90, 0.16) 0%, rgba(180, 35, 18, 0.34) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 88% 52%, rgba(255, 120, 90, 0.16) 0%, rgba(180, 35, 18, 0.34) 40%, transparent 70%),
+    radial-gradient(circle at 50% 38%, rgba(255, 210, 190, 0.26) 0%, rgba(225, 52, 28, 0.50) 35%, rgba(85, 15, 8, 0.32) 65%, transparent 85%),
+    linear-gradient(180deg, rgba(255, 240, 230, 0.08) 0%, #360a06 18%, #1f0503 48%, #140302 78%, #080101 100%);
+
+  --theme-ambient-top: radial-gradient(ellipse at 50% 25%, rgba(255, 235, 220, 0.44) 0%, rgba(235, 60, 32, 0.72) 35%, rgba(160, 30, 16, 0.44) 60%, transparent 80%);
+  --theme-ambient-center: radial-gradient(ellipse at 50% 50%, rgba(255, 220, 200, 0.28) 0%, rgba(220, 50, 25, 0.55) 35%, rgba(95, 16, 8, 0.34) 65%, transparent 80%);
+
+  --theme-showcase-bg: 
+    radial-gradient(ellipse 80% 55% at 50% 5%, rgba(255, 230, 210, 0.28) 0%, rgba(230, 56, 30, 0.58) 35%, transparent 75%),
+    radial-gradient(ellipse 65% 55% at 15% 50%, rgba(255, 110, 80, 0.14) 0%, rgba(190, 40, 20, 0.34) 42%, transparent 75%),
+    radial-gradient(ellipse 65% 55% at 85% 50%, rgba(255, 110, 80, 0.14) 0%, rgba(190, 40, 20, 0.34) 42%, transparent 75%),
+    linear-gradient(180deg, rgba(255, 240, 230, 0.06) 0%, #2f0804 18%, #1c0403 50%, #150302 80%, #080101 100%);
+
+  --theme-shimmer-top: radial-gradient(ellipse 90% 100% at 50% 0%, rgba(255, 235, 220, 0.38) 0%, rgba(235, 60, 32, 0.62) 35%, rgba(120, 22, 12, 0.26) 70%, transparent 100%);
+  --theme-bottom-fade: linear-gradient(to top, rgba(12, 2, 1, 0.30) 0%, rgba(12, 2, 1, 0.05) 60%, transparent 100%);
+
+  --theme-nav-bg: rgba(22, 5, 4, 0.90);
+  --theme-nav-border: rgba(255, 180, 160, 0.25);
+  --theme-nav-center-status: rgba(42, 8, 5, 0.80);
+  --theme-logo-symbol-bg: rgba(56, 11, 7, 0.80);
+  --theme-logo-border: rgba(255, 180, 160, 0.70);
+  --theme-logo-dot: #ff4d2e;
+  --theme-dot-active-pulse: rgba(230, 56, 30, 0.75);
+
+  --theme-btn-card-pill-bg: linear-gradient(135deg, #ffffff 0%, #fff2ec 40%, #ffd5c8 100%);
+  --theme-btn-card-pill-hover: linear-gradient(135deg, #ffffff 0%, #ffe9e2 100%);
+  --theme-btn-card-pill-text: #140302;
+  --theme-btn-card-pill-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(230, 56, 30, 0.28);
+  --theme-btn-card-pill-hover-shadow: 0 6px 24px rgba(255, 255, 255, 0.35), 0 0 20px rgba(230, 56, 30, 0.48);
+
+  --theme-btn-hover-bg: rgba(230, 56, 30, 0.28);
+  --theme-gauge-stroke: #ff5733;
+
+  /* Total Legacy Sanitization - Overrides ANY residual maroon references to Crimson */
+  --bg-maroon-deepest: #070101;
+  --bg-maroon-noir: #120302;
+  --bg-maroon-base: #1e0503;
+  --bg-maroon-surface: #2e0805;
+  --bg-maroon-card: rgba(46, 9, 5, 0.82);
+  --maroon-accent: #c22f18;
+  --maroon-bright: #e6381e;
+  --maroon-vivid: #ff5733;
+  --maroon-glow: rgba(230, 56, 30, 0.50);
+}
+
+:root {
   /* Off-White Tones */
   --offwhite-bright: #fcfaf6;
   --offwhite-cream: #f4ede2;
@@ -48,12 +255,12 @@
   --offwhite-border-bright: rgba(252, 250, 246, 0.65);
   --offwhite-glow: rgba(252, 250, 246, 0.2);
 
-  /* Semantic Aliases - Remapped strictly to Off-White & Maroon */
+  /* Semantic Aliases */
   --gold-primary: var(--offwhite-bright);
   --gold-shimmer: var(--offwhite-cream);
   --gold-pale: var(--offwhite-bright);
-  --gold-antique: var(--maroon-accent);
-  --gold-glow: var(--maroon-glow);
+  --gold-antique: var(--theme-accent);
+  --gold-glow: var(--theme-accent-glow);
   --gold-subtle: var(--offwhite-subtle);
   --gold-border: var(--offwhite-border);
   --gold-border-bright: var(--offwhite-border-bright);
@@ -63,7 +270,6 @@
   --font-delicate: 'Thinoo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-simple: 'Vollkorn', Georgia, serif;
 
-  /* Aliases */
   --font-display: var(--font-elegant);
   --font-body: var(--font-simple);
   --font-mono: var(--font-delicate);
@@ -72,10 +278,6 @@
   --text-secondary: var(--offwhite-cream);
   --text-muted: var(--offwhite-muted);
   --text-inverse: #140204;
-
-  /* Glass Borders & Reflections */
-  --border-glass: var(--offwhite-border);
-  --border-glass-bright: var(--offwhite-border-bright);
 
   /* Transitions */
   --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
@@ -100,28 +302,19 @@
 html {
   scroll-behavior: smooth;
   color-scheme: dark;
-  background-color: #0c0103;
+  background-color: var(--bg-deepest, #0c0103);
 }
 
 body {
   font-family: var(--font-simple);
-  /* Elegant Imperial Maroon & Alabaster Off-White Atmospheric Gradient System */
-  background: 
-    /* Top luminous pearlescent off-white bloom bleeding into imperial maroon */
-    radial-gradient(ellipse 85% 55% at 50% -2%, rgba(254, 250, 244, 0.20) 0%, rgba(215, 45, 75, 0.35) 35%, rgba(65, 8, 18, 0.22) 65%, transparent 80%),
-    /* Lateral off-white & wine ambient glows behind stage content */
-    radial-gradient(ellipse 60% 50% at 12% 45%, rgba(252, 250, 246, 0.10) 0%, rgba(165, 26, 52, 0.24) 40%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 88% 52%, rgba(252, 250, 246, 0.10) 0%, rgba(165, 26, 52, 0.24) 40%, transparent 70%),
-    /* Center aura behind Vedika */
-    radial-gradient(circle at 50% 48%, rgba(254, 250, 244, 0.10) 0%, rgba(184, 34, 60, 0.22) 42%, transparent 75%),
-    /* Base linear sweep from soft off-white shimmer through velvet maroon to deep noir */
-    linear-gradient(180deg, rgba(252, 250, 246, 0.06) 0%, #22040b 16%, #140206 50%, #1a0309 78%, #070002 100%);
+  background: var(--theme-body-bg);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.65;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background 0.4s ease;
 }
 
 /* Typography Utilities */
@@ -142,27 +335,22 @@ body {
   color: var(--offwhite-bright);
 }
 
-.text-gold-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 35%, #f4ede2 65%, #df94a4 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+.text-gold-gradient,
 .text-maroon-offwhite {
-  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 30%, #ebdcc9 60%, #cc3650 100%);
+  background: var(--theme-headline-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Ambient Glow Blobs in Background (Luminous Off-White & Imperial Maroon) */
+/* Ambient Glow Blobs in Background */
 .ambient-glow {
   position: fixed;
   pointer-events: none;
   z-index: 0;
   border-radius: 50%;
   filter: blur(140px);
+  transition: background 0.4s ease;
 }
 
 .ambient-glow-top {
@@ -171,13 +359,7 @@ body {
   transform: translateX(-50%);
   width: 1100px;
   height: 620px;
-  background: radial-gradient(
-    ellipse at 50% 25%,
-    rgba(254, 250, 244, 0.26) 0%,
-    rgba(215, 40, 72, 0.40) 35%,
-    rgba(125, 18, 36, 0.26) 60%,
-    transparent 80%
-  );
+  background: var(--theme-ambient-top);
 }
 
 .ambient-glow-center {
@@ -186,13 +368,7 @@ body {
   transform: translate(-50%, -50%);
   width: 1250px;
   height: 950px;
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(252, 250, 246, 0.16) 0%,
-    rgba(184, 34, 60, 0.32) 35%,
-    rgba(55, 8, 18, 0.20) 65%,
-    transparent 80%
-  );
+  background: var(--theme-ambient-center);
 }
 
 /* ==========================================================================
@@ -204,8 +380,8 @@ body {
   gap: 3px;
   padding: 3px 4px;
   border-radius: var(--radius-full);
-  background: rgba(18, 3, 7, 0.88);
-  border: 1px solid rgba(244, 237, 226, 0.22);
+  background: var(--theme-stepper-bg, rgba(18, 3, 7, 0.88));
+  border: 1px solid var(--theme-border-subtle, rgba(244, 237, 226, 0.22));
   box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
@@ -213,8 +389,8 @@ body {
 }
 
 .theme-switch-deck-card {
-  background: rgba(22, 4, 9, 0.92);
-  border-color: rgba(252, 250, 246, 0.25);
+  background: var(--theme-pill-bg, rgba(22, 4, 9, 0.92));
+  border-color: var(--theme-pill-border, rgba(252, 250, 246, 0.25));
 }
 
 .theme-switch-btn {
@@ -240,9 +416,9 @@ body {
 
 .theme-switch-btn.active {
   color: #ffffff;
-  background: linear-gradient(135deg, rgba(184, 34, 60, 0.95) 0%, rgba(85, 12, 28, 0.95) 100%);
+  background: var(--theme-accent-bright);
   border: 1px solid rgba(255, 255, 255, 0.35);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 14px rgba(184, 34, 60, 0.45);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 14px var(--theme-accent-glow);
 }
 
 .theme-dot {
@@ -262,80 +438,6 @@ body {
   box-shadow: 0 0 8px #ff5733;
 }
 
-/* ==========================================================================
-   THEME 2: CORTEX CRIMSON SUNSET (EXACT REFERENCE VIDEO THEME)
-   Colors & Gradients sampled directly from Website reference.mp4:
-   Vibrant Cinnabar / Vermilion Sunset Glow, Warm Coral Amber Accents
-   ========================================================================== */
-body[data-theme="crimson"] {
-  background: 
-    /* Glowing warm sunset vermilion canopy from video frames 00:00 - 00:24 */
-    radial-gradient(ellipse 85% 65% at 50% -5%, rgba(255, 235, 220, 0.35) 0%, rgba(235, 60, 32, 0.68) 32%, rgba(150, 28, 14, 0.45) 60%, transparent 80%),
-    /* Lateral warm coral / amber illumination */
-    radial-gradient(ellipse 60% 50% at 12% 45%, rgba(255, 120, 90, 0.15) 0%, rgba(180, 35, 18, 0.32) 40%, transparent 70%),
-    radial-gradient(ellipse 60% 50% at 88% 52%, rgba(255, 120, 90, 0.15) 0%, rgba(180, 35, 18, 0.32) 40%, transparent 70%),
-    /* Radiant backlight behind 3D Bot */
-    radial-gradient(circle at 50% 38%, rgba(255, 210, 190, 0.22) 0%, rgba(225, 52, 28, 0.45) 35%, rgba(85, 15, 8, 0.30) 65%, transparent 85%),
-    /* Base sunset noir linear gradient */
-    linear-gradient(180deg, rgba(255, 240, 230, 0.08) 0%, #360a06 18%, #1f0503 48%, #140302 78%, #080101 100%);
-}
-
-body[data-theme="crimson"] .ambient-glow-top {
-  background: radial-gradient(
-    ellipse at 50% 25%,
-    rgba(255, 235, 220, 0.42) 0%,
-    rgba(235, 60, 32, 0.70) 35%,
-    rgba(160, 30, 16, 0.42) 60%,
-    transparent 80%
-  );
-}
-
-body[data-theme="crimson"] .ambient-glow-center {
-  background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(255, 220, 200, 0.26) 0%,
-    rgba(220, 50, 25, 0.52) 35%,
-    rgba(95, 16, 8, 0.32) 65%,
-    transparent 80%
-  );
-}
-
-body[data-theme="crimson"] .theme-switch-btn.active {
-  background: linear-gradient(135deg, #e6381e 0%, #a8200d 100%);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4), 0 0 16px rgba(230, 56, 30, 0.55);
-}
-
-body[data-theme="crimson"] .global-nav {
-  background: rgba(24, 6, 4, 0.88);
-  border-bottom-color: rgba(255, 180, 160, 0.22);
-}
-
-body[data-theme="crimson"] .brand-logo .logo-symbol {
-  background: rgba(60, 12, 8, 0.75);
-  border-color: rgba(255, 180, 160, 0.65);
-  box-shadow: 0 0 16px rgba(230, 56, 30, 0.4);
-}
-
-body[data-theme="crimson"] .nav-center-status {
-  background: rgba(45, 10, 6, 0.75);
-  border-color: rgba(255, 180, 160, 0.25);
-}
-
-body[data-theme="crimson"] .status-pulse-dot {
-  background-color: #ff4824;
-  box-shadow: 0 0 10px #ff4824;
-}
-
-body[data-theme="crimson"] .btn-nav-outline {
-  border-color: rgba(255, 180, 160, 0.35);
-}
-
-body[data-theme="crimson"] .btn-nav-outline:hover {
-  background: rgba(230, 56, 30, 0.25);
-  border-color: #ff5733;
-  box-shadow: 0 0 18px rgba(230, 56, 30, 0.35);
-}
-
 /* Global Nav Header */
 .global-nav {
   position: fixed;
@@ -346,8 +448,8 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   padding: 18px 32px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  background: rgba(18, 2, 5, 0.85);
-  border-bottom: 1px solid var(--offwhite-border);
+  background: var(--theme-nav-bg, rgba(18, 2, 5, 0.85));
+  border-bottom: 1px solid var(--theme-nav-border, var(--offwhite-border));
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
   transition: background var(--transition-fast), border var(--transition-fast);
 }
@@ -379,15 +481,20 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: rgba(45, 7, 15, 0.7);
-  border: 1px solid var(--offwhite-border-bright);
-  box-shadow: 0 0 16px rgba(184, 34, 60, 0.35);
+  background: var(--theme-logo-symbol-bg, rgba(45, 7, 15, 0.7));
+  border: 1px solid var(--theme-logo-border, var(--offwhite-border-bright));
+  box-shadow: 0 0 16px var(--theme-accent-glow);
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.theme-logo-dot {
+  fill: var(--theme-logo-dot, #b8223c);
+  transition: fill var(--transition-fast);
 }
 
 .brand-logo:hover .logo-symbol {
   transform: scale(1.06);
-  box-shadow: 0 0 24px rgba(252, 250, 246, 0.3), 0 0 18px rgba(184, 34, 60, 0.4);
+  box-shadow: 0 0 24px rgba(252, 250, 246, 0.3), 0 0 18px var(--theme-accent-glow);
 }
 
 .nav-center-status {
@@ -396,35 +503,37 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   gap: 10px;
   padding: 7px 18px;
   border-radius: var(--radius-full);
-  background: rgba(36, 5, 11, 0.7);
-  border: 1px solid var(--offwhite-border);
+  background: var(--theme-nav-center-status, rgba(36, 5, 11, 0.7));
+  border: 1px solid var(--theme-border-subtle, var(--offwhite-border));
   font-family: var(--font-delicate);
   font-size: 0.75rem;
   color: var(--offwhite-cream);
   letter-spacing: 0.12em;
+  transition: background var(--transition-fast), border var(--transition-fast);
 }
 
 .status-pulse-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background-color: var(--maroon-bright);
-  box-shadow: 0 0 8px var(--maroon-bright);
-  animation: pulse-maroon 2.2s infinite;
+  background-color: var(--theme-accent-bright, #b8223c);
+  box-shadow: 0 0 8px var(--theme-accent-bright, #b8223c);
+  animation: pulse-theme-dot 2.2s infinite;
+  transition: background-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
-@keyframes pulse-maroon {
+@keyframes pulse-theme-dot {
   0% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(184, 34, 60, 0.7);
+    box-shadow: 0 0 0 0 var(--theme-dot-active-pulse, rgba(184, 34, 60, 0.7));
   }
   70% {
     transform: scale(1.05);
-    box-shadow: 0 0 0 8px rgba(184, 34, 60, 0);
+    box-shadow: 0 0 0 8px rgba(0, 0, 0, 0);
   }
   100% {
     transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(184, 34, 60, 0);
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   }
 }
 
@@ -439,10 +548,10 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   gap: 14px;
 }
 
-/* Button Styles - Pure Classic Off-White & Maroon */
+/* Button Styles - Theme Adaptive */
 .btn-ghost-sm {
-  background: rgba(36, 5, 11, 0.6);
-  border: 1px solid var(--offwhite-border);
+  background: var(--theme-icon-bg, rgba(36, 5, 11, 0.6));
+  border: 1px solid var(--theme-border-subtle, var(--offwhite-border));
   color: var(--offwhite-cream);
   display: flex;
   align-items: center;
@@ -459,8 +568,8 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
 .btn-ghost-sm:hover {
   color: var(--offwhite-bright);
   border-color: var(--offwhite-border-bright);
-  background: rgba(53, 8, 18, 0.9);
-  box-shadow: 0 0 16px rgba(252, 250, 246, 0.15), 0 0 12px rgba(184, 34, 60, 0.3);
+  background: var(--theme-icon-hover, rgba(53, 8, 18, 0.9));
+  box-shadow: 0 0 16px rgba(252, 250, 246, 0.15), 0 0 12px var(--theme-accent-glow);
 }
 
 .btn-nav-outline {
@@ -471,17 +580,17 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   color: var(--offwhite-bright);
   padding: 8px 20px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--offwhite-border);
-  background: rgba(36, 5, 11, 0.6);
+  border: 1px solid var(--theme-border-subtle, var(--offwhite-border));
+  background: var(--theme-icon-bg, rgba(36, 5, 11, 0.6));
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .btn-nav-outline:hover {
-  background: rgba(53, 8, 18, 0.9);
+  background: var(--theme-icon-hover, rgba(53, 8, 18, 0.9));
   border-color: var(--offwhite-border-bright);
   color: var(--offwhite-bright);
-  box-shadow: 0 0 14px rgba(252, 250, 246, 0.15);
+  box-shadow: 0 0 14px var(--theme-accent-glow);
 }
 
 .btn-primary-pill {
@@ -493,22 +602,22 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   font-size: 0.82rem;
   letter-spacing: 0.1em;
   font-weight: 600;
-  color: #160205;
-  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 40%, #ece3d4 100%);
+  color: var(--theme-btn-card-pill-text, #160205);
+  background: var(--theme-btn-card-pill-bg);
   padding: 9px 24px;
   border-radius: var(--radius-full);
   border: 1px solid rgba(255, 255, 255, 0.65);
   transition: all var(--transition-fast);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(252, 250, 246, 0.18);
+  box-shadow: var(--theme-btn-card-pill-shadow);
 }
 
 .btn-primary-pill:hover {
-  background: linear-gradient(135deg, #ffffff 0%, #faf8f5 100%);
-  box-shadow: 0 6px 26px rgba(255, 255, 255, 0.3), 0 0 24px rgba(184, 34, 60, 0.35);
+  background: var(--theme-btn-card-pill-hover);
+  box-shadow: var(--theme-btn-card-pill-hover-shadow);
   transform: translateY(-1px);
 }
 
-/* Regal Lacquered Maroon Prism Card */
+/* Lacquered Prism Card */
 .prism-card {
   position: relative;
   background: var(--bg-card) !important;
@@ -540,30 +649,87 @@ body[data-theme="crimson"] .btn-nav-outline:hover {
   border-color: var(--offwhite-border-bright) !important;
   box-shadow: 
     0 24px 60px rgba(0, 0, 0, 0.75), 
-    0 0 28px rgba(184, 34, 60, 0.3) !important;
+    0 0 28px var(--theme-accent-glow) !important;
 }
 
-/* Custom Scrollbar - Off-White & Deep Maroon */
+/* Custom Scrollbar - Responsive to Active Theme */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #140204;
+  background: var(--bg-deepest);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #350812;
+  background: var(--bg-surface);
   border: 1px solid rgba(252, 250, 246, 0.15);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #6e1323;
+  background: var(--theme-accent-bright);
 }
 
 @media (max-width: 900px) {
   .nav-center-status {
     display: none;
   }
+}
+
+/* Crimson Absolute Overrides for Global Elements */
+body[data-theme="crimson"] .theme-logo-dot {
+  fill: #ff4d2e !important;
+}
+
+body[data-theme="crimson"] .logo-symbol {
+  background: rgba(56, 11, 7, 0.85) !important;
+  border-color: rgba(255, 180, 160, 0.70) !important;
+  box-shadow: 0 0 16px rgba(230, 56, 30, 0.50) !important;
+}
+
+body[data-theme="crimson"] .brand-logo:hover .logo-symbol {
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.35), 0 0 20px rgba(230, 56, 30, 0.65) !important;
+}
+
+body[data-theme="crimson"] .nav-center-status {
+  background: rgba(42, 8, 5, 0.85) !important;
+  border-color: rgba(255, 180, 160, 0.30) !important;
+}
+
+body[data-theme="crimson"] .status-pulse-dot {
+  background-color: #ff5733 !important;
+  box-shadow: 0 0 8px #ff5733 !important;
+}
+
+body[data-theme="crimson"] .btn-ghost-sm {
+  background: rgba(46, 9, 5, 0.80) !important;
+  border-color: rgba(255, 180, 160, 0.30) !important;
+}
+
+body[data-theme="crimson"] .btn-ghost-sm:hover {
+  background: rgba(78, 16, 9, 0.96) !important;
+  box-shadow: 0 0 16px rgba(255, 255, 255, 0.2), 0 0 14px rgba(230, 56, 30, 0.55) !important;
+}
+
+body[data-theme="crimson"] .btn-nav-outline {
+  background: rgba(46, 9, 5, 0.80) !important;
+  border-color: rgba(255, 180, 160, 0.35) !important;
+}
+
+body[data-theme="crimson"] .btn-nav-outline:hover {
+  background: rgba(78, 16, 9, 0.96) !important;
+  border-color: rgba(255, 200, 180, 0.70) !important;
+  box-shadow: 0 0 16px rgba(230, 56, 30, 0.50) !important;
+}
+
+body[data-theme="crimson"] .btn-primary-pill {
+  color: #140302 !important;
+  background: linear-gradient(135deg, #ffffff 0%, #fff2ec 40%, #ffd5c8 100%) !important;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 16px rgba(230, 56, 30, 0.32) !important;
+}
+
+body[data-theme="crimson"] .btn-primary-pill:hover {
+  background: linear-gradient(135deg, #ffffff 0%, #ffe9e2 100%) !important;
+  box-shadow: 0 6px 26px rgba(255, 255, 255, 0.35), 0 0 24px rgba(230, 56, 30, 0.50) !important;
 }

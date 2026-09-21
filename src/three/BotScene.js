@@ -31,7 +31,8 @@ export class BotScene {
     this.scene.add(this.rootGroup);
 
     // Active Theme ('maroon' | 'crimson')
-    this.currentTheme = 'maroon';
+    const savedTheme = (typeof localStorage !== 'undefined' && localStorage.getItem('vedika-theme')) || (document.body ? document.body.getAttribute('data-theme') : 'maroon') || 'maroon';
+    this.currentTheme = savedTheme;
 
     // Initial positioning: camera framed naturally so head, shoulders, and chest are solid and grounded
     this.rootGroup.position.set(0, 0, 0);
@@ -67,6 +68,9 @@ export class BotScene {
     this.clock = new THREE.Clock();
 
     this.initLighting();
+    if (this.currentTheme !== 'maroon') {
+      this.setTheme(this.currentTheme);
+    }
     this.initEventListeners();
     this.loadModel();
     this.build3DCarousel();

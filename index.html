@@ -49,8 +49,22 @@
   
   <link rel="stylesheet" href="/src/styles/main.css" />
   <link rel="stylesheet" href="/src/styles/hud.css" />
+  <script>
+    (function() {
+      try {
+        var t = localStorage.getItem('vedika-theme') || 'maroon';
+        document.documentElement.setAttribute('data-theme', t);
+        window.__initialTheme = t;
+      } catch(e) {}
+    })();
+  </script>
 </head>
-<body class="bg-maroon-noir">
+<body data-theme="maroon">
+  <script>
+    if (window.__initialTheme) {
+      document.body.setAttribute('data-theme', window.__initialTheme);
+    }
+  </script>
   <!-- Ambient background glow layers -->
   <div class="ambient-glow ambient-glow-top"></div>
   <div class="ambient-glow ambient-glow-center"></div>
@@ -62,7 +76,7 @@
         <span class="logo-symbol">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
             <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" stroke="#fcfaf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            <circle cx="12" cy="12" r="3" fill="#b8223c" />
+            <circle cx="12" cy="12" r="3" fill="var(--theme-logo-dot, #b8223c)" id="logo-dot-circle" class="theme-logo-dot" />
           </svg>
         </span>
         <span class="logo-text">VEDIKA<span class="text-gold">.AI</span></span>
