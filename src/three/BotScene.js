@@ -43,14 +43,23 @@ export class BotScene {
     this.targetCamY = 0.26;
     this.targetCamZ = 2.65;
 
-    // 3D Revolving Carousel (compact, elegant card size, less hazy glassmorphism)
+    // 3D Revolving Carousel (Tilted 30 degrees to the right)
+    this.carouselTiltGroup = new THREE.Group();
     this.carouselGroup = new THREE.Group();
     this.carouselCards = [];
     this.carouselTargetRotation = 0;
-    // Compact radius (1.45m) and tighter framing so cards gracefully orbit around Vedika without eclipsing her
-    this.carouselRadius = 1.45; // Clean open circular halo around Vedika
+    // Compact radius (1.48m) so cards gracefully orbit around Vedika without eclipsing her
+    this.carouselRadius = 1.48;
     this.isCarouselActive = false;
-    this.scene.add(this.carouselGroup);
+
+    // Tilt the entire carousel circle 30 degrees to the right (-30° around Z axis)
+    // plus slight forward incline on X (0.18 rad) for rich 3D orbital perspective
+    this.carouselTiltGroup.rotation.z = -30 * (Math.PI / 180); // -0.5236 rad (30° right tilt)
+    this.carouselTiltGroup.rotation.x = 0.18; // slight forward incline
+    this.carouselTiltGroup.position.set(0, 0.05, 0);
+
+    this.carouselTiltGroup.add(this.carouselGroup);
+    this.scene.add(this.carouselTiltGroup);
 
     this.clock = new THREE.Clock();
 
@@ -282,64 +291,91 @@ export class BotScene {
   }
 
   /* ==========================================================================
-     3D REVOLVING CAROUSEL (REDUCED CARD SIZES & LESS HAZY GLASS)
-     User requirement: "reduce the card sizes and all the cards should be little less of glassmorphism"
+     3D REVOLVING CAROUSEL (30° TILTED ORBITAL HALO)
+     - 10 Cards mapping the webapp's actual feature suite
+     - Center card is enlarged (1.38x) and 100% razor sharp
+     - Remaining cards' content is blurred with defocused frosted glass
      ========================================================================== */
   build3DCarousel() {
     const cardData = [
-      { id: '01', category: 'PHYSICS', title: 'Quantum Kinematics', desc: 'Particle wave packet dynamics.', hue: '#fcfaf6' },
-      { id: '02', category: 'CALCULUS', title: 'Vector Surfaces', desc: '3D gradient fields & flux.', hue: '#b8223c' },
-      { id: '03', category: 'CHEMISTRY', title: 'Molecular Orbitals', desc: 'Covalent bond angles in 3D.', hue: '#f4ede2' },
-      { id: '04', category: 'CODE HEAP', title: 'Call Stack Heap', desc: 'Recursion tree visualizer.', hue: '#9e182e' },
-      { id: '05', category: 'AI TUTOR', title: 'Neural Latent Space', desc: 'Cognitive retention weights.', hue: '#fcfaf6' },
-      { id: '06', category: 'GRAVITY', title: 'Orbital Mechanics', desc: 'N-body gravitational paths.', hue: '#c92a46' },
-      { id: '07', category: 'ALGORITHMS', title: 'Graph Traversal', desc: 'Dijkstra & A* spatial trees.', hue: '#ece3d4' },
-      { id: '08', category: 'THERMO', title: 'Entropy Chamber', desc: 'Kinetic particle dispersion.', hue: '#8e182c' },
-      { id: '09', category: 'WAVES', title: 'Laser Diffraction', desc: 'Wave interference patterns.', hue: '#fcfaf6' },
-      { id: '10', category: 'EXAM LAB', title: 'Socratic Diagnostics', desc: 'Proof-paced concept checks.', hue: '#b8223c' }
+      { id: '01', category: 'VEDIKA-AI', title: 'Ask Vedika & History', desc: 'Conversational Socratic AI mentor with full session logs.', hue: '#fcfaf6' },
+      { id: '02', category: 'VEDIKA-AI', title: 'Dynamic Infographics', desc: 'Auto coordinate graphs, math plots & algorithmic trees.', hue: '#f4ede2' },
+      { id: '03', category: 'CODING', title: 'Code with Vedika', desc: 'Live code sandbox with real-time memory stack tracer.', hue: '#ece3d4' },
+      { id: '04', category: 'PRACTICE', title: 'Daily Code Puzzles', desc: 'Gamified algorithmic challenges with runtime checks.', hue: '#fcfaf6' },
+      { id: '05', category: 'CAREERS', title: 'Viva & Aptitude Prep', desc: 'AI oral viva defenses & corporate interview mock drills.', hue: '#dfd3c3' },
+      { id: '06', category: 'VEDIKA-LABS', title: 'Virtual Biology Lab', desc: '3D cellular cytology, organelle explorer & specimen labs.', hue: '#fcfaf6' },
+      { id: '07', category: 'VEDIKA-LABS', title: 'Virtual Physics Lab', desc: 'Orbital gravity mechanics, wave packets & laser benches.', hue: '#f4ede2' },
+      { id: '08', category: 'VEDIKA-LABS', title: 'Virtual Chemistry Lab', desc: 'Molecular 3D tetrahedral geometry & reaction titration.', hue: '#ece3d4' },
+      { id: '09', category: 'CURRICULUM', title: 'DSA Resource Hub', desc: 'Company-wise Google, Amazon, Meta roadmap & cheatsheets.', hue: '#fcfaf6' },
+      { id: '10', category: 'PLACEMENTS', title: 'Jobs & Progress Radar', desc: 'Curated skill-matched openings & student analytics.', hue: '#dfd3c3' }
     ];
 
     const numCards = cardData.length;
-    // COMPACT CARD GEOMETRY: (0.20 x 0.28) - compact, elegant, unobtrusive, allowing Vedika and content to shine
+    // Base Card Geometry: (0.20 x 0.28) - scales dynamically up to 1.38x when centered
     const cardGeo = new THREE.PlaneGeometry(0.20, 0.28);
 
     cardData.forEach((data, i) => {
       const angle = (i / numCards) * Math.PI * 2;
-      const canvasTexture = this.generateCardTexture(data);
+      const sharpTexture = this.generateCardTexture(data, false);
+      const blurTexture = this.generateCardTexture(data, true);
 
-      // Refined semi-solid card material (less glassmorphism, high opacity, crisp contrast)
-      const cardMat = new THREE.MeshStandardMaterial({
-        map: canvasTexture,
+      // Hardware-accelerated crossfade ShaderMaterial:
+      // Blurs content when on the sides/back, sharpens to crystal clarity at center!
+      const cardMat = new THREE.ShaderMaterial({
+        uniforms: {
+          tSharp: { value: sharpTexture },
+          tBlur: { value: blurTexture },
+          uSharpness: { value: 0.0 },
+          uOpacity: { value: 0.98 }
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform sampler2D tSharp;
+          uniform sampler2D tBlur;
+          uniform float uSharpness;
+          uniform float uOpacity;
+          varying vec2 vUv;
+          void main() {
+            vec4 sharpCol = texture2D(tSharp, vUv);
+            vec4 blurCol = texture2D(tBlur, vUv);
+            vec4 finalCol = mix(blurCol, sharpCol, clamp(uSharpness, 0.0, 1.0));
+            gl_FragColor = vec4(finalCol.rgb, finalCol.a * uOpacity);
+          }
+        `,
         transparent: true,
-        opacity: 0.98,
-        roughness: 0.32,
-        metalness: 0.14,
         side: THREE.DoubleSide,
         depthWrite: true
       });
 
       const cardMesh = new THREE.Mesh(cardGeo, cardMat);
 
-      // Position in 3D circle around Vedika with compact radius (1.45m)
+      // Position in 3D circle around Vedika with compact radius (1.48m)
       cardMesh.position.x = Math.sin(angle) * this.carouselRadius;
       cardMesh.position.z = Math.cos(angle) * this.carouselRadius;
-      // Positioned at chest level (y = 0.04) so Vedika's face & eyes are fully unobstructed
-      cardMesh.position.y = 0.04;
+      cardMesh.position.y = 0.02;
 
       // Orient card tangent to circle facing outward
       cardMesh.rotation.y = angle;
 
-      this.carouselCards.push({ mesh: cardMesh, baseAngle: angle, data });
+      this.carouselCards.push({ mesh: cardMesh, material: cardMat, baseAngle: angle, data });
       this.carouselGroup.add(cardMesh);
     });
 
     // Carousel starts hidden/compact until Stage 4
-    this.carouselGroup.scale.set(0.001, 0.001, 0.001);
-    this.carouselGroup.visible = false;
+    this.carouselTiltGroup.scale.set(0.001, 0.001, 0.001);
+    this.carouselTiltGroup.visible = false;
   }
 
-  // Generates clean, high-contrast, semi-solid card texture in Regal Maroon & Alabaster Off-White
-  generateCardTexture(data) {
+  // Generates card texture in Regal Maroon & Alabaster Off-White
+  // isBlurred = true: content (text, emblem, details) is blurred;
+  // isBlurred = false: 100% razor-sharp typography and vector art
+  generateCardTexture(data, isBlurred = false) {
     const canvas = document.createElement('canvas');
     canvas.width = 400;
     canvas.height = 560;
@@ -370,7 +406,7 @@ export class BotScene {
 
     // Crisp off-white perimeter border
     ctx.lineWidth = 2;
-    ctx.strokeStyle = 'rgba(252, 250, 246, 0.32)';
+    ctx.strokeStyle = isBlurred ? 'rgba(252, 250, 246, 0.16)' : 'rgba(252, 250, 246, 0.35)';
     ctx.stroke();
 
     // Top hairline accent glow
@@ -380,12 +416,17 @@ export class BotScene {
     ctx.lineTo(365, 10);
     const topHl = ctx.createLinearGradient(35, 10, 365, 10);
     topHl.addColorStop(0, 'transparent');
-    topHl.addColorStop(0.5, 'rgba(255, 255, 255, 0.85)');
+    topHl.addColorStop(0.5, isBlurred ? 'rgba(255, 255, 255, 0.35)' : 'rgba(255, 255, 255, 0.85)');
     topHl.addColorStop(1, 'transparent');
     ctx.strokeStyle = topHl;
     ctx.lineWidth = 3;
     ctx.stroke();
     ctx.restore();
+
+    // If blurred mode: apply 2D canvas filter blur to all text and emblem content!
+    if (isBlurred) {
+      ctx.filter = 'blur(10px) opacity(60%)';
+    }
 
     // Top Header: Tag & Number Pill
     ctx.save();
@@ -459,11 +500,11 @@ export class BotScene {
     ctx.restore();
 
     // Card Title in Calluna (Elegant) & Description in Vollkorn (Simple)
-    ctx.font = 'bold 24px "Calluna", Georgia, serif';
+    ctx.font = 'bold 23px "Calluna", Georgia, serif';
     ctx.fillStyle = '#fcfaf6';
     ctx.fillText(data.title, 26, 395);
 
-    ctx.font = '15px "Vollkorn", Georgia, serif';
+    ctx.font = '14px "Vollkorn", Georgia, serif';
     ctx.fillStyle = '#f4ede2';
     ctx.fillText(data.desc, 26, 428, 348);
 
@@ -478,8 +519,15 @@ export class BotScene {
 
     ctx.font = 'bold 12px "Thinoo", -apple-system, sans-serif';
     ctx.fillStyle = '#fcfaf6';
-    ctx.fillText('EXPLORE SIMULATION →', 42, 501);
+    ctx.fillText('EXPLORE FEATURE →', 42, 501);
     ctx.restore();
+
+    if (isBlurred) {
+      ctx.filter = 'none';
+      // Add a subtle frosted defocus glaze
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
+      ctx.fill();
+    }
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
@@ -503,24 +551,14 @@ export class BotScene {
 
   // Smooth scroll-driven sequence & 3D carousel revolving around Vedika
   // 5-Stage Choreography:
-  // - Stage 1 (01 / Brand Hero): Center gaze
-  // - Stage 1 -> 2: Turn from Center to Left
-  // - Stage 2 (02 / Cognitive HUD): Left gaze
-  // - Stage 2 -> 3: Turn from Left back to Center
-  // - Stage 3 (03 / Platform Facts): Center gaze
-  // - Stage 3 -> 4: 3D Carousel entrance & camera zoom out
-  // - Stage 4 (04 / Pure Carousel): 100% pure revolving carousel halo (zero clutter, nothing else on screen)
-  // - Stage 4 -> 5: Carousel exits, camera returns, Creative Labs enters
-  // Smooth scroll-driven sequence & 3D carousel revolving around Vedika
-  // 5-Stage Choreography:
   // - Stage 1 (01 / Brand Hero): Center frontal gaze
-  // - Stage 1 -> 2: Turn prominently from Center to Left (-0.85 rad / ~49°) in lockstep with page shift
-  // - Stage 2 (02 / Vedika-AI): Hold gaze toward Left looking at editorial features & infographics
-  // - Stage 2 -> 3: Turn prominently from Left back to Center (0.0 rad) in lockstep with page shift
+  // - Stage 1 -> 2: Turn to organic TOP-LEFT look (-0.82 rad Y, -0.22 rad X, 0.08 rad Z) in lockstep with page shift
+  // - Stage 2 (02 / Vedika-AI): Hold graceful TOP-LEFT gaze looking at headline & telemetry
+  // - Stage 2 -> 3: Return from TOP-LEFT back to Center frontal gaze (0.0 rad)
   // - Stage 3 (03 / Courses & Resource Hub): Center frontal gaze
-  // - Stage 3 -> 4: 3D Carousel entrance & camera zoom out
-  // - Stage 4 (04 / Pure Carousel): 100% pure revolving carousel halo (zero clutter, nothing else on screen)
-  // - Stage 4 -> 5: Carousel exits, camera returns, Vedika recenters
+  // - Stage 3 -> 4: 3D Carousel entrance (tilted 30° to right) & gaze prepares to far left card
+  // - Stage 4 (04 / Pure Carousel): Bot sweeps gaze smoothly from far left card to far right card (ZERO shaking!)
+  // - Stage 4 -> 5: Carousel exits, camera returns, bot smoothly settles back to Center
   // - Stage 5 (05 / Virtual Labs, Jobs & Progress): Center frontal gaze
   // Full reversibility: scrolling up from Stage 5 to Stage 1 reverses all transformations in exact symmetry!
   updateScrollProgress(progress) {
@@ -533,10 +571,13 @@ export class BotScene {
     let camY = 0.26;
     let camZ = 2.65;
 
-    // Prominent, unmistakable turn angle: -0.85 rad (~48.7 degrees to the left)
-    const TURN_ANGLE = -0.85;
-    const PITCH_ANGLE = 0.04;
-    const ROLL_ANGLE = -0.04;
+    // Organic "Top-Left" look for Stage 2:
+    // - targetY = -0.82 rad (~47° left)
+    // - targetX = -0.22 rad (~12.6° lifted up towards top-left)
+    // - targetZ = 0.08 rad (natural inquisitive human-like head roll)
+    const TOP_LEFT_Y = -0.82;
+    const TOP_LEFT_X = -0.22;
+    const TOP_LEFT_Z = 0.08;
 
     if (p < 0.107) {
       // Stage 1: Frontal gaze (Center)
@@ -547,32 +588,32 @@ export class BotScene {
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.202) {
-      // Shift Page 1 -> Page 2: Turn smoothly from Center to Left
-      // Synchronized directly with Page 1 exit and Page 2 entry (and vice versa in reverse!)
+      // Shift Page 1 -> Page 2: Turn smoothly to TOP-LEFT
+      // Synchronized directly with Page 1 exit and Page 2 entry (reversible)
       const t = (p - 0.107) / (0.202 - 0.107);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
-      targetY = THREE.MathUtils.lerp(0.0, TURN_ANGLE, easeT);
-      targetX = THREE.MathUtils.lerp(0.0, PITCH_ANGLE, easeT);
-      targetZ = THREE.MathUtils.lerp(0.0, ROLL_ANGLE, easeT);
+      targetY = THREE.MathUtils.lerp(0.0, TOP_LEFT_Y, easeT);
+      targetX = THREE.MathUtils.lerp(0.0, TOP_LEFT_X, easeT);
+      targetZ = THREE.MathUtils.lerp(0.0, TOP_LEFT_Z, easeT);
       camZ = THREE.MathUtils.lerp(2.65, 2.58, easeT);
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.321) {
-      // Stage 2: Holding gaze clearly towards Left (looking at Vedika-AI title & features)
-      targetY = TURN_ANGLE;
-      targetX = PITCH_ANGLE;
-      targetZ = ROLL_ANGLE;
+      // Stage 2: Holding gaze gracefully towards TOP-LEFT (reading Vedika-AI title & features)
+      targetY = TOP_LEFT_Y;
+      targetX = TOP_LEFT_X;
+      targetZ = TOP_LEFT_Z;
       camZ = 2.58;
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.417) {
-      // Shift Page 2 -> Page 3: Turn smoothly from Left back to Center
-      // Synchronized directly with Page 2 exit and Page 3 entry (and vice versa in reverse!)
+      // Shift Page 2 -> Page 3: Get back from TOP-LEFT to CENTER
+      // Synchronized directly with Page 2 exit and Page 3 entry (reversible)
       const t = (p - 0.321) / (0.417 - 0.321);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
-      targetY = THREE.MathUtils.lerp(TURN_ANGLE, 0.0, easeT);
-      targetX = THREE.MathUtils.lerp(PITCH_ANGLE, 0.0, easeT);
-      targetZ = THREE.MathUtils.lerp(ROLL_ANGLE, 0.0, easeT);
+      targetY = THREE.MathUtils.lerp(TOP_LEFT_Y, 0.0, easeT);
+      targetX = THREE.MathUtils.lerp(TOP_LEFT_X, 0.0, easeT);
+      targetZ = THREE.MathUtils.lerp(TOP_LEFT_Z, 0.0, easeT);
       camZ = THREE.MathUtils.lerp(2.58, 2.65, easeT);
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
@@ -585,18 +626,21 @@ export class BotScene {
       this.isCarouselActive = false;
       this.carouselTargetScale = 0.001;
     } else if (p < 0.631) {
-      // Shift Page 3 -> Page 4: 3D Carousel enters, camera pulls back smoothly
+      // Shift Page 3 -> Page 4: 3D Carousel enters, camera pulls back smoothly,
+      // bot smoothly prepares gaze by turning from Center to FAR LEFT carousel card
       const t = (p - 0.536) / (0.631 - 0.536);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
-      targetY = 0.0;
-      targetX = 0.0;
-      targetZ = 0.0;
+      targetY = THREE.MathUtils.lerp(0.0, -0.70, easeT);
+      targetX = THREE.MathUtils.lerp(0.0, -0.06, easeT);
+      targetZ = THREE.MathUtils.lerp(0.0, -0.04, easeT);
       camZ = THREE.MathUtils.lerp(2.65, 3.10, easeT);
       camY = THREE.MathUtils.lerp(0.26, 0.24, easeT);
       this.isCarouselActive = true;
       this.carouselTargetScale = easeT;
     } else if (p < 0.798) {
-      // Stage 4: 100% PURE 3D CAROUSEL (Nothing at all obstructing screen!)
+      // Stage 4: 100% PURE 3D CAROUSEL (Tilted 30° to the right)
+      // As user scrolls the carousel, bot sweeps smoothly from FAR LEFT card to FAR RIGHT card
+      // Zero sawtooth, zero modulo resets, ZERO SHAKING even on fastest scroll!
       this.isCarouselActive = true;
       this.carouselTargetScale = 1.0;
       camZ = 3.10;
@@ -605,14 +649,13 @@ export class BotScene {
       const tCarousel = (p - 0.631) / (0.798 - 0.631);
       this.carouselTargetRotation = tCarousel * Math.PI * 2 * 1.8;
 
-      // Vedika smoothly tracks the revolving cards passing in front of her
-      const cardStep = (Math.PI * 2) / 10;
-      const currentAngleOffset = ((this.carouselTargetRotation % cardStep) / cardStep - 0.5);
-      targetY = -currentAngleOffset * 0.35;
-      targetX = 0.02;
-      targetZ = 0.0;
+      // Smooth, majestic gaze sweep from far left card (-0.70) to far right card (+0.70)
+      targetY = THREE.MathUtils.lerp(-0.70, 0.70, tCarousel);
+      targetX = -0.06;
+      targetZ = THREE.MathUtils.lerp(-0.04, 0.04, tCarousel);
     } else if (p < 0.893) {
-      // Shift Page 4 -> Page 5: Carousel exits, camera returns, Vedika recenters
+      // Shift Page 4 -> Page 5: Carousel exits, camera returns,
+      // bot smoothly transitions from FAR RIGHT card (+0.70) back to CENTER (0.0)
       const t = (p - 0.798) / (0.893 - 0.798);
       const easeT = (1 - Math.cos(t * Math.PI)) * 0.5;
       camZ = THREE.MathUtils.lerp(3.10, 2.65, easeT);
@@ -620,12 +663,9 @@ export class BotScene {
       this.carouselTargetScale = Math.max(0.001, 1.0 - easeT);
       this.isCarouselActive = (this.carouselTargetScale > 0.05);
 
-      const cardStep = (Math.PI * 2) / 10;
-      const currentAngleOffset = ((this.carouselTargetRotation % cardStep) / cardStep - 0.5);
-      const carouselLookY = -currentAngleOffset * 0.35;
-      targetY = THREE.MathUtils.lerp(carouselLookY, 0.0, easeT);
-      targetX = THREE.MathUtils.lerp(0.02, 0.0, easeT);
-      targetZ = 0.0;
+      targetY = THREE.MathUtils.lerp(0.70, 0.0, easeT);
+      targetX = THREE.MathUtils.lerp(-0.06, 0.0, easeT);
+      targetZ = THREE.MathUtils.lerp(0.04, 0.0, easeT);
     } else {
       // Stage 5: Virtual Labs, Jobs & Progress (Center gaze)
       this.isCarouselActive = false;
@@ -661,20 +701,40 @@ export class BotScene {
     this.camera.position.z += (this.targetCamZ - this.camera.position.z) * 0.22;
     this.camera.lookAt(0, 0.26, 0);
 
-    // 3D Carousel animation & visibility
+    // 3D Carousel animation & visibility (30° right-tilted orbital group)
     if (this.isCarouselActive) {
-      this.carouselGroup.visible = true;
-      const currentScale = this.carouselGroup.scale.x;
-      const newScale = currentScale + (this.carouselTargetScale - currentScale) * 0.08;
-      this.carouselGroup.scale.set(newScale, newScale, newScale);
+      this.carouselTiltGroup.visible = true;
+      const currentScale = this.carouselTiltGroup.scale.x;
+      const newScale = currentScale + (this.carouselTargetScale - currentScale) * 0.12;
+      this.carouselTiltGroup.scale.set(newScale, newScale, newScale);
 
-      this.carouselGroup.rotation.y += (this.carouselTargetRotation - this.carouselGroup.rotation.y) * 0.08;
+      this.carouselGroup.rotation.y += (this.carouselTargetRotation - this.carouselGroup.rotation.y) * 0.10;
+
+      // Center proximity effect:
+      // Cards coming to center front scale up to 1.38x & become 100% razor sharp;
+      // remaining cards stay compact (0.88x) & their content stays blurred!
+      const tempPos = new THREE.Vector3();
+      this.carouselCards.forEach((card) => {
+        card.mesh.getWorldPosition(tempPos);
+        let proximity = 0;
+        if (tempPos.z > 0) {
+          proximity = Math.pow(Math.max(0, 1.0 - Math.abs(tempPos.x) / 0.85), 2.0);
+        }
+        // Center card scales up (1.38x), remaining cards are 0.88x
+        const scale = THREE.MathUtils.lerp(0.88, 1.38, proximity);
+        card.mesh.scale.set(scale, scale, 1);
+
+        // Center card unblurs into crystal sharpness, remaining cards stay blurred!
+        if (card.material.uniforms && card.material.uniforms.uSharpness) {
+          card.material.uniforms.uSharpness.value = proximity;
+        }
+      });
     } else {
-      if (this.carouselGroup.scale.x > 0.01) {
-        const newScale = this.carouselGroup.scale.x * 0.85;
-        this.carouselGroup.scale.set(newScale, newScale, newScale);
+      if (this.carouselTiltGroup.scale.x > 0.01) {
+        const newScale = this.carouselTiltGroup.scale.x * 0.82;
+        this.carouselTiltGroup.scale.set(newScale, newScale, newScale);
       } else {
-        this.carouselGroup.visible = false;
+        this.carouselTiltGroup.visible = false;
       }
     }
 
