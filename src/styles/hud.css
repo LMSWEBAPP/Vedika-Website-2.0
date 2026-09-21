@@ -222,7 +222,7 @@
   letter-spacing: 0.18em;
 }
 
-/* Stage Layers Layout */
+/* Stage Layers Layout (Isolated layout boundaries for max performance) */
 .stage-layer {
   position: absolute;
   top: 0;
@@ -236,6 +236,8 @@
   justify-content: center;
   padding: 85px clamp(24px, 4vw, 56px) 95px;
   box-sizing: border-box;
+  contain: layout style;
+  backface-visibility: hidden;
   will-change: transform, opacity;
   overflow: hidden;
 }

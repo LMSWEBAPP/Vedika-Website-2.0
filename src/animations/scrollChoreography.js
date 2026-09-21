@@ -57,6 +57,8 @@ export function initScrollChoreography(botScene) {
       pin: true,
       scrub: 1.2, // Silky smooth damping - smooths out mousewheel notches and trackpad jitter
       anticipatePin: 1,
+      fastScrollEnd: true,
+      preventOverlaps: true,
       onUpdate: (self) => {
         const progress = self.progress; // 0.0 to 1.0
 

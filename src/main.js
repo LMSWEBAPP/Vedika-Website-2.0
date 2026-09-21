@@ -36,11 +36,19 @@ document.addEventListener('DOMContentLoaded', () => {
 function initWaveformCanvas() {
   const canvas = document.getElementById('emotional-wave-canvas');
   if (!canvas) return;
+  const stage2 = document.getElementById('stage-2');
   const ctx = canvas.getContext('2d');
 
   let offset = 0;
 
   function renderWave() {
+    requestAnimationFrame(renderWave);
+
+    // Skip heavy 2D canvas drawing when Stage 2 is not visible to free up GPU & CPU cycles
+    if (stage2 && stage2.style.visibility === 'hidden') {
+      return;
+    }
+
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Background Grid lines - subtle off-white
@@ -84,7 +92,6 @@ function initWaveformCanvas() {
     ctx.shadowBlur = 0;
 
     offset += 1.8;
-    requestAnimationFrame(renderWave);
   }
 
   renderWave();

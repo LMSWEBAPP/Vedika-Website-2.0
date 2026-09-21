@@ -343,20 +343,22 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-/* Ambient Glow Blobs in Background */
+/* Ambient Glow Blobs in Background (Hardware composited, zero scroll paint cost) */
 .ambient-glow {
   position: fixed;
   pointer-events: none;
   z-index: 0;
   border-radius: 50%;
-  filter: blur(140px);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
   transition: background 0.4s ease;
 }
 
 .ambient-glow-top {
   top: -140px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
   width: 1100px;
   height: 620px;
   background: var(--theme-ambient-top);
@@ -365,7 +367,7 @@ body {
 .ambient-glow-center {
   top: 48%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate3d(-50%, -50%, 0);
   width: 1250px;
   height: 950px;
   background: var(--theme-ambient-center);
