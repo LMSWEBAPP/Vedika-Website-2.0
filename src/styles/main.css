@@ -105,12 +105,17 @@ html {
 
 body {
   font-family: var(--font-simple);
-  /* Elegant Multi-Dimensional Velvet Gradient System (Eliminates flat maroon) */
+  /* Elegant Imperial Maroon & Alabaster Off-White Atmospheric Gradient System */
   background: 
-    radial-gradient(ellipse 90% 60% at 50% -5%, rgba(195, 36, 64, 0.26) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 55% at 90% 75%, rgba(125, 18, 36, 0.22) 0%, transparent 65%),
-    radial-gradient(ellipse 70% 50% at 10% 45%, rgba(95, 12, 28, 0.25) 0%, transparent 65%),
-    linear-gradient(180deg, #180307 0%, #0d0103 40%, #160206 75%, #080002 100%);
+    /* Top luminous pearlescent off-white bloom bleeding into imperial maroon */
+    radial-gradient(ellipse 85% 55% at 50% -2%, rgba(254, 250, 244, 0.20) 0%, rgba(215, 45, 75, 0.35) 35%, rgba(65, 8, 18, 0.22) 65%, transparent 80%),
+    /* Lateral off-white & wine ambient glows behind stage content */
+    radial-gradient(ellipse 60% 50% at 12% 45%, rgba(252, 250, 246, 0.10) 0%, rgba(165, 26, 52, 0.24) 40%, transparent 70%),
+    radial-gradient(ellipse 60% 50% at 88% 52%, rgba(252, 250, 246, 0.10) 0%, rgba(165, 26, 52, 0.24) 40%, transparent 70%),
+    /* Center aura behind Vedika */
+    radial-gradient(circle at 50% 48%, rgba(254, 250, 244, 0.10) 0%, rgba(184, 34, 60, 0.22) 42%, transparent 75%),
+    /* Base linear sweep from soft off-white shimmer through velvet maroon to deep noir */
+    linear-gradient(180deg, rgba(252, 250, 246, 0.06) 0%, #22040b 16%, #140206 50%, #1a0309 78%, #070002 100%);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.65;
@@ -138,13 +143,20 @@ body {
 }
 
 .text-gold-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 35%, #f4ede2 70%, #dcd3c5 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 35%, #f4ede2 65%, #df94a4 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* Ambient Glow Blobs in Background (Multi-Stop Velvet Lighting) */
+.text-maroon-offwhite {
+  background: linear-gradient(135deg, #ffffff 0%, #fcfaf6 30%, #ebdcc9 60%, #cc3650 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Ambient Glow Blobs in Background (Luminous Off-White & Imperial Maroon) */
 .ambient-glow {
   position: fixed;
   pointer-events: none;
@@ -157,18 +169,30 @@ body {
   top: -140px;
   left: 50%;
   transform: translateX(-50%);
-  width: 1050px;
-  height: 580px;
-  background: radial-gradient(ellipse at 50% 30%, rgba(205, 38, 68, 0.32) 0%, rgba(125, 18, 36, 0.28) 45%, transparent 75%);
+  width: 1100px;
+  height: 620px;
+  background: radial-gradient(
+    ellipse at 50% 25%,
+    rgba(254, 250, 244, 0.26) 0%,
+    rgba(215, 40, 72, 0.40) 35%,
+    rgba(125, 18, 36, 0.26) 60%,
+    transparent 80%
+  );
 }
 
 .ambient-glow-center {
-  top: 45%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 1200px;
-  height: 900px;
-  background: radial-gradient(ellipse at 50% 50%, rgba(120, 18, 36, 0.24) 0%, rgba(45, 6, 14, 0.15) 50%, transparent 75%);
+  width: 1250px;
+  height: 950px;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    rgba(252, 250, 246, 0.16) 0%,
+    rgba(184, 34, 60, 0.32) 35%,
+    rgba(55, 8, 18, 0.20) 65%,
+    transparent 80%
+  );
 }
 
 /* Global Nav Header */

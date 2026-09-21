@@ -362,8 +362,9 @@ export class BotScene {
 
       // Orient card tangent to circle facing outward
       cardMesh.rotation.y = angle;
+      const defaultQuat = cardMesh.quaternion.clone();
 
-      this.carouselCards.push({ mesh: cardMesh, material: cardMat, baseAngle: angle, data });
+      this.carouselCards.push({ mesh: cardMesh, material: cardMat, baseAngle: angle, defaultQuat, data });
       this.carouselGroup.add(cardMesh);
     });
 
@@ -731,17 +732,30 @@ export class BotScene {
 
       // Center proximity effect:
       // Cards coming to center front scale up to 1.40x & become 100% razor sharp;
-      // remaining cards stay compact (0.90x) & their content stays softly blurred!
+      // Straightens up at center (0° tilt) and smoothly returns to tilted position when scrolling away!
       const tempPos = new THREE.Vector3();
+      const qWorldStraight = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, 0));
+      const parentWorldQuat = new THREE.Quaternion();
+      this.carouselGroup.getWorldQuaternion(parentWorldQuat);
+      const invParentWorldQuat = parentWorldQuat.clone().invert();
+      const qStraightLocal = invParentWorldQuat.multiply(qWorldStraight);
+
       this.carouselCards.forEach((card) => {
         card.mesh.getWorldPosition(tempPos);
         let proximity = 0;
         if (tempPos.z > 0) {
-          proximity = Math.pow(Math.max(0, 1.0 - Math.abs(tempPos.x) / 0.95), 1.6);
+          // Responsive proximity window around center front
+          proximity = Math.pow(Math.max(0, 1.0 - Math.abs(tempPos.x) / 0.88), 1.5);
         }
         // Center card scales up (1.40x), remaining cards are 0.90x
         const scale = THREE.MathUtils.lerp(0.90, 1.40, proximity);
         card.mesh.scale.set(scale, scale, 1);
+
+        // Center card straightens up to 0° upright facing camera when centered,
+        // and smoothly returns to the 15° tilted orbital angle as it scrolls away!
+        if (card.defaultQuat) {
+          card.mesh.quaternion.copy(card.defaultQuat).slerp(qStraightLocal, proximity);
+        }
 
         // Center card unblurs into crystal sharpness, remaining cards stay blurred!
         if (card.material.uniforms && card.material.uniforms.uSharpness) {
